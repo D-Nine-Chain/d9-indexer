@@ -1,0 +1,44 @@
+{
+  "name": "d9-indexer",
+  "version": "1.0.0",
+  "description": "d9 indexer",
+  "author": "d9",
+  "license": "MIT",
+  "homepage": "https://github.com/subquery/subql-starter",
+  "repository": "github:subquery/subql-starter",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "project.yaml",
+    "schema.graphql"
+  ],
+  "scripts": {
+    "build": "subql build",
+    "codegen": "subql codegen",
+    "start:docker": "docker-compose pull && docker-compose up --remove-orphans",
+    "dev": "subql codegen && subql build && docker-compose pull && docker-compose up --remove-orphans",
+    "prepack": "rm -rf dist && npm run build",
+    "test": "subql build && subql-node test"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.6.3",
+    "@polkadot/api": "^10",
+    "@polkadot/api-augment": "^10.11.2",
+    "@polkadot/api-base": "^10.11.2",
+    "@polkadot/rpc-core": "^10.11.2",
+    "@polkadot/types": "^10.11.2",
+    "@polkadot/types-codec": "^10.11.2",
+    "@polkadot/util-crypto": "^12.6.2",
+    "@subql/cli": "latest",
+    "@subql/testing": "latest",
+    "@subql/types": "latest",
+    "@subql/types-core": "^0.4.0",
+    "eslint": "^8.56.0",
+    "taze": "^0.13.1",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
+  },
+  "resolutions": {
+    "ipfs-unixfs": "6.0.6"
+  }
+}
