@@ -30,6 +30,7 @@
     "@polkadot/types-codec": "^10.11.2",
     "@polkadot/util-crypto": "^12.6.2",
     "@subql/cli": "latest",
+    "@subql/node": "^3.5.0",
     "@subql/testing": "latest",
     "@subql/types": "latest",
     "@subql/types-core": "^0.4.0",
