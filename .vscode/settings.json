@@ -1,7 +1,9 @@
 {
   "cSpell.words": [
     "antfu",
-    "subql"
+    "extrinsics",
+    "subql",
+    "taze"
   ],
   // Enable the ESlint flat config support
   "eslint.experimental.useFlatConfig": true,

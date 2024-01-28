@@ -5,6 +5,8 @@ import { Balance, EventRecord } from '@polkadot/types/interfaces'
 import { AugmentedEvents } from '@polkadot/api-base/types'
 import { Account, Transfer } from '../types'
 
+// d9 balance
+
 async function checkAndGetAccount(
   id: string,
   blockNumber: number,
@@ -22,6 +24,7 @@ async function checkAndGetAccount(
 }
 
 export async function handlerBalanceDepositEvent(event: SubstrateEvent) {
+  // logger.info(`event:${JSON.stringify(event)}`)
   const {
     event: {
       data: [to, amount],

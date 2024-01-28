@@ -17,3 +17,4 @@ export async function handleCall(_extrinsic: SubstrateExtrinsic): Promise<void> 
 }
 
 export * from './balance'
+export * from './contract'

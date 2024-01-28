@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.6.3",
-    "@polkadot/api": "^10",
+    "@polkadot/api": "^10.11.2",
     "@polkadot/api-augment": "^10.11.2",
     "@polkadot/api-base": "^10.11.2",
     "@polkadot/rpc-core": "^10.11.2",
@@ -31,6 +31,7 @@
     "@polkadot/util-crypto": "^12.6.2",
     "@subql/cli": "latest",
     "@subql/node": "^3.5.0",
+    "@subql/substrate-wasm-processor": "^1.0.0",
     "@subql/testing": "latest",
     "@subql/types": "latest",
     "@subql/types-core": "^0.4.0",

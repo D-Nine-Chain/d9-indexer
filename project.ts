@@ -3,9 +3,10 @@ import {
   SubstrateHandlerKind,
   SubstrateProject,
 } from '@subql/types'
+import { WasmDatasource } from '@subql/substrate-wasm-processor'
 
 // Can expand the Datasource processor types via the genreic param
-const project: SubstrateProject = {
+const project: SubstrateProject<WasmDatasource> = {
   specVersion: '1.0.0',
   version: '0.0.1',
   name: 'polkadot-starter',
@@ -41,32 +42,37 @@ const project: SubstrateProject = {
   dataSources: [
     {
       kind: SubstrateDatasourceKind.Runtime,
-      startBlock: 1,
+      startBlock: 571000,
       mapping: {
         file: './dist/index.js',
         handlers: [
-          /* {
-            kind: SubstrateHandlerKind.Block,
-            handler: "handleBlock",
-            filter: {
-              modulo: 100,
-            },
-          }, */
-          /* {
-            kind: SubstrateHandlerKind.Call,
-            handler: "handleCall",
-            filter: {
-              module: "balances",
-            },
-          }, */
           {
-            kind: SubstrateHandlerKind.Event,
-            handler: 'handlerBalanceDepositEvent',
+            kind: SubstrateHandlerKind.Block,
+            handler: 'handlerContractBlock',
+          },
+          {
+            kind: SubstrateHandlerKind.Call,
+            handler: 'handlerContractCall',
             filter: {
-              module: 'balances',
-              method: 'Deposit',
+              module: 'contracts',
             },
           },
+          {
+            kind: SubstrateHandlerKind.Event,
+            handler: 'handlerContractEvent',
+            filter: {
+              module: 'contracts',
+              method: 'ContractEmitted',
+            },
+          },
+          // {
+          //   kind: SubstrateHandlerKind.Event,
+          //   handler: 'handlerBalanceDepositEvent',
+          //   filter: {
+          //     module: 'balances',
+          //     method: 'Deposit',
+          //   },
+          // },
         ],
       },
     },
