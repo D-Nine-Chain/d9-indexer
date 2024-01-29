@@ -33,7 +33,6 @@ export async function handleBlock(block: SubstrateBlock) {
 SECTION: ${extrinsic.method.section}
 METHOD: ${extrinsic.method.method}
 ARGS: ${JSON.stringify(extrinsic.args, null, 2)}
-DATA: ${JSON.stringify(extrinsic.data)}
 ${JSON.stringify(extrinsic.unwrap(), null, 2)}}
 \n=================================================`,
         )
