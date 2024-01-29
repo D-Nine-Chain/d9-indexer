@@ -8,6 +8,6 @@ export type IBlockHandler<I extends AnyTuple, T extends Entity> = (
     extrinsic: GenericExtrinsic<I>
     block: SubstrateBlock
     index: number
-  }) => Promise<T[]>
+  }) => Promise<T[] | T>
 
 export const blockHandlers = new Array<{ match: string, handler: IBlockHandler<AnyTuple, Entity> }>()

@@ -25,6 +25,7 @@ blockHandlers.push({
     fromAccount.lastTransferBlock = blockNumber
     toAccount.lastTransferBlock = blockNumber
 
-    return [transfer]
+    await Promise.all([fromAccount.save(), toAccount.save(), transfer.save()])
+    return transfer
   },
 })

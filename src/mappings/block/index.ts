@@ -1,4 +1,3 @@
-import { Entity } from '@subql/types-core'
 import { SubstrateBlock } from '@subql/types'
 import { blockHandlers } from './handlers'
 
@@ -7,7 +6,6 @@ import './balances'
 export async function handleBlock(block: SubstrateBlock) {
   const extrinsics = block.block.extrinsics
   const len = extrinsics.length
-  const entities: Entity[] = []
   if (len > 1) {
     extrinsics.shift()
     for await (const extrinsic of extrinsics) {
@@ -25,26 +23,17 @@ ${JSON.stringify(extrinsic.unwrap(), null, 2)}}
         const matcher = [`${extrinsic.method.section}.${extrinsic.method.method}`, `${extrinsic.method.section}.*`]
         if (matcher.includes(match)) {
           try {
-            entities.push(...(await handler({
+            await handler({
               extrinsic,
               block,
               index,
-            })))
+            })
           }
           catch (err) {
             logger.warn(err)
           }
         }
       }
-    }
-  }
-  logger.info(`entities: ${JSON.stringify(entities, null, 2)}`)
-  for await (const entity of entities) {
-    try {
-      await entity.save?.()
-    }
-    catch (err) {
-      logger.warn(err)
     }
   }
 }
