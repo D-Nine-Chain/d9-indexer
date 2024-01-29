@@ -15,6 +15,7 @@
     "declaration": true,
     "importHelpers": true,
     "outDir": "dist",
+    "sourceMap": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },

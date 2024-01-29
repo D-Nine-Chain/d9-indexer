@@ -22,5 +22,7 @@ module.exports = antfu({
     'ts/consistent-type-imports': 'off',
     'curly': 'off',
     'eslint-comments/no-unlimited-disable': 'off',
+    'no-debugger': 'off',
+    'no-restricted-syntax': 'off',
   },
 })

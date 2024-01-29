@@ -1,20 +1,15 @@
-import assert from 'assert'
-import {
-  SubstrateBlock,
-  SubstrateEvent,
-  SubstrateExtrinsic,
-} from '@subql/types'
-import { Balance } from '@polkadot/types/interfaces'
-import { decodeAddress } from '@polkadot/util-crypto'
-import { Account, Transfer } from '../types'
+import { SubstrateEvent } from '@subql/types'
 
-export async function handleBlock(_block: SubstrateBlock): Promise<void> {
-  // Do something with each block handler here
+export * from './block'
+
+export async function handleContractCallEvent(event: SubstrateEvent) {
+  logger.info(`event: ${JSON.stringify(event.toHuman())}`)
+  logger.info(` event: ${JSON.stringify(event.toJSON())}`)
 }
 
-export async function handleCall(_extrinsic: SubstrateExtrinsic): Promise<void> {
-  // Do something with a call handler here
-}
-
-export * from './balance'
-export * from './contract'
+// eslint-disable-next-line no-extend-native
+Object.defineProperty(BigInt.prototype, 'toJSON', {
+  get() {
+    return () => String(this)
+  },
+})

@@ -26,45 +26,36 @@ const project: SubstrateProject<WasmDatasource> = {
     file: './schema.graphql',
   },
   network: {
-    /* The genesis hash of the network (hash of block 0) */
     chainId:
       '0xdcee8f92ac67f45b733e9d46c510d9d73d0d8310af7ba4ba0de2485e9128298b',
-    /**
-     * These endpoint(s) should be public non-pruned archive node
-     * We recommend providing more than one endpoint for improved reliability, performance, and uptime
-     * Public nodes may be rate limited, which can affect indexing speed
-     * When developing your project we suggest getting a private API key
-     * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
-     * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
-     */
     endpoint: ['ws://3.15.163.97:40300'],
   },
   dataSources: [
     {
       kind: SubstrateDatasourceKind.Runtime,
-      startBlock: 571000,
+      startBlock: 571750,
       mapping: {
         file: './dist/index.js',
         handlers: [
           {
             kind: SubstrateHandlerKind.Block,
-            handler: 'handlerContractBlock',
+            handler: 'handleBlock',
           },
-          {
-            kind: SubstrateHandlerKind.Call,
-            handler: 'handlerContractCall',
-            filter: {
-              module: 'contracts',
-            },
-          },
-          {
-            kind: SubstrateHandlerKind.Event,
-            handler: 'handlerContractEvent',
-            filter: {
-              module: 'contracts',
-              method: 'ContractEmitted',
-            },
-          },
+          // {
+          //   kind: SubstrateHandlerKind.Call,
+          //   handler: 'handlerContractCall',
+          //   filter: {
+          //     module: 'contracts',
+          //   },
+          // },
+          // {
+          //   kind: SubstrateHandlerKind.Event,
+          //   handler: 'handlerContractEvent',
+          //   filter: {
+          //     module: 'contracts',
+          //     method: 'ContractEmitted',
+          //   },
+          // },
           // {
           //   kind: SubstrateHandlerKind.Event,
           //   handler: 'handlerBalanceDepositEvent',
