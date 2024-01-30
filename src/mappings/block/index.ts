@@ -11,13 +11,15 @@ export async function handleBlock(block: SubstrateBlock) {
   if (len > 1) {
     logger.info(`handleBlock ${block.block.header.number.toNumber()}`)
     logger.info(`extrinsics.length ${len}`)
-    logger.info(`extrinsics ${extrinsics}`)
+    // logger.info(`extrinsics ${extrinsics}`)
     extrinsics.shift()
     for await (const extrinsic of extrinsics) {
       const index = extrinsics.findIndex(_ => _.hash === extrinsic.hash) + 1
       let handled = false
+      const matcher = [`${extrinsic.method.section}.${extrinsic.method.method}`, `${extrinsic.method.section}.*`]
+      if (extrinsic.method.section === 'contracts')
+        continue
       for await (const { match, handler } of blockHandlers) {
-        const matcher = [`${extrinsic.method.section}.${extrinsic.method.method}`, `${extrinsic.method.section}.*`]
         if (matcher.includes(match)) {
           try {
             await handler({

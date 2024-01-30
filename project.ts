@@ -33,7 +33,7 @@ const project: SubstrateProject<WasmDatasource> = {
   dataSources: [
     {
       kind: 'substrate/Wasm',
-      startBlock: 750000,
+      startBlock: 752000,
       processor: {
         file: './node_modules/@subql/substrate-wasm-processor/dist/bundle.js',
         options: {
@@ -72,7 +72,7 @@ const project: SubstrateProject<WasmDatasource> = {
     },
     {
       kind: 'substrate/Wasm',
-      startBlock: 750000,
+      startBlock: 752000,
       processor: {
         file: './node_modules/@subql/substrate-wasm-processor/dist/bundle.js',
         options: {
@@ -95,7 +95,7 @@ const project: SubstrateProject<WasmDatasource> = {
     },
     {
       kind: SubstrateDatasourceKind.Runtime,
-      startBlock: 750000,
+      startBlock: 752000,
       mapping: {
         file: './dist/index.js',
         handlers: [

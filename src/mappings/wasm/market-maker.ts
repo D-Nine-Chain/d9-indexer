@@ -19,21 +19,27 @@ export async function handleMarketMakerCurrencySwap(event: WasmEvent<CurrencySwa
 export async function handleGetD9Call(call: WasmCall<[Balance]>) {
   const { data, from, success, blockNumber, blockHash, hash, idx, timestamp } = call
   logger.info(`handleGetD9Call: block: ${blockNumber}-${idx} address: ${from.toString()} amount: ${data}`)
-  const account = await checkAndGetAccount(from.toString(), blockNumber)
-  await account.save()
-  const record = CurrencySwap.create({
-    id: `${blockNumber}-${idx}`,
-    amount: typeof call.data === 'string' ? BigInt(0) : call.data.args[0].toBigInt(),
-    blockNumber,
-    blockHash,
-    hash,
-    date: timestamp,
-    accountId: account.id,
-    success,
-    from: 'USDT',
-    to: 'D9',
-  })
-  await record.save()
+  if (typeof call.data !== 'string') {
+    const [amount] = call.data.args
+    const account = await checkAndGetAccount(from.toString(), blockNumber)
+    await account.save()
+    const record = CurrencySwap.create({
+      id: `${blockNumber}-${idx}`,
+      amount: amount.toBigInt(),
+      blockNumber,
+      blockHash,
+      hash,
+      date: timestamp,
+      accountId: account.id,
+      success,
+      from: 'USDT',
+      to: 'D9',
+    })
+    await record.save()
+  }
+  else {
+    logger.info(`Decode call failed ${blockNumber}-${idx} ${call.hash}`)
+  }
 }
 
 export async function handleGetUSDTCall(call: WasmCall) {
