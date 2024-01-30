@@ -3,10 +3,15 @@ import { blockHandlers } from './handlers'
 
 import './balances'
 
+// import './contracts'
+
 export async function handleBlock(block: SubstrateBlock) {
   const extrinsics = block.block.extrinsics
   const len = extrinsics.length
   if (len > 1) {
+    logger.info(`handleBlock ${block.block.header.number.toNumber()}`)
+    logger.info(`extrinsics.length ${len}`)
+    logger.info(`extrinsics ${extrinsics}`)
     extrinsics.shift()
     for await (const extrinsic of extrinsics) {
       const index = extrinsics.findIndex(_ => _.hash === extrinsic.hash) + 1
@@ -34,6 +39,8 @@ SECTION: ${extrinsic.method.section}
 METHOD: ${extrinsic.method.method}
 ARGS: ${JSON.stringify(extrinsic.args, null, 2)}
 ${JSON.stringify(extrinsic.unwrap(), null, 2)}}
+${JSON.stringify([`${extrinsic.method.section}.${extrinsic.method.method}`, `${extrinsic.method.section}.*`])}
+${JSON.stringify(blockHandlers)}
 \n=================================================`,
         )
       }

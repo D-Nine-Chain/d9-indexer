@@ -1,6 +1,7 @@
 import { SubstrateEvent } from '@subql/types'
 
 export * from './block'
+export * from './wasm'
 
 export async function handleContractCallEvent(event: SubstrateEvent) {
   logger.info(`event: ${JSON.stringify(event.toHuman())}`)

@@ -1,12 +1,3 @@
-type Transfer @entity {
-  id: ID!
-  amount: BigInt!
-  blockNumber: Int!
-  date: Date!
-  from: Account!
-  to: Account!
-}
-
 type Account @entity {
   id: ID!
   publicKey: String!
@@ -14,4 +5,29 @@ type Account @entity {
   lastTransferBlock: Int
   sentTransfers: [Transfer] @derivedFrom(field: "from") # These are virtual properties to help us navigate to the correct foreign key of Transfer
   recievedTransfers: [Transfer] @derivedFrom(field: "to") # These are virtual properties to help us navigate to the correct foreign key of Transfer
+  currencySwaps: [CurrencySwap] @derivedFrom(field: "account")
+}
+
+type Transfer @entity {
+  id: ID!
+  amount: BigInt!
+  blockNumber: Int!
+  blockHash: String!
+  hash: String!
+  date: Date!
+  from: Account!
+  to: Account!
+}
+
+type CurrencySwap @entity {
+  id: ID!
+  amount: BigInt!
+  blockNumber: Int!
+  blockHash: String!
+  hash: String!
+  date: Date!
+  account: Account!
+  success: Boolean!
+  from: String!
+  to: String!
 }

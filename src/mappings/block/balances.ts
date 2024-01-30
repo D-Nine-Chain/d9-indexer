@@ -16,6 +16,8 @@ blockHandlers.push({
     const transfer = Transfer.create({
       id: `${blockNumber}-${index}`,
       blockNumber,
+      blockHash: block.hash.toString(),
+      hash: extrinsic.hash.toString(),
       date: timestamp,
       fromId: fromAccount.id,
       toId: toAccount.id,

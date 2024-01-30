@@ -32,8 +32,70 @@ const project: SubstrateProject<WasmDatasource> = {
   },
   dataSources: [
     {
+      kind: 'substrate/Wasm',
+      startBlock: 750000,
+      processor: {
+        file: './node_modules/@subql/substrate-wasm-processor/dist/bundle.js',
+        options: {
+          abi: 'market-maker-abi',
+          contract: 'wZksHemV7UiLQwYGMFuBCcGZ9NvwxQKcBHYoMsMXefuZucU',
+        },
+      },
+      assets: new Map([
+        ['market-maker-abi', { file: './abis/market-maker.json' }],
+      ]),
+      mapping: {
+        file: './dist/index.js',
+        handlers: [
+          // debug
+          {
+            handler: 'handleWasm',
+            kind: 'substrate/WasmCall',
+          },
+
+          {
+            handler: 'handleGetD9Call',
+            kind: 'substrate/WasmCall',
+            filter: { selector: '0x0edab8e1', method: 'get_d9' },
+          },
+
+          // not working
+          {
+            handler: 'handleMarketMakerCurrencySwap',
+            kind: 'substrate/WasmEvent',
+            filter: {
+              // identifier: 'CurrencySwap',
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'substrate/Wasm',
+      startBlock: 750000,
+      processor: {
+        file: './node_modules/@subql/substrate-wasm-processor/dist/bundle.js',
+        options: {
+          abi: 'usdt-abi',
+          contract: 'yHSqdwvg7PuGVu2Xk9c9tYViLmRv9oRfEgokocE3KmnHVKj',
+        },
+      },
+      assets: new Map([
+        ['usdt-abi', { file: './abis/d9-usdt.json' }],
+      ]),
+      mapping: {
+        file: './dist/index.js',
+        handlers: [
+          {
+            handler: 'handleWasm',
+            kind: 'substrate/WasmCall',
+          },
+        ],
+      },
+    },
+    {
       kind: SubstrateDatasourceKind.Runtime,
-      startBlock: 571750,
+      startBlock: 750000,
       mapping: {
         file: './dist/index.js',
         handlers: [
@@ -41,29 +103,29 @@ const project: SubstrateProject<WasmDatasource> = {
             kind: SubstrateHandlerKind.Block,
             handler: 'handleBlock',
           },
-          // {
-          //   kind: SubstrateHandlerKind.Call,
-          //   handler: 'handlerContractCall',
-          //   filter: {
-          //     module: 'contracts',
-          //   },
-          // },
-          // {
-          //   kind: SubstrateHandlerKind.Event,
-          //   handler: 'handlerContractEvent',
-          //   filter: {
-          //     module: 'contracts',
-          //     method: 'ContractEmitted',
-          //   },
-          // },
-          // {
-          //   kind: SubstrateHandlerKind.Event,
-          //   handler: 'handlerBalanceDepositEvent',
-          //   filter: {
-          //     module: 'balances',
-          //     method: 'Deposit',
-          //   },
-          // },
+        // {
+        //   kind: SubstrateHandlerKind.Call,
+        //   handler: 'handlerContractCall',
+        //   filter: {
+        //     module: 'contracts',
+        //   },
+        // },
+        // {
+        //   kind: SubstrateHandlerKind.Event,
+        //   handler: 'handlerContractEvent',
+        //   filter: {
+        //     module: 'contracts',
+        //     method: 'ContractEmitted',
+        //   },
+        // },
+        // {
+        //   kind: SubstrateHandlerKind.Event,
+        //   handler: 'handlerBalanceDepositEvent',
+        //   filter: {
+        //     module: 'balances',
+        //     method: 'Deposit',
+        //   },
+        // },
         ],
       },
     },
