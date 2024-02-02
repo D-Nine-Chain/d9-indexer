@@ -8,12 +8,15 @@ module.exports = antfu({
     'yarn.lock',
     'src/interfaces',
     '.data',
+    'db',
+    'scripts',
+    'src/abi',
+    'src/types',
+    'src/model',
   ],
 }, {
   rules: {
-    // https://academy.subquery.network/build/testing.html#logging
-    'no-console': 'error',
-
+    'no-console': 'off',
     'ts/consistent-type-definitions': 'off',
     'test/prefer-lowercase-title': 'off',
     'prefer-exponentiation-operator': 'off',

@@ -1,5 +1,10 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin"
+  ],
+  "unwantedRecommendations": [
+    "vscode.typescript-language-features"
   ]
 }

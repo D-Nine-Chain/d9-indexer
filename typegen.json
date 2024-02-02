@@ -1,0 +1,8 @@
+{
+  "outDir": "src/types",
+  "specVersions": "d9.jsonl",
+  "pallets": {
+    "Balances": true,
+    "D9NodeVoting": true
+  }
+}

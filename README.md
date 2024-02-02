@@ -1,94 +1,224 @@
-# SubQuery - Example Project for Polkadot
+# Squid template project
 
-[SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
+A starter [Squid](https://subsquid.io) project to demonstrate its structure and conventions.
+It accumulates [kusama](https://kusama.network) account transfers and serves them via GraphQL API.
 
-**This SubQuery project indexes all asset transfers using the balances pallet on the Polkadot Network**
+## Summary
 
-## Start
+- [Quickstart](#quickly-running-the-sample)
+- [Public archives for Parachains](#public-archives-for-parachains)
+- [Self-hosted archive](#self-hosted-archive)
+- [Development flow](#dev-flow)
+  - [Database Schema](#1-define-database-schema)
+  - [Entity classes](#2-generate-typeorm-classes)
+  - [DB migrations](#3-generate-database-migration)
+  - [Typegen for Events, Extrinsics and Storage Calls](#4-generate-typescript-definitions-for-substrate-events-calls-and-storage)
+- [Deploy the Squid](#deploy-the-squid)
+- [Conventions](#project-conventions)
+- [Type Bundles](#types-bundle)
 
-First, install SubQuery CLI globally on your terminal by using NPM `npm install -g @subql/cli`
+## Prerequisites
 
-You can either clone this GitHub repo, or use the `subql` CLI to bootstrap a clean project in the network of your choosing by running `subql init` and following the prompts.
+* node 16.x
+* docker
+* npm -- note that `yarn` package manager is not supported
 
-Don't forget to install dependencies with `npm install` or `yarn install`!
+## Quickly running the sample
 
-## Editing your SubQuery project
+Example commands below use [sqd](https://docs.subsquid.io/squid-cli/).
+Please [install](https://docs.subsquid.io/squid-cli/installation/) it before proceeding.
 
-Although this is a working example SubQuery project, you can edit the SubQuery project by changing the following files:
+```bash
+# 1. Install dependencies
+npm ci
 
-- The project manifest in `project.yaml` defines the key project configuration and mapping handler filters
-- The GraphQL Schema (`schema.graphql`) defines the shape of the resulting data that you are using SubQuery to index
-- The Mapping functions in `src/mappings/` directory are typescript functions that handle transformation logic
+# 2. Start target Postgres database and detach
+sqd up
 
-SubQuery supports various layer-1 blockchain networks and provides [dedicated quick start guides](https://academy.subquery.network/quickstart/quickstart.html) as well as [detailed technical documentation](https://academy.subquery.network/build/introduction.html) for each of them.
+# 3. Build the project
+sqd build
 
-## Run your project
+# 4. Start both the squid processor and the GraphQL server
+sqd run .
+```
+A GraphiQL playground will be available at [localhost:4350/graphql](http://localhost:4350/graphql).
 
-_If you get stuck, find out how to get help below._
+## Public archives for Parachains
 
-The simplest way to run your project is by running `yarn dev` or `npm run-script dev`. This does all of the following:
+Subsquid provides archive data sources [for most parachains](https://docs.subsquid.io/substrate-indexing/supported-networks/). Use `lookupArchive(<network name>, <lookup filters>)` from `@subsquid/archive-registry` to look up the archive endpoint by the network name, e.g.
 
-1.  `yarn codegen` - Generates types from the GraphQL schema definition and contract ABIs and saves them in the `/src/types` directory. This must be done after each change to the `schema.graphql` file or the contract ABIs
-2.  `yarn build` - Builds and packages the SubQuery project into the `/dist` directory
-3.  `docker-compose pull && docker-compose up` - Runs a Docker container with an indexer, PostgeSQL DB, and a query service. This requires [Docker to be installed](https://docs.docker.com/engine/install) and running locally. The configuration for this container is set from your `docker-compose.yml`
+```typescript
+processor.setDataSource({
+  archive: lookupArchive("kusama", { release: "ArrowSquid" })
+  //...
+});
+```
 
-You can observe the three services start, and once all are running (it may take a few minutes on your first start), please open your browser and head to [http://localhost:3000](http://localhost:3000) - you should see a GraphQL playground showing with the schemas ready to query. [Read the docs for more information](https://academy.subquery.network/run_publish/run.html) or [explore the possible service configuration for running SubQuery](https://academy.subquery.network/run_publish/references.html).
+To make sure you're indexing the right chain one can additionally filter by the genesis block hash:
 
-## Query your project
+```typescript
+processor.setDataSource({
+  archive: lookupArchive("kusama", { 
+    release: "ArrowSquid",
+    genesis: "0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe" 
+  }),
+  //...
+});
+```
 
-For this project, you can try to query with the following GraphQL code to get a taste of how it works.
+If the chain is not yet supported, you can still index it using [RPC ingestion](https://docs.subsquid.io/substrate-indexing/setup/general/#set-data-source). If you take this route, use [metadata exporer](https://github.com/subsquid/squid-sdk/tree/master/substrate/substrate-metadata-explorer) with [Substrate typegen](https://docs.subsquid.io/substrate-indexing/squid-substrate-typegen/) for help with decoding.
 
-```graphql
+You can also fill out this [form](https://forms.gle/Vhr3exPs4HrF4Zt36) to submit a request for an Archive/Subsquid Network dataset.
+
+## Self-hosted archive
+
+Self-hosted Archives are deprecated by the ArrowSquid release. Keep an eye on updates on [Subsquid Network](https://docs.subsquid.io/subsquid-network/) and use it instead once it is released.
+
+## Dev flow
+
+### 1. Define database schema
+
+Start development by defining the schema of the target database via `schema.graphql`.
+Schema definition consists of regular graphql type declarations annotated with custom directives.
+Full description of `schema.graphql` dialect is available [here](https://docs.subsquid.io/store/postgres/schema-file/).
+
+### 2. Generate TypeORM classes
+
+Mapping developers use [TypeORM](https://typeorm.io) entities
+to interact with the target database during data processing. All necessary entity classes are
+[generated](https://docs.subsquid.io/store/postgres/schema-file/intro/) by the squid framework from `schema.graphql`. This is done by running `npx squid-typeorm-codegen`
+or (equivalently) `sqd codegen` command.
+
+### 3. Generate database migration
+
+All database changes are applied through migration files located at `db/migrations`.
+`squid-typeorm-migration(1)` tool provides several commands to drive the process.
+It is all [TypeORM](https://typeorm.io/#/migrations) under the hood.
+
+```bash
+# Connect to database, analyze its state and generate migration to match the target schema.
+# The target schema is derived from entity classes generated earlier.
+# Don't forget to compile your entity classes beforehand!
+npx squid-typeorm-migration generate
+
+# Create template file for custom database changes
+npx squid-typeorm-migration create
+
+# Apply database migrations from `db/migrations`
+npx squid-typeorm-migration apply
+
+# Revert the last performed migration
+npx squid-typeorm-migration revert         
+```
+Available `sqd` shortcuts:
+```bash
+# Build the project, remove any old migrations, then run `npx squid-typeorm-migration generate`
+sqd migration:generate
+
+# Run npx squid-typeorm-migration apply
+sqd migration:apply
+```
+
+### 4. Generate TypeScript definitions for substrate events, calls and storage 
+
+This is an optional part, but it is very advisable. 
+
+Event, call and runtime storage data come to mapping handlers as raw untyped json. 
+While it is possible to work with raw untyped json data, 
+it's extremely error-prone and the json structure may change over time due to runtime upgrades.
+
+Squid framework provides a tool for generating type-safe wrappers around events, calls and runtime storage items for
+each historical change in the spec version. See the [Substrate typegen](https://docs.subsquid.io/substrate-indexing/squid-substrate-typegen/) documentation page.
+
+## Deploy the Squid
+
+After a local run, obtain a deployment key by signing into [Subsquid Cloud](https://app.subsquid.io) and run
+
+```sh
+npx sqd auth -k YOUR_DEPLOYMENT_KEY
+```
+
+Next, inspect the Squid CLI help to deploy and manage your squid:
+
+```sh
+npx sqd squid --help
+```
+
+For more information, consult the [Deployment Guide](https://docs.subsquid.io/deploy-squid/).
+
+## Project conventions
+
+Squid tools assume a certain project layout.
+
+* All compiled js files must reside in `lib` and all TypeScript sources in `src`. 
+The layout of `lib` must reflect `src`.
+* All TypeORM classes must be exported by `src/model/index.ts` (`lib/model` module).
+* Database schema must be defined in `schema.graphql`.
+* Database migrations must reside in `db/migrations` and must be plain js files.
+* `squid-*(1)` executables consult `.env` file for a number of environment variables.
+
+See the [full desription](https://docs.subsquid.io/basics/squid-structure/) in the documentation.
+
+## Types bundle
+
+Substrate chains that have blocks with metadata versions below 14 don't provide enough 
+information to decode their data. For those chains, external [type](https://polkadot.js.org/docs/api/start/types.extend) [definitions](https://polkadot.js.org/docs/api/start/types.extend) are required.
+
+Subsquid tools include definitions for many chains, however sometimes external 
+definitions are still required.
+
+You can pass them as a special json file (types bundle) of the following structure:
+
+```json5
 {
-  query {
-    transfers(first: 5, orderBy: BLOCK_NUMBER_DESC) {
-      totalCount
-      nodes {
-        id
-        date
-        blockNumber
-        toId
-        fromId
-        amount
-      }
+  "types": {
+    "AccountId": "[u8; 32]"
+  },
+  "typesAlias": {
+    "assets": {
+      "Balance": "u64"
     }
-    accounts(first: 5, orderBy: SENT_TRANSFERS_COUNT_DESC) {
-      nodes {
-        id
-        sentTransfers(first: 5, orderBy: BLOCK_NUMBER_DESC) {
-          totalCount
-          nodes {
-            id
-            toId
-            amount
-          }
+  },
+  "versions": [
+    {
+      "minmax": [0, 1000], // spec version range with inclusive boundaries
+      "types": {
+        "AccountId": "[u8; 16]"
+      },
+      "typesAlias": {
+        "assets": {
+          "Balance": "u32"
         }
-        lastTransferBlock
       }
     }
-  }
+  ]
 }
 ```
 
-You can explore the different possible queries and entities to help you with GraphQL using the documentation draw on the right.
+* `.types` - scale type definitions similar to [polkadot.js types](https://polkadot.js.org/docs/api/start/types.extend#extension)
+* `.typesAlias` - similar to [polkadot.js type aliases](https://polkadot.js.org/docs/api/start/types.extend#type-clashes)
+* `.versions` - per-block range overrides/patches for above fields.
 
-## Publish your project
+All fields in the type bundle are optional and applied on top of a fixed set of well-known frame types.
 
-SubQuery is open-source, meaning you have the freedom to run it in the following three ways:
+Note, that although the structure of subsquid types bundle is very similar to the one from polkadot.js,
+those two are not fully compatible.
 
-- Locally on your own computer (or a cloud provider of your choosing), [view the instructions on how to run SubQuery Locally](https://academy.subquery.network/run_publish/run.html)
-- By publishing it to our enterprise-level [Managed Service](https://managedservice.subquery.network), where we'll host your SubQuery project in production ready services for mission critical data with zero-downtime blue/green deployments. We even have a generous free tier. [Find out how](https://academy.subquery.network/run_publish/publish.html)
-- [Coming Soon] By publishing it to the decentralised [SubQuery Network](https://subquery.network/network), the most open, performant, reliable, and scalable data service for dApp developers. The SubQuery Network indexes and services data to the global community in an incentivised and verifiable way
+## Differences from polkadot.js
 
-## What Next?
+Polkadot.js provides lots of [specialized classes](https://polkadot.js.org/docs/api/start/types.basics) for various types of data. 
+Even primitives like `u32` are exposed through special classes.
+In contrast, the squid framework works only with plain js primitives and objects.
+For instance, account data is passed to the handler context as a plain byte array.  To convert it into a standard human-readable format one should explicitly use a utility lib `@subsquid/ss58`:
 
-Take a look at some of our advanced features to take your project to the next level!
+```typescript 
+    // ...
+    from: ss58.codec('kusama').encode(rec.from),
+    to: ss58.codec('kusama').encode(rec.to),
+```
 
-- [**Multi-chain indexing support**](https://academy.subquery.network/build/multi-chain.html) - SubQuery allows you to index data from across different layer-1 networks into the same database, this allows you to query a single endpoint to get data for all supported networks.
-- [**Dynamic Data Sources**](https://academy.subquery.network/build/dynamicdatasources.html) - When you want to index factory contracts, for example on a DEX or generative NFT project.
-- [**Project Optimisation Advice**](https://academy.subquery.network/build/optimisation.html) - Some common tips on how to tweak your project to maximise performance.
-- [**GraphQL Subscriptions**](https://academy.subquery.network/run_publish/subscription.html) - Build more reactive front end applications that subscribe to changes in your SubQuery project.
+## Graphql server extensions
 
-## Need Help?
-
-The fastest way to get support is by [searching our documentation](https://academy.subquery.network), or by [joining our discord](https://discord.com/invite/subquery) and messaging us in the `#technical-support` channel.
+It is possible to extend `squid-graphql-server(1)` with custom
+[type-graphql](https://typegraphql.com) resolvers and to add request validation.
+For more details, consult [docs](https://docs.subsquid.io/graphql-api/).

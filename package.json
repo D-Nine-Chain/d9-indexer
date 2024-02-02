@@ -1,48 +1,44 @@
 {
-  "name": "d9-indexer",
-  "version": "1.0.0",
-  "description": "d9 indexer",
-  "author": "d9",
-  "license": "MIT",
-  "homepage": "https://github.com/subquery/subql-starter",
-  "repository": "github:subquery/subql-starter",
-  "main": "dist/index.js",
-  "files": [
-    "dist",
-    "project.yaml",
-    "schema.graphql"
-  ],
+  "name": "squid",
+  "private": true,
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
-    "build": "subql build",
-    "codegen": "subql codegen",
-    "start:docker": "docker-compose pull && docker-compose up --remove-orphans",
-    "dev": "subql codegen && subql build && docker-compose pull && docker-compose up --remove-orphans",
-    "start": "subql-node -f ./",
-    "dbg": "node --inspect-brk node_modules/@subql/node/dist/main.js -f ./",
-    "prepack": "rm -rf dist && npm run build",
-    "test": "subql build && subql-node test"
+    "build": "rm -rf lib && tsc",
+    "start": "rm -rf lib && tsc && node --require=dotenv/config lib/main.js",
+    "metadata": "squid-substrate-metadata-explorer --rpc ws://3.15.163.97:40300 --out d9.jsonl",
+    "serve": "sqd serve",
+    "gen": "squid-substrate-typegen ./typegen.json",
+    "gen:burn-manager": "squid-ink-typegen --abi ABIs/burn-manager.json --output src/abi/burn-manager.ts",
+    "gen:burn-miner": "squid-ink-typegen --abi ABIs/burn-miner.json --output src/abi/burn-miner.ts",
+    "gen:cross-chain": "squid-ink-typegen --abi ABIs/cross-chain.json --output src/abi/cross-chain.ts",
+    "gen:d9-usdt": "squid-ink-typegen --abi ABIs/d9-usdt.json --output src/abi/d9-usdt.ts",
+    "gen:market-maker": "squid-ink-typegen --abi ABIs/market-maker.json --output src/abi/market-maker.ts",
+    "gen:merchant": "squid-ink-typegen --abi ABIs/merchant.json --output src/abi/merchant.ts",
+    "gen:ink": "npm run gen:burn-manager && npm run gen:burn-miner && npm run gen:cross-chain && npm run gen:d9-usdt && npm run gen:market-maker && npm run gen:merchant"
+  },
+  "dependencies": {
+    "@subsquid/archive-registry": "^3.3.0",
+    "@subsquid/graphql-server": "^4.5.0",
+    "@subsquid/ss58": "^2.0.2",
+    "@subsquid/substrate-processor": "^8.1.1",
+    "@subsquid/typeorm-migration": "^1.3.0",
+    "@subsquid/typeorm-store": "^1.2.6",
+    "dotenv": "^16.4.1",
+    "pg": "8.11.3",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.6.3",
-    "@polkadot/api": "^10.11.2",
-    "@polkadot/api-augment": "^10.11.2",
-    "@polkadot/api-base": "^10.11.2",
-    "@polkadot/rpc-core": "^10.11.2",
-    "@polkadot/types": "^10.11.2",
-    "@polkadot/types-codec": "^10.11.2",
-    "@polkadot/util-crypto": "^12.6.2",
-    "@subql/cli": "latest",
-    "@subql/node": "^3.5.0",
-    "@subql/substrate-wasm-processor": "^1.0.0",
-    "@subql/testing": "latest",
-    "@subql/types": "latest",
-    "@subql/types-core": "^0.4.0",
+    "@subsquid/ink-abi": "^3.0.2",
+    "@subsquid/ink-typegen": "^3.0.3",
+    "@subsquid/substrate-metadata-explorer": "^3.1.2",
+    "@subsquid/substrate-typegen": "^8.0.2",
+    "@subsquid/typeorm-codegen": "^1.3.3",
+    "@types/node": "^20.11.10",
     "eslint": "^8.56.0",
     "taze": "^0.13.1",
-    "tslib": "^2.6.2",
-    "typescript": "^5.2.2"
-  },
-  "resolutions": {
-    "ipfs-unixfs": "6.0.6"
+    "typescript": "^5.3.3"
   }
 }
