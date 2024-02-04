@@ -10,7 +10,7 @@ import {
   Extrinsic as _Extrinsic,
 } from '@subsquid/substrate-processor'
 
-import { events } from './types'
+import { calls, events } from './types'
 
 export const processor = new SubstrateBatchProcessor()
   .setRpcEndpoint({
@@ -28,6 +28,14 @@ export const processor = new SubstrateBatchProcessor()
     extrinsic: true,
     call: true,
   })
+  // .addCall({
+  //   name: [
+  //     // calls.d9NodeVoting.addVotingInterest
+  //   ],
+  //   extrinsic: true,
+  //   events: true,
+  //   stack: true
+  // })
   .setFields({
     event: {
       args: true,
