@@ -36,8 +36,10 @@ function getTransferEvents(ctx: ProcessorContext<Store>): TransferEvent[] {
     //   console.table(call)
     // }
     for (const event of block.events) {
+      console.info('------------------------------------')
       console.info('event.name', event.name, 'event 👇 ')
-      console.table(event)
+      console.info(JSON.stringify(event, null, 2))
+      console.info('------------------------------------')
       if (event.name === events.balances.transfer.name) {
         let rec: { from: string, to: string, amount: bigint }
         if (events.balances.transfer.v110.is(event)) {
