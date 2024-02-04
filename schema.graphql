@@ -3,8 +3,8 @@ type Account @entity {
   id: ID!
   transfersTo: [Transfer!] @derivedFrom(field: "to")
   transfersFrom: [Transfer!] @derivedFrom(field: "from")
-
-  withdraws: [Withdraw!] @derivedFrom(field: "who")
+  withdrawals: [Withdraw!] @derivedFrom(field: "who")
+  burns: [Burn!] @derivedFrom(field: "who")
 }
 
 type Transfer @entity {
@@ -12,10 +12,10 @@ type Transfer @entity {
   blockNumber: Int! @index
   timestamp: DateTime! @index
   extrinsicHash: String @index
+  fee: BigInt! # fee is calculated at the best effort and may be zero for some old extrinsics
   from: Account!
   to: Account!
   amount: BigInt! @index
-  fee: BigInt! # fee is calculated at the best effort and may be zero for some old extrinsics
 }
 
 type Withdraw @entity {
@@ -23,7 +23,17 @@ type Withdraw @entity {
   blockNumber: Int! @index
   timestamp: DateTime! @index
   extrinsicHash: String @index
+  fee: BigInt!
   who: Account!
   amount: BigInt! @index
+}
+
+type Burn @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
   fee: BigInt!
+  who: Account!
+  amount: BigInt! @index
 }

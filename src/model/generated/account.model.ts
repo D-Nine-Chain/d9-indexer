@@ -1,6 +1,7 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "typeorm"
 import {Transfer} from "./transfer.model"
 import {Withdraw} from "./withdraw.model"
+import {Burn} from "./burn.model"
 
 @Entity_()
 export class Account {
@@ -21,5 +22,8 @@ export class Account {
     transfersFrom!: Transfer[]
 
     @OneToMany_(() => Withdraw, e => e.who)
-    withdraws!: Withdraw[]
+    withdrawals!: Withdraw[]
+
+    @OneToMany_(() => Burn, e => e.who)
+    burns!: Burn[]
 }
