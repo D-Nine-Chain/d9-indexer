@@ -16,9 +16,9 @@ export const processor = new SubstrateBatchProcessor()
   .setRpcEndpoint({
     url: assertNotNull(process.env.RPC_ENDPOINT),
     rateLimit: 0,
-    maxBatchCallSize: 100,
+    maxBatchCallSize: 500,
   })
-  // .setBlockRange({ from: 700000 })
+  .setBlockRange({ from: 100000 })
   .addEvent({
     name: [
       events.balances.transfer.name,

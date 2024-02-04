@@ -3,8 +3,8 @@ import * as marshal from "./marshal"
 import {Account} from "./account.model"
 
 @Entity_()
-export class Transfer {
-    constructor(props?: Partial<Transfer>) {
+export class Withdraw {
+    constructor(props?: Partial<Withdraw>) {
         Object.assign(this, props)
     }
 
@@ -25,11 +25,7 @@ export class Transfer {
 
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})
-    from!: Account
-
-    @Index_()
-    @ManyToOne_(() => Account, {nullable: true})
-    to!: Account
+    who!: Account
 
     @Index_()
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})

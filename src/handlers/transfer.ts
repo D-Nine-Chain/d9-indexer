@@ -1,10 +1,10 @@
 import assert from 'assert'
 import { Store } from '@subsquid/typeorm-store'
 import { In } from 'typeorm'
-import * as ss58 from '@subsquid/ss58'
 import { ProcessorContext } from '../processor'
 import { Account, Transfer } from '../model'
 import { events } from '../types'
+import { ss58Encode } from '../utils'
 
 interface TransferEvent {
   id: string
@@ -31,10 +31,10 @@ function getTransferEvents(ctx: ProcessorContext<Store>): TransferEvent[] {
   // Filters and decodes the arriving events
   const transfers: TransferEvent[] = []
   for (const block of ctx.blocks) {
-    for (const call of block.calls) {
-      console.info('call.name', call.name, 'call 👇 ')
-      console.table(call)
-    }
+    // for (const call of block.calls) {
+    //   console.info('call.name', call.name, 'call 👇 ')
+    //   console.table(call)
+    // }
     for (const event of block.events) {
       console.info('event.name', event.name, 'event 👇 ')
       console.table(event)
@@ -54,8 +54,8 @@ function getTransferEvents(ctx: ProcessorContext<Store>): TransferEvent[] {
           blockNumber: block.header.height,
           timestamp: new Date(block.header.timestamp),
           extrinsicHash: event.extrinsic?.hash,
-          from: ss58.codec('kusama').encode(rec.from),
-          to: ss58.codec('kusama').encode(rec.to),
+          from: ss58Encode(rec.from),
+          to: ss58Encode(rec.to),
           amount: rec.amount,
           fee: event.extrinsic?.fee || 0n,
         })
