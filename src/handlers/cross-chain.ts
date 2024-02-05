@@ -1,29 +1,22 @@
 import { Entity, Store } from '@subsquid/typeorm-store'
 import { ProcessorContext } from '../processor'
-import { isContractsEvent, ss58Encode } from '../utils'
+import { BaseEntity, isContractsEvent, ss58Encode } from '../utils'
 import { ContractAddress } from '../constant'
 import * as CrossChain from '../abi/cross-chain'
 import { CrossChainCommitment, CrossChainDispatch } from '../model'
 import { getAccounts } from './account'
 
 type Commitment = {
-  id: string
-  blockNumber: number
-  timestamp: Date
-  extrinsicHash: string | undefined
   txId: string
   from: string
   amount: bigint
-}
+} & BaseEntity
+
 type Dispatch = {
-  id: string
-  blockNumber: number
-  timestamp: Date
-  extrinsicHash: string | undefined
   txId: string
   to: string
   amount: bigint
-}
+} & BaseEntity
 
 // untested
 
@@ -31,7 +24,6 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
   const entities = [] as (Commitment | Dispatch)[]
   for await (const block of ctx.blocks) {
     for await (const event of block.events) {
-      console.info('test', ContractAddress.CONTRACT_CROSS_CHAIN)
       if (isContractsEvent(event, ContractAddress.CONTRACT_CROSS_CHAIN)) {
         const decoded = CrossChain.decodeEvent(event.args.data)
         switch (decoded.__kind) {
