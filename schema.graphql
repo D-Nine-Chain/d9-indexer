@@ -15,7 +15,7 @@ type Transfer @entity {
   blockNumber: Int! @index
   timestamp: DateTime! @index
   extrinsicHash: String @index
-  fee: BigInt! # fee is calculated at the best effort and may be zero for some old extrinsics
+  fee: BigInt!
   from: Account!
   to: Account!
   amount: BigInt! @index

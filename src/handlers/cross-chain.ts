@@ -24,7 +24,7 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
   const entities = [] as (Commitment | Dispatch)[]
   for await (const block of ctx.blocks) {
     for await (const event of block.events) {
-      if (isContractsEvent(event, ContractAddress.CONTRACT_CROSS_CHAIN)) {
+      if (isContractsEvent(event, ContractAddress.CROSS_CHAIN)) {
         const decoded = CrossChain.decodeEvent(event.args.data)
         switch (decoded.__kind) {
           case 'CommitCreated':

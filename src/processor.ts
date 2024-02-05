@@ -40,6 +40,8 @@ export const processor = new SubstrateBatchProcessor()
   .addContractsContractEmitted({
     contractAddress: [
       ContractAddress.AMM,
+      ContractAddress.CROSS_CHAIN,
+      ContractAddress.D9_USDT,
     ],
     extrinsic: true,
     call: true,

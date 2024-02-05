@@ -6,6 +6,7 @@ import { handleWithdrawEvents } from './handlers/withdraw'
 import { handleBurnEvents } from './handlers/burn'
 import { handleAmmContractEvent } from './handlers/amm'
 import { handleCrossChainContractEvent } from './handlers/cross-chain'
+import { handleD9USDTContractEvent } from './handlers/usdt-transfer'
 
 processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (ctx) => {
   // for await (const block of ctx.blocks) {
@@ -21,4 +22,5 @@ processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (ctx) => {
   await handleBurnEvents(ctx)
   await handleAmmContractEvent(ctx)
   await handleCrossChainContractEvent(ctx)
+  await handleD9USDTContractEvent(ctx)
 })
