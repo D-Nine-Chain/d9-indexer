@@ -2,6 +2,8 @@ import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, O
 import {Transfer} from "./transfer.model"
 import {Withdraw} from "./withdraw.model"
 import {Burn} from "./burn.model"
+import {CrossChainCommitment} from "./crossChainCommitment.model"
+import {CrossChainDispatch} from "./crossChainDispatch.model"
 
 @Entity_()
 export class Account {
@@ -26,4 +28,10 @@ export class Account {
 
     @OneToMany_(() => Burn, e => e.who)
     burns!: Burn[]
+
+    @OneToMany_(() => CrossChainCommitment, e => e.from)
+    crossChainCommitmentsFrom!: CrossChainCommitment[]
+
+    @OneToMany_(() => CrossChainDispatch, e => e.to)
+    crossChainDispatchesTo!: CrossChainDispatch[]
 }

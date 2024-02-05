@@ -2,7 +2,7 @@ import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0x44d7befe0103dca75cf172ba9d8b254aeafd2b2d5d53c96c839f13aa0d9e090b",
+    "hash": "0x61f1dc95435ae5803dfbffebf0c363472e6a88c5dc102cdba59369a313940104",
     "language": "ink! 4.3.0",
     "compiler": "rustc 1.72.0",
     "build_info": {
@@ -265,7 +265,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 12
+          "type": 16
         },
         "selector": "0xbdd16bfa"
       },
@@ -357,7 +357,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 16
+          "type": 18
         },
         "selector": "0x0edab8e1"
       },
@@ -375,7 +375,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 16
+          "type": 18
         },
         "selector": "0x5b41ab8a"
       },
@@ -412,7 +412,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 18
+          "type": 20
         },
         "selector": "0xbdcee4ed"
       },
@@ -424,7 +424,7 @@ export const metadata = {
               "displayName": [
                 "Direction"
               ],
-              "type": 19
+              "type": 21
             }
           },
           {
@@ -449,7 +449,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 16
+          "type": 18
         },
         "selector": "0x2413eb9a"
       },
@@ -461,7 +461,7 @@ export const metadata = {
               "displayName": [
                 "Direction"
               ],
-              "type": 19
+              "type": 21
             }
           },
           {
@@ -484,7 +484,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 16
         },
         "selector": "0x06f49352"
       },
@@ -1035,6 +1035,78 @@ export const metadata = {
               {
                 "index": 15,
                 "name": "USDTTooMuch"
+              },
+              {
+                "index": 16,
+                "name": "SomeEnvironmentError"
+              },
+              {
+                "index": 17,
+                "name": "CalledContractTrapped"
+              },
+              {
+                "index": 18,
+                "name": "CalledContractReverted"
+              },
+              {
+                "index": 19,
+                "name": "NotCallable"
+              },
+              {
+                "index": 20,
+                "name": "SomeDecodeError"
+              },
+              {
+                "index": 21,
+                "name": "SomeOffChainError"
+              },
+              {
+                "index": 22,
+                "name": "CalleeTrapped"
+              },
+              {
+                "index": 23,
+                "name": "CalleeReverted"
+              },
+              {
+                "index": 24,
+                "name": "KeyNotFound"
+              },
+              {
+                "index": 25,
+                "name": "_BelowSubsistenceThreshold"
+              },
+              {
+                "index": 26,
+                "name": "EnvironmentalTransferFailed"
+              },
+              {
+                "index": 27,
+                "name": "_EndowmentTooLow"
+              },
+              {
+                "index": 28,
+                "name": "CodeNotFound"
+              },
+              {
+                "index": 29,
+                "name": "Unknown"
+              },
+              {
+                "index": 30,
+                "name": "LoggingDisabled"
+              },
+              {
+                "index": 31,
+                "name": "CallRuntimeFailed"
+              },
+              {
+                "index": 32,
+                "name": "EcdsaRecoveryFailed"
+              },
+              {
+                "index": 33,
+                "name": "WithdrawalAmountExceedsBalance"
               }
             ]
           }
@@ -1121,156 +1193,6 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 4
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 14
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 4
-          },
-          {
-            "name": "E",
-            "type": 14
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 18,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 4
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 7
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 4
-          },
-          {
-            "name": "E",
-            "type": 7
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 19,
-      "type": {
-        "def": {
-          "composite": {
-            "fields": [
-              {
-                "type": 15,
-                "typeName": "Currency"
-              },
-              {
-                "type": 15,
-                "typeName": "Currency"
-              }
-            ]
-          }
-        },
-        "path": [
-          "market_maker",
-          "market_maker",
-          "Direction"
-        ]
-      }
-    },
-    {
-      "id": 20,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 21
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 7
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 21
-          },
-          {
-            "name": "E",
-            "type": 7
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 21,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
                     "type": 9
                   }
                 ],
@@ -1305,12 +1227,162 @@ export const metadata = {
       }
     },
     {
+      "id": 18,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 19
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 19
+          },
+          {
+            "name": "E",
+            "type": 7
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 14
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 14
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 7
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 15,
+                "typeName": "Currency"
+              },
+              {
+                "type": 15,
+                "typeName": "Currency"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_maker",
+          "market_maker",
+          "Direction"
+        ]
+      }
+    },
+    {
       "id": 22,
       "type": {
         "def": {
           "tuple": [
-            19,
-            19
+            21,
+            21
           ]
         }
       }
@@ -1431,7 +1503,31 @@ export interface Currency_USDT {
     __kind: 'USDT'
 }
 
-export type Error = Error_ConversionAmountTooLow | Error_CouldntTransferUSDTFromUser | Error_D9orUSDTProvidedLiquidityAtZero | Error_DivisionByZero | Error_InsufficientAllowance | Error_InsufficientContractLPTokens | Error_InsufficientLPTokens | Error_InsufficientLiquidity | Error_InsufficientLiquidityProvided | Error_LiquidityAddedBeyondTolerance | Error_LiquidityProviderNotFound | Error_MarketMakerHasInsufficientFunds | Error_MultiplicationError | Error_USDTBalanceInsufficient | Error_USDTTooMuch | Error_USDTTooSmall
+export type Error = Error_CallRuntimeFailed | Error_CalledContractReverted | Error_CalledContractTrapped | Error_CalleeReverted | Error_CalleeTrapped | Error_CodeNotFound | Error_ConversionAmountTooLow | Error_CouldntTransferUSDTFromUser | Error_D9orUSDTProvidedLiquidityAtZero | Error_DivisionByZero | Error_EcdsaRecoveryFailed | Error_EnvironmentalTransferFailed | Error_InsufficientAllowance | Error_InsufficientContractLPTokens | Error_InsufficientLPTokens | Error_InsufficientLiquidity | Error_InsufficientLiquidityProvided | Error_KeyNotFound | Error_LiquidityAddedBeyondTolerance | Error_LiquidityProviderNotFound | Error_LoggingDisabled | Error_MarketMakerHasInsufficientFunds | Error_MultiplicationError | Error_NotCallable | Error_SomeDecodeError | Error_SomeEnvironmentError | Error_SomeOffChainError | Error_USDTBalanceInsufficient | Error_USDTTooMuch | Error_USDTTooSmall | Error_Unknown | Error_WithdrawalAmountExceedsBalance | Error__BelowSubsistenceThreshold | Error__EndowmentTooLow
+
+export interface Error_CallRuntimeFailed {
+    __kind: 'CallRuntimeFailed'
+}
+
+export interface Error_CalledContractReverted {
+    __kind: 'CalledContractReverted'
+}
+
+export interface Error_CalledContractTrapped {
+    __kind: 'CalledContractTrapped'
+}
+
+export interface Error_CalleeReverted {
+    __kind: 'CalleeReverted'
+}
+
+export interface Error_CalleeTrapped {
+    __kind: 'CalleeTrapped'
+}
+
+export interface Error_CodeNotFound {
+    __kind: 'CodeNotFound'
+}
 
 export interface Error_ConversionAmountTooLow {
     __kind: 'ConversionAmountTooLow'
@@ -1447,6 +1543,14 @@ export interface Error_D9orUSDTProvidedLiquidityAtZero {
 
 export interface Error_DivisionByZero {
     __kind: 'DivisionByZero'
+}
+
+export interface Error_EcdsaRecoveryFailed {
+    __kind: 'EcdsaRecoveryFailed'
+}
+
+export interface Error_EnvironmentalTransferFailed {
+    __kind: 'EnvironmentalTransferFailed'
 }
 
 export interface Error_InsufficientAllowance {
@@ -1470,6 +1574,10 @@ export interface Error_InsufficientLiquidityProvided {
     __kind: 'InsufficientLiquidityProvided'
 }
 
+export interface Error_KeyNotFound {
+    __kind: 'KeyNotFound'
+}
+
 export interface Error_LiquidityAddedBeyondTolerance {
     __kind: 'LiquidityAddedBeyondTolerance'
     value: [Balance, Balance]
@@ -1479,6 +1587,10 @@ export interface Error_LiquidityProviderNotFound {
     __kind: 'LiquidityProviderNotFound'
 }
 
+export interface Error_LoggingDisabled {
+    __kind: 'LoggingDisabled'
+}
+
 export interface Error_MarketMakerHasInsufficientFunds {
     __kind: 'MarketMakerHasInsufficientFunds'
     value: Currency
@@ -1486,6 +1598,22 @@ export interface Error_MarketMakerHasInsufficientFunds {
 
 export interface Error_MultiplicationError {
     __kind: 'MultiplicationError'
+}
+
+export interface Error_NotCallable {
+    __kind: 'NotCallable'
+}
+
+export interface Error_SomeDecodeError {
+    __kind: 'SomeDecodeError'
+}
+
+export interface Error_SomeEnvironmentError {
+    __kind: 'SomeEnvironmentError'
+}
+
+export interface Error_SomeOffChainError {
+    __kind: 'SomeOffChainError'
 }
 
 export interface Error_USDTBalanceInsufficient {
@@ -1498,6 +1626,22 @@ export interface Error_USDTTooMuch {
 
 export interface Error_USDTTooSmall {
     __kind: 'USDTTooSmall'
+}
+
+export interface Error_Unknown {
+    __kind: 'Unknown'
+}
+
+export interface Error_WithdrawalAmountExceedsBalance {
+    __kind: 'WithdrawalAmountExceedsBalance'
+}
+
+export interface Error__BelowSubsistenceThreshold {
+    __kind: '_BelowSubsistenceThreshold'
+}
+
+export interface Error__EndowmentTooLow {
+    __kind: '_EndowmentTooLow'
 }
 
 export type AccountId = Bytes

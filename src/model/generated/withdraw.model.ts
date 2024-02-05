@@ -23,6 +23,9 @@ export class Withdraw {
     @Column_("text", {nullable: true})
     extrinsicHash!: string | undefined | null
 
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    fee!: bigint
+
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})
     who!: Account
@@ -30,7 +33,4 @@ export class Withdraw {
     @Index_()
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
     amount!: bigint
-
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    fee!: bigint
 }

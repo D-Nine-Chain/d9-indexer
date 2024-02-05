@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0x44d7befe0103dca75cf172ba9d8b254aeafd2b2d5d53c96c839f13aa0d9e090b",
+    "hash": "0x61f1dc95435ae5803dfbffebf0c363472e6a88c5dc102cdba59369a313940104",
     "language": "ink! 4.3.0",
     "compiler": "rustc 1.72.0",
     "build_info": {
@@ -263,7 +263,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 12
+          "type": 16
         },
         "selector": "0xbdd16bfa"
       },
@@ -355,7 +355,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 16
+          "type": 18
         },
         "selector": "0x0edab8e1"
       },
@@ -373,7 +373,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 16
+          "type": 18
         },
         "selector": "0x5b41ab8a"
       },
@@ -410,7 +410,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 18
+          "type": 20
         },
         "selector": "0xbdcee4ed"
       },
@@ -422,7 +422,7 @@
               "displayName": [
                 "Direction"
               ],
-              "type": 19
+              "type": 21
             }
           },
           {
@@ -447,7 +447,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 16
+          "type": 18
         },
         "selector": "0x2413eb9a"
       },
@@ -459,7 +459,7 @@
               "displayName": [
                 "Direction"
               ],
-              "type": 19
+              "type": 21
             }
           },
           {
@@ -482,7 +482,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 16
         },
         "selector": "0x06f49352"
       },
@@ -1033,6 +1033,78 @@
               {
                 "index": 15,
                 "name": "USDTTooMuch"
+              },
+              {
+                "index": 16,
+                "name": "SomeEnvironmentError"
+              },
+              {
+                "index": 17,
+                "name": "CalledContractTrapped"
+              },
+              {
+                "index": 18,
+                "name": "CalledContractReverted"
+              },
+              {
+                "index": 19,
+                "name": "NotCallable"
+              },
+              {
+                "index": 20,
+                "name": "SomeDecodeError"
+              },
+              {
+                "index": 21,
+                "name": "SomeOffChainError"
+              },
+              {
+                "index": 22,
+                "name": "CalleeTrapped"
+              },
+              {
+                "index": 23,
+                "name": "CalleeReverted"
+              },
+              {
+                "index": 24,
+                "name": "KeyNotFound"
+              },
+              {
+                "index": 25,
+                "name": "_BelowSubsistenceThreshold"
+              },
+              {
+                "index": 26,
+                "name": "EnvironmentalTransferFailed"
+              },
+              {
+                "index": 27,
+                "name": "_EndowmentTooLow"
+              },
+              {
+                "index": 28,
+                "name": "CodeNotFound"
+              },
+              {
+                "index": 29,
+                "name": "Unknown"
+              },
+              {
+                "index": 30,
+                "name": "LoggingDisabled"
+              },
+              {
+                "index": 31,
+                "name": "CallRuntimeFailed"
+              },
+              {
+                "index": 32,
+                "name": "EcdsaRecoveryFailed"
+              },
+              {
+                "index": 33,
+                "name": "WithdrawalAmountExceedsBalance"
               }
             ]
           }
@@ -1119,156 +1191,6 @@
               {
                 "fields": [
                   {
-                    "type": 4
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 14
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 4
-          },
-          {
-            "name": "E",
-            "type": 14
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 18,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 4
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 7
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 4
-          },
-          {
-            "name": "E",
-            "type": 7
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 19,
-      "type": {
-        "def": {
-          "composite": {
-            "fields": [
-              {
-                "type": 15,
-                "typeName": "Currency"
-              },
-              {
-                "type": 15,
-                "typeName": "Currency"
-              }
-            ]
-          }
-        },
-        "path": [
-          "market_maker",
-          "market_maker",
-          "Direction"
-        ]
-      }
-    },
-    {
-      "id": 20,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 21
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 7
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 21
-          },
-          {
-            "name": "E",
-            "type": 7
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 21,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
                     "type": 9
                   }
                 ],
@@ -1303,12 +1225,162 @@
       }
     },
     {
+      "id": 18,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 19
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 19
+          },
+          {
+            "name": "E",
+            "type": 7
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 14
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 14
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 7
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 15,
+                "typeName": "Currency"
+              },
+              {
+                "type": 15,
+                "typeName": "Currency"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_maker",
+          "market_maker",
+          "Direction"
+        ]
+      }
+    },
+    {
       "id": 22,
       "type": {
         "def": {
           "tuple": [
-            19,
-            19
+            21,
+            21
           ]
         }
       }

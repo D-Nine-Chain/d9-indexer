@@ -3,8 +3,8 @@ import * as marshal from "./marshal"
 import {Account} from "./account.model"
 
 @Entity_()
-export class Transfer {
-    constructor(props?: Partial<Transfer>) {
+export class CrossChainDispatch {
+    constructor(props?: Partial<CrossChainDispatch>) {
         Object.assign(this, props)
     }
 
@@ -23,12 +23,9 @@ export class Transfer {
     @Column_("text", {nullable: true})
     extrinsicHash!: string | undefined | null
 
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    fee!: bigint
-
     @Index_()
-    @ManyToOne_(() => Account, {nullable: true})
-    from!: Account
+    @Column_("text", {nullable: false})
+    txId!: string
 
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})

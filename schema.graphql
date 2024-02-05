@@ -5,6 +5,9 @@ type Account @entity {
   transfersFrom: [Transfer!] @derivedFrom(field: "from")
   withdrawals: [Withdraw!] @derivedFrom(field: "who")
   burns: [Burn!] @derivedFrom(field: "who")
+
+  crossChainCommitmentsFrom: [CrossChainCommitment!] @derivedFrom(field: "from")
+  crossChainDispatchesTo: [CrossChainDispatch!] @derivedFrom(field: "to")
 }
 
 type Transfer @entity {
@@ -35,5 +38,24 @@ type Burn @entity {
   extrinsicHash: String @index
   fee: BigInt!
   who: Account!
+  amount: BigInt! @index
+}
+
+type CrossChainCommitment @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
+  txId: String! @index
+  from: Account!
+  amount: BigInt! @index
+}
+type CrossChainDispatch @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
+  txId: String! @index
+  to: Account!
   amount: BigInt! @index
 }

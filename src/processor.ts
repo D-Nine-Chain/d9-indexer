@@ -11,6 +11,7 @@ import {
 } from '@subsquid/substrate-processor'
 
 import { calls, events } from './types'
+import { ContractAddress } from './constant'
 
 export const processor = new SubstrateBatchProcessor()
   .setRpcEndpoint({
@@ -18,7 +19,7 @@ export const processor = new SubstrateBatchProcessor()
     rateLimit: 0,
     maxBatchCallSize: 500,
   })
-  .setBlockRange({ from: 100000 })
+  .setBlockRange({ from: 60000 })
   .addEvent({
     name: [
       events.balances.transfer.name,
@@ -36,8 +37,17 @@ export const processor = new SubstrateBatchProcessor()
   //   events: true,
   //   stack: true
   // })
+  .addContractsContractEmitted({
+    contractAddress: [
+      ContractAddress.AMM,
+    ],
+    extrinsic: true,
+    call: true,
+    stack: true,
+  })
   .setFields({
     event: {
+      phase: true,
       args: true,
     },
     extrinsic: {

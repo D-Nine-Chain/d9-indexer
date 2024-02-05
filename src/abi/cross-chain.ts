@@ -1355,14 +1355,14 @@ export function decodeConstructor(bytes: Bytes): Constructor {
     return _abi.decodeConstructor(bytes)
 }
 
-export interface Chain {
+export interface ChainRPC {
     rpc: {
         call<T=any>(method: string, params?: unknown[]): Promise<T>
     }
 }
 
 export interface ChainContext {
-    _chain: Chain
+    _chain: ChainRPC
 }
 
 export class Contract {
@@ -1396,7 +1396,7 @@ export class Contract {
 export interface Transaction {
     transactionId: String
     transactionType: TransactionType
-    fromChain: ChainKinds
+    fromChain: Chain
     fromAddress: AddressType
     toAddress: AddressType
     amount: bigint
@@ -1415,7 +1415,7 @@ export interface AddressType_Tron {
     value: Bytes
 }
 
-export type ChainKinds = Chain_D9 | Chain_TRON
+export type Chain = Chain_D9 | Chain_TRON
 
 export interface Chain_D9 {
     __kind: 'D9'
