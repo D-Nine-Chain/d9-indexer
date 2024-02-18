@@ -76,14 +76,22 @@ export const AccountData: sts.Type<AccountData> = sts.struct(() => {
 
 export const ExtraFlags = sts.bigint()
 
-export interface ValidatorStats {
+export interface NodeMetadataStruct {
+    name: BoundedVec
+    sharingPercent: number
+    indexOfLastPercentChange: number
+}
+
+export type BoundedVec = Bytes
+
+export interface ValidatorVoteStats {
     accountId: AccountId32
     totalVotes: bigint
     selfVotes: bigint
     delegatedVotes: bigint
 }
 
-export const ValidatorStats: sts.Type<ValidatorStats> = sts.struct(() => {
+export const ValidatorVoteStats: sts.Type<ValidatorVoteStats> = sts.struct(() => {
     return  {
         accountId: AccountId32,
         totalVotes: sts.bigint(),
@@ -142,6 +150,8 @@ export interface MultiAddress_Raw {
     value: Bytes
 }
 
+export const BoundedVec = sts.bytes()
+
 export const ValidatorDelegations: sts.Type<ValidatorDelegations> = sts.struct(() => {
     return  {
         candidate: AccountId32,
@@ -165,6 +175,14 @@ export interface Weight {
     refTime: bigint
     proofSize: bigint
 }
+
+export const NodeMetadataStruct: sts.Type<NodeMetadataStruct> = sts.struct(() => {
+    return  {
+        name: BoundedVec,
+        sharingPercent: sts.number(),
+        indexOfLastPercentChange: sts.number(),
+    }
+})
 
 export const BalanceStatus: sts.Type<BalanceStatus> = sts.closedEnum(() => {
     return  {

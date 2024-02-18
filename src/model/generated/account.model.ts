@@ -5,6 +5,7 @@ import {Burn} from "./burn.model"
 import {BurnWithdrawal} from "./burnWithdrawal.model"
 import {CrossChainCommitment} from "./crossChainCommitment.model"
 import {CrossChainDispatch} from "./crossChainDispatch.model"
+import {NodeVote} from "./nodeVote.model"
 
 @Entity_()
 export class Account {
@@ -38,4 +39,7 @@ export class Account {
 
     @OneToMany_(() => CrossChainDispatch, e => e.to)
     crossChainDispatchesTo!: CrossChainDispatch[]
+
+    @OneToMany_(() => NodeVote, e => e.beneficiaryVoter)
+    asNodeVotingBeneficiary!: NodeVote[]
 }

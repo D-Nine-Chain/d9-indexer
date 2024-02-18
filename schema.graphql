@@ -10,6 +10,8 @@ type Account @entity {
 
   crossChainCommitmentsFrom: [CrossChainCommitment!] @derivedFrom(field: "from")
   crossChainDispatchesTo: [CrossChainDispatch!] @derivedFrom(field: "to")
+  
+  asNodeVotingBeneficiary: [NodeVote!] @derivedFrom(field: "beneficiaryVoter")
 }
 # D9
 type Transfer @entity {
@@ -73,4 +75,17 @@ type CrossChainDispatch @entity {
   txId: String! @index
   to: Account!
   amount: BigInt! @index
+}
+
+#d9 node voting
+type NodeVote @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
+  fee: BigInt!
+  amount: BigInt!
+  beneficiaryVoter: Account!
+  burnContract: String!
+  mainPool: String!
 }

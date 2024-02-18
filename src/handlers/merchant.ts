@@ -3,6 +3,7 @@ import { ProcessorContext } from '../processor'
 import { isContractsEvent } from '../utils'
 import { ContractAddress } from '../constant'
 
+// TODO: GreenPointsTransaction event, SubscriptionCreated event
 export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) {
   for await (const block of ctx.blocks) {
     for await (const _event of block.events) {

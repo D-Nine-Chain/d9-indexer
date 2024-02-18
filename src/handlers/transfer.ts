@@ -28,18 +28,13 @@ export async function handleTransferEvents(ctx: ProcessorContext<Store>) {
 }
 
 function getTransferEvents(ctx: ProcessorContext<Store>): TransferEvent[] {
-  // Filters and decodes the arriving events
   const transfers: TransferEvent[] = []
   for (const block of ctx.blocks) {
-    // for (const call of block.calls) {
-    //   console.info('call.name', call.name, 'call 👇 ')
-    //   console.table(call)
-    // }
     for (const event of block.events) {
       if (event.name === events.balances.transfer.name) {
         let rec: { from: string, to: string, amount: bigint }
-        if (events.balances.transfer.v110.is(event)) {
-          rec = events.balances.transfer.v110.decode(event)
+        if (events.balances.transfer.v112.is(event)) {
+          rec = events.balances.transfer.v112.decode(event)
         }
         else {
           throw new Error('Unsupported spec')

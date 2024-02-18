@@ -1,4 +1,4 @@
-import * as ss58 from '@subsquid/ss58'
+// import * as ss58 from '@subsquid/ss58'
 import { SS58 } from './constant'
 
 export function ss58Encode(value: any): string {

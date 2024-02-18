@@ -1,5 +1,5 @@
 import {sts, Block, Bytes, Option, Result, CallType, RuntimeCtx} from '../support'
-import * as v110 from '../v110'
+import * as v112 from '../v112'
 
 export const transferAllowDeath =  {
     name: 'Balances.transfer_allow_death',
@@ -12,10 +12,10 @@ export const transferAllowDeath =  {
      * 
      * The dispatch origin for this call must be `Signed` by the transactor.
      */
-    v110: new CallType(
+    v112: new CallType(
         'Balances.transfer_allow_death',
         sts.struct({
-            dest: v110.MultiAddress,
+            dest: v112.MultiAddress,
             value: sts.bigint(),
         })
     ),
@@ -31,10 +31,10 @@ export const setBalanceDeprecated =  {
      * 
      * WARNING: This call is DEPRECATED! Use `force_set_balance` instead.
      */
-    v110: new CallType(
+    v112: new CallType(
         'Balances.set_balance_deprecated',
         sts.struct({
-            who: v110.MultiAddress,
+            who: v112.MultiAddress,
             newFree: sts.bigint(),
             oldReserved: sts.bigint(),
         })
@@ -47,11 +47,11 @@ export const forceTransfer =  {
      * Exactly as `transfer_allow_death`, except the origin must be root and the source account
      * may be specified.
      */
-    v110: new CallType(
+    v112: new CallType(
         'Balances.force_transfer',
         sts.struct({
-            source: v110.MultiAddress,
-            dest: v110.MultiAddress,
+            source: v112.MultiAddress,
+            dest: v112.MultiAddress,
             value: sts.bigint(),
         })
     ),
@@ -67,10 +67,10 @@ export const transferKeepAlive =  {
      * 
      * [`transfer_allow_death`]: struct.Pallet.html#method.transfer
      */
-    v110: new CallType(
+    v112: new CallType(
         'Balances.transfer_keep_alive',
         sts.struct({
-            dest: v110.MultiAddress,
+            dest: v112.MultiAddress,
             value: sts.bigint(),
         })
     ),
@@ -95,10 +95,10 @@ export const transferAll =  {
      *   transfer everything except at least the existential deposit, which will guarantee to
      *   keep the sender account alive (true).
      */
-    v110: new CallType(
+    v112: new CallType(
         'Balances.transfer_all',
         sts.struct({
-            dest: v110.MultiAddress,
+            dest: v112.MultiAddress,
             keepAlive: sts.boolean(),
         })
     ),
@@ -111,10 +111,10 @@ export const forceUnreserve =  {
      * 
      * Can only be called by ROOT.
      */
-    v110: new CallType(
+    v112: new CallType(
         'Balances.force_unreserve',
         sts.struct({
-            who: v110.MultiAddress,
+            who: v112.MultiAddress,
             amount: sts.bigint(),
         })
     ),
@@ -132,10 +132,10 @@ export const upgradeAccounts =  {
      * be upgraded. (We let some not have to be upgraded just in order to allow for the
      * possibililty of churn).
      */
-    v110: new CallType(
+    v112: new CallType(
         'Balances.upgrade_accounts',
         sts.struct({
-            who: sts.array(() => v110.AccountId32),
+            who: sts.array(() => v112.AccountId32),
         })
     ),
 }
@@ -147,10 +147,10 @@ export const transfer =  {
      * 
      * WARNING: DEPRECATED! Will be released in approximately 3 months.
      */
-    v110: new CallType(
+    v112: new CallType(
         'Balances.transfer',
         sts.struct({
-            dest: v110.MultiAddress,
+            dest: v112.MultiAddress,
             value: sts.bigint(),
         })
     ),
@@ -163,10 +163,10 @@ export const forceSetBalance =  {
      * 
      * The dispatch origin for this call is `root`.
      */
-    v110: new CallType(
+    v112: new CallType(
         'Balances.force_set_balance',
         sts.struct({
-            who: v110.MultiAddress,
+            who: v112.MultiAddress,
             newFree: sts.bigint(),
         })
     ),

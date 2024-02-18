@@ -17,7 +17,7 @@ export async function handleWithdrawEvents(ctx: ProcessorContext<Store>) {
   for (const block of ctx.blocks) {
     for (const event of block.events) {
       if (event.name === events.balances.withdraw.name) {
-        const rec = events.balances.withdraw.v110.decode(event)
+        const rec = events.balances.withdraw.v112.decode(event)
         entities.push({
           id: event.id,
           blockNumber: block.header.height,

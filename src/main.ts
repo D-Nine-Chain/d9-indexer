@@ -3,11 +3,13 @@ import { TypeormDatabase } from '@subsquid/typeorm-store'
 import { processor } from './processor'
 import { handleTransferEvents } from './handlers/transfer'
 import { handleWithdrawEvents } from './handlers/withdraw'
-import { handleAmmContractEvent } from './handlers/amm'
+
+// import { handleAmmContractEvent } from './handlers/amm'
 import { handleMerchantContractEvent } from './handlers/merchant'
 import { handleCrossChainContractEvent } from './handlers/cross-chain'
 import { handleD9USDTContractEvent } from './handlers/usdt-transfer'
 import { handleBurnManagerContract } from './handlers/burn-manager'
+import { handleD9NodeVoting } from './handlers/d9-node-voting'
 
 processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (ctx) => {
   for await (const block of ctx.blocks) {
@@ -26,10 +28,10 @@ processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (ctx) => {
   }
   await handleTransferEvents(ctx)
   await handleWithdrawEvents(ctx)
-  // await handleBurnEvents(ctx)
-  await handleAmmContractEvent(ctx)
+  // await handleAmmContractEvent(ctx)
   await handleBurnManagerContract(ctx)
   await handleMerchantContractEvent(ctx)
   await handleCrossChainContractEvent(ctx)
   await handleD9USDTContractEvent(ctx)
+  await handleD9NodeVoting(ctx)
 })

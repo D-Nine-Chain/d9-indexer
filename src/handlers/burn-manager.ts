@@ -41,7 +41,7 @@ export async function handleBurnManagerContract(ctx: ProcessorContext<Store>) {
     }
   }
 
-  const accounts = await getAccounts(ctx, entities.map((entity: any) => entity.from))
+  const accounts = await getAccounts(ctx, entities.map(entity => entity.from))
 
   // eslint-disable-next-line array-callback-return
   await ctx.store.insert(entities.map((entity) => {
