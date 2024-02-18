@@ -1,6 +1,6 @@
 import { Store } from '@subsquid/typeorm-store'
 import { ProcessorContext } from '../processor'
-import { Account, Withdraw } from '../model'
+import { Withdraw } from '../model'
 import { events } from '../types'
 import { BaseEntity, ss58Encode } from '../utils'
 import { getAccounts } from './account'

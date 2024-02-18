@@ -3,8 +3,8 @@ import * as marshal from "./marshal"
 import {Account} from "./account.model"
 
 @Entity_()
-export class Burn {
-    constructor(props?: Partial<Burn>) {
+export class BurnWithdrawal {
+    constructor(props?: Partial<BurnWithdrawal>) {
         Object.assign(this, props)
     }
 

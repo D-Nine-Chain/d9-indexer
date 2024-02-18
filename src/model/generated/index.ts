@@ -1,6 +1,7 @@
 export * from "./account.model"
 export * from "./transfer.model"
 export * from "./withdraw.model"
+export * from "./burnWithdrawal.model"
 export * from "./burn.model"
 export * from "./crossChainCommitment.model"
 export * from "./crossChainDispatch.model"

@@ -1,4 +1,4 @@
-import { Entity, Store } from '@subsquid/typeorm-store'
+import { Store } from '@subsquid/typeorm-store'
 import { ProcessorContext } from '../processor'
 import { BaseEntity, isContractsEvent, ss58Encode } from '../utils'
 import { ContractAddress } from '../constant'

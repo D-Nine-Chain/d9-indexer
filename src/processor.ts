@@ -19,7 +19,7 @@ export const processor = new SubstrateBatchProcessor()
     rateLimit: 0,
     maxBatchCallSize: 500,
   })
-  .setBlockRange({ from: 60000 })
+  .setBlockRange({ from: 982467 })
   .addEvent({
     name: [
       events.balances.transfer.name,
@@ -29,19 +29,21 @@ export const processor = new SubstrateBatchProcessor()
     extrinsic: true,
     call: true,
   })
-  // .addCall({
-  //   name: [
-  //     // calls.d9NodeVoting.addVotingInterest
-  //   ],
-  //   extrinsic: true,
-  //   events: true,
-  //   stack: true
-  // })
+  .addCall({
+    name: [
+      calls.d9NodeVoting.addVotingInterest.name,
+    ],
+    extrinsic: true,
+    events: true,
+    stack: true,
+  })
   .addContractsContractEmitted({
     contractAddress: [
       ContractAddress.AMM,
       ContractAddress.CROSS_CHAIN,
       ContractAddress.D9_USDT,
+      ContractAddress.MERCHANT,
+      ContractAddress.BURN_MANAGER,
     ],
     extrinsic: true,
     call: true,

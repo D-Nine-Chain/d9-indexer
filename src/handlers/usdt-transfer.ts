@@ -1,10 +1,8 @@
-import { Entity, Store } from '@subsquid/typeorm-store'
+import { Store } from '@subsquid/typeorm-store'
 import { ProcessorContext } from '../processor'
-import { BaseEntity, isContractsCall, isContractsEvent, ss58Encode } from '../utils'
+import { BaseEntity, isContractsCall } from '../utils'
 import { ContractAddress } from '../constant'
 import * as D9USDT from '../abi/d9-usdt'
-import { CrossChainCommitment, CrossChainDispatch } from '../model'
-import { getAccounts } from './account'
 
 type Tansfer = {
   to: string
