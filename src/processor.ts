@@ -19,7 +19,7 @@ export const processor = new SubstrateBatchProcessor()
     rateLimit: 0,
     maxBatchCallSize: 500,
   })
-  .setBlockRange({ from: 982467 })
+  .setBlockRange({ from: 993443 })
   .addEvent({
     name: [
       events.balances.transfer.name,
@@ -57,9 +57,16 @@ export const processor = new SubstrateBatchProcessor()
     extrinsic: {
       hash: true,
       fee: true,
+      success: true,
+      error: true,
     },
     block: {
       timestamp: true,
+    },
+    call: {
+      name: true,
+      args: true,
+      origin: true,
     },
   })
 // Uncomment to disable RPC ingestion and drastically reduce no of RPC calls

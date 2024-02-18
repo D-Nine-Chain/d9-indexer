@@ -2,20 +2,16 @@ import assert from 'assert'
 import { Store } from '@subsquid/typeorm-store'
 import { In } from 'typeorm'
 import { ProcessorContext } from '../processor'
-import { Account, Transfer } from '../model'
+import { Account, Token, Transfer } from '../model'
 import { events } from '../types'
-import { ss58Encode } from '../utils'
+import { BaseEntity, ss58Encode } from '../utils'
 
-interface TransferEvent {
-  id: string
-  blockNumber: number
-  timestamp: Date
-  extrinsicHash?: string
+type TransferEvent = {
   from: string
   to: string
   amount: bigint
-  fee?: bigint
-}
+  fee: bigint
+} & BaseEntity
 
 export async function handleTransferEvents(ctx: ProcessorContext<Store>) {
   const transferEvents: TransferEvent[] = getTransferEvents(ctx)
@@ -31,6 +27,8 @@ function getTransferEvents(ctx: ProcessorContext<Store>): TransferEvent[] {
   const transfers: TransferEvent[] = []
   for (const block of ctx.blocks) {
     for (const event of block.events) {
+      if (!event.extrinsic?.success)
+        continue
       if (event.name === events.balances.transfer.name) {
         let rec: { from: string, to: string, amount: bigint }
         if (events.balances.transfer.v112.is(event)) {
@@ -98,6 +96,7 @@ function createTransfers(transferEvents: TransferEvent[], accounts: Map<string, 
       from,
       to,
       amount,
+      token: Token.D9,
       fee,
     }))
   }

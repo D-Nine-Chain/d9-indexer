@@ -17,6 +17,8 @@ export async function handleBurnManagerContract(ctx: ProcessorContext<Store>) {
   const entities = [] as _Record[]
   for await (const block of ctx.blocks) {
     for await (const _event of block.events) {
+      if (!_event.extrinsic?.success)
+        continue
       if (isContractsEvent(_event, ContractAddress.BURN_MANAGER)) {
         const event = BurnManager.decodeEvent(_event.args.data)
         entities.push({

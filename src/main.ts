@@ -1,15 +1,17 @@
 import { TypeormDatabase } from '@subsquid/typeorm-store'
 
 import { processor } from './processor'
-import { handleTransferEvents } from './handlers/transfer'
+import { handleTransferEvents } from './handlers/d9-transfer'
 import { handleWithdrawEvents } from './handlers/withdraw'
 
 // import { handleAmmContractEvent } from './handlers/amm'
 import { handleMerchantContractEvent } from './handlers/merchant'
 import { handleCrossChainContractEvent } from './handlers/cross-chain'
-import { handleD9USDTContractEvent } from './handlers/usdt-transfer'
+import { handleD9USDTContract } from './handlers/d9-usdt'
 import { handleBurnManagerContract } from './handlers/burn-manager'
 import { handleD9NodeVoting } from './handlers/d9-node-voting'
+
+(BigInt.prototype as any).toJSON = function () { return this.toString() }
 
 processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (ctx) => {
   for await (const block of ctx.blocks) {
@@ -32,6 +34,6 @@ processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (ctx) => {
   await handleBurnManagerContract(ctx)
   await handleMerchantContractEvent(ctx)
   await handleCrossChainContractEvent(ctx)
-  await handleD9USDTContractEvent(ctx)
+  await handleD9USDTContract(ctx)
   await handleD9NodeVoting(ctx)
 })

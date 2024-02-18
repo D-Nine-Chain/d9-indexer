@@ -17,6 +17,8 @@ export async function handleD9NodeVoting(ctx: ProcessorContext<Store>) {
   const entities = [] as _Record[]
   for await (const block of ctx.blocks) {
     for await (const call of block.calls) {
+      if (!call.extrinsic?.success)
+        continue
       if (call.name === calls.d9NodeVoting.addVotingInterest.name) {
         const { amountToBurn, beneficiaryVoter, burnContract, mainPool } = calls.d9NodeVoting.addVotingInterest.v113.decode(call)
         entities.push({

@@ -13,6 +13,11 @@ type Account @entity {
   
   asNodeVotingBeneficiary: [NodeVote!] @derivedFrom(field: "beneficiaryVoter")
 }
+
+enum Token {
+  D9 USDT
+}
+
 # D9
 type Transfer @entity {
   id: ID!
@@ -22,6 +27,7 @@ type Transfer @entity {
   fee: BigInt!
   from: Account!
   to: Account!
+  token: Token! @index
   amount: BigInt! @index
 }
 

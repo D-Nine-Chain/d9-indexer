@@ -1,5 +1,6 @@
 export * from "./account.model"
 export * from "./transfer.model"
+export * from "./_token"
 export * from "./withdraw.model"
 export * from "./burnWithdrawal.model"
 export * from "./burn.model"
