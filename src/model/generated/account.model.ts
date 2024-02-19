@@ -6,6 +6,8 @@ import {BurnWithdrawal} from "./burnWithdrawal.model"
 import {CrossChainCommitment} from "./crossChainCommitment.model"
 import {CrossChainDispatch} from "./crossChainDispatch.model"
 import {NodeVote} from "./nodeVote.model"
+import {AddLiquidity} from "./addLiquidity.model"
+import {MarketGetToken} from "./marketGetToken.model"
 
 @Entity_()
 export class Account {
@@ -42,4 +44,13 @@ export class Account {
 
     @OneToMany_(() => NodeVote, e => e.beneficiaryVoter)
     asNodeVotingBeneficiary!: NodeVote[]
+
+    @OneToMany_(() => AddLiquidity, e => e.who)
+    addedLiquidity!: AddLiquidity[]
+
+    @OneToMany_(() => AddLiquidity, e => e.who)
+    removedLiquidity!: AddLiquidity[]
+
+    @OneToMany_(() => MarketGetToken, e => e.who)
+    marketGetTokens!: MarketGetToken[]
 }

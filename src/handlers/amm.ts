@@ -1,19 +1,120 @@
-// TODO: CurrencySwap event
-// import { Store } from '@subsquid/typeorm-store'
-// import { ProcessorContext } from '../processor'
-// import { isContractsEvent } from '../utils'
-// import { ContractAddress } from '../constant'
+/* eslint-disable array-callback-return */
+import { Entity, Store } from '@subsquid/typeorm-store'
+import { ProcessorContext } from '../processor'
+import { BaseEntity, isContractsCall, ss58Encode } from '../utils'
+import { ContractAddress } from '../constant'
+import * as AMM from '../abi/market-maker'
+import { AddLiquidity, MarketGetToken, RemoveLiquidity, Token } from '../model'
+import { getAccounts } from './account'
 
-// export async function handleAmmContractEvent(ctx: ProcessorContext<Store>) {
-//   for await (const block of ctx.blocks) {
-//     for await (const _event of block.events) {
-//       // if (isContractsEvent(event, ContractAddress.AMM)) {
-//       //   console.info('emit amm', '\n', JSON.stringify(event, null, 2))
-//       // }
-//       // else {
-//       //   console.info('??', event.args.contract)
-//       //   console.info('emit amm', '\n', JSON.stringify(event, null, 2))
-//       // }
-//     }
-//   }
-// }
+type _Kind = (AMM.Message_add_liquidity | AMM.Message_remove_liquidity | AMM.Message_get_d9 | AMM.Message_get_usdt)['__kind']
+
+type _AddLiquidity = {
+  kind: _Kind
+  fee: bigint
+  who: string
+  d9: bigint
+  usdt: bigint
+} & BaseEntity
+type _RemoveLiquidity = {
+  kind: _Kind
+  fee: bigint
+  who: string
+} & BaseEntity
+type _GetToken = {
+  kind: _Kind
+  fee: bigint
+  who: string
+  value: bigint
+  token: Token
+} & BaseEntity
+
+type _Entity = _AddLiquidity | _RemoveLiquidity | _GetToken
+
+export async function handleAmmContract(ctx: ProcessorContext<Store>) {
+  const entities = [] as _Entity[]
+  for await (const block of ctx.blocks) {
+    for await (const _call of block.calls) {
+      if (!_call.extrinsic?.success)
+        return
+      if (isContractsCall(_call, ContractAddress.AMM)) {
+        const call = AMM.decodeMessage(_call.args.data)
+        switch (call.__kind) {
+          case 'add_liquidity':
+            entities.push({
+              kind: call.__kind,
+              id: _call.id,
+              blockNumber: _call.block.height,
+              timestamp: new Date(_call.block.timestamp!),
+              extrinsicHash: _call.extrinsic.hash,
+              fee: _call.extrinsic.fee ?? 0n,
+              who: ss58Encode(_call.origin?.value?.value),
+              d9: BigInt(_call.args.value),
+              usdt: call.usdtLiquidity,
+            })
+            break
+          case 'get_d9':
+            entities.push({
+              kind: call.__kind,
+              id: _call.id,
+              blockNumber: _call.block.height,
+              timestamp: new Date(_call.block.timestamp!),
+              extrinsicHash: _call.extrinsic.hash,
+              fee: _call.extrinsic.fee ?? 0n,
+              who: ss58Encode(_call.origin?.value?.value),
+              value: call.usdt,
+              token: Token.D9,
+            })
+            break
+          case 'get_usdt':
+            entities.push({
+              kind: call.__kind,
+              id: _call.id,
+              blockNumber: _call.block.height,
+              timestamp: new Date(_call.block.timestamp!),
+              extrinsicHash: _call.extrinsic.hash,
+              fee: _call.extrinsic.fee ?? 0n,
+              who: ss58Encode(_call.origin?.value?.value),
+              value: BigInt(_call.args.value),
+              token: Token.USDT,
+            })
+            break
+          case 'remove_liquidity':
+            entities.push({
+              kind: call.__kind,
+              id: _call.id,
+              blockNumber: _call.block.height,
+              timestamp: new Date(_call.block.timestamp!),
+              extrinsicHash: _call.extrinsic.hash,
+              fee: _call.extrinsic.fee ?? 0n,
+              who: ss58Encode(_call.origin?.value?.value),
+            })
+            break
+        }
+      }
+    }
+  }
+
+  const accounts = await getAccounts(ctx, entities.map(({ who }) => who), true)
+
+  await ctx.store.insert(entities.map((entity) => {
+    switch (entity.kind) {
+      case 'add_liquidity':
+        return new AddLiquidity({
+          ...entity,
+          who: accounts.find(({ id }) => id === entity.who),
+        })
+      case 'remove_liquidity':
+        return new RemoveLiquidity({
+          ...entity,
+          who: accounts.find(({ id }) => id === entity.who),
+        })
+      case 'get_usdt':
+      case 'get_d9':
+        return new MarketGetToken({
+          ...entity,
+          who: accounts.find(({ id }) => id === entity.who),
+        })
+    }
+  }) satisfies Entity[])
+}

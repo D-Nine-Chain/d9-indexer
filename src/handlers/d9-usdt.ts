@@ -6,7 +6,7 @@ import * as D9USDT from '../abi/d9-usdt'
 import { Token, Transfer } from '../model'
 import { getAccounts } from './account'
 
-type Tansfer = {
+type _Tansfer = {
   from: string
   to: string
   amount: bigint
@@ -14,7 +14,7 @@ type Tansfer = {
 } & BaseEntity
 
 export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
-  const entities = [] as Tansfer[]
+  const entities = [] as _Tansfer[]
   for await (const block of ctx.blocks) {
     for await (const call of block.calls) {
       if (!call.extrinsic?.success)

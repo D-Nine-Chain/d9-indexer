@@ -12,6 +12,10 @@ type Account @entity {
   crossChainDispatchesTo: [CrossChainDispatch!] @derivedFrom(field: "to")
   
   asNodeVotingBeneficiary: [NodeVote!] @derivedFrom(field: "beneficiaryVoter")
+
+  addedLiquidity: [AddLiquidity!] @derivedFrom(field: "who")
+  removedLiquidity: [AddLiquidity!] @derivedFrom(field: "who")
+  marketGetTokens: [MarketGetToken!] @derivedFrom(field: "who")
 }
 
 enum Token {
@@ -94,4 +98,36 @@ type NodeVote @entity {
   beneficiaryVoter: Account!
   burnContract: String!
   mainPool: String!
+}
+
+#amm
+type AddLiquidity @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
+  fee: BigInt!
+  who: Account!
+  d9: BigInt!
+  usdt: BigInt!
+}
+
+type RemoveLiquidity @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
+  fee: BigInt!
+  who: Account!
+}
+
+type MarketGetToken @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
+  fee: BigInt!
+  token: Token!
+  who: Account!
+  value: BigInt!
 }

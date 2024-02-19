@@ -1,5 +1,5 @@
-module.exports = class Data1708239314715 {
-    name = 'Data1708239314715'
+module.exports = class Data1708311875555 {
+    name = 'Data1708311875555'
 
     async up(db) {
         await db.query(`CREATE TABLE "transfer" ("id" character varying NOT NULL, "block_number" integer NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, "extrinsic_hash" text, "fee" numeric NOT NULL, "token" character varying(4) NOT NULL, "amount" numeric NOT NULL, "from_id" character varying, "to_id" character varying, CONSTRAINT "PK_fd9ddbdd49a17afcbe014401295" PRIMARY KEY ("id"))`)
@@ -47,7 +47,22 @@ module.exports = class Data1708239314715 {
         await db.query(`CREATE INDEX "IDX_a108b4d346deeccb79c58dafd9" ON "node_vote" ("timestamp") `)
         await db.query(`CREATE INDEX "IDX_19117e8987ee1a74a4b03f3cfc" ON "node_vote" ("extrinsic_hash") `)
         await db.query(`CREATE INDEX "IDX_bc0da80f82334f63118852fb2a" ON "node_vote" ("beneficiary_voter_id") `)
+        await db.query(`CREATE TABLE "add_liquidity" ("id" character varying NOT NULL, "block_number" integer NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, "extrinsic_hash" text, "fee" numeric NOT NULL, "d9" numeric NOT NULL, "usdt" numeric NOT NULL, "who_id" character varying, CONSTRAINT "PK_bed521f69f3730ace33b305d7a8" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_2c8aa318bcb1cbacba5f069a17" ON "add_liquidity" ("block_number") `)
+        await db.query(`CREATE INDEX "IDX_367492c5f8121421933eb9fb96" ON "add_liquidity" ("timestamp") `)
+        await db.query(`CREATE INDEX "IDX_79d6fb9244930cac3fa7707d72" ON "add_liquidity" ("extrinsic_hash") `)
+        await db.query(`CREATE INDEX "IDX_a71ff766eba3044479577db5e8" ON "add_liquidity" ("who_id") `)
+        await db.query(`CREATE TABLE "market_get_token" ("id" character varying NOT NULL, "block_number" integer NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, "extrinsic_hash" text, "fee" numeric NOT NULL, "token" character varying(4) NOT NULL, "value" numeric NOT NULL, "who_id" character varying, CONSTRAINT "PK_277507ff7a8d8492a121a331b0e" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_7bd7025023339971093c3308a1" ON "market_get_token" ("block_number") `)
+        await db.query(`CREATE INDEX "IDX_a295aee42a2f7dbf5f88ac6ebb" ON "market_get_token" ("timestamp") `)
+        await db.query(`CREATE INDEX "IDX_5a16c040909783c862b5cd0811" ON "market_get_token" ("extrinsic_hash") `)
+        await db.query(`CREATE INDEX "IDX_ccd631d239c6df087028251fc9" ON "market_get_token" ("who_id") `)
         await db.query(`CREATE TABLE "account" ("id" character varying NOT NULL, CONSTRAINT "PK_54115ee388cdb6d86bb4bf5b2ea" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE TABLE "remove_liquidity" ("id" character varying NOT NULL, "block_number" integer NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, "extrinsic_hash" text, "fee" numeric NOT NULL, "who_id" character varying, CONSTRAINT "PK_6d1cc35f1989ecfe110c1922c64" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_71ae3a6406d9bfea065332c9e4" ON "remove_liquidity" ("block_number") `)
+        await db.query(`CREATE INDEX "IDX_631ee3990b8d06fe34a638b782" ON "remove_liquidity" ("timestamp") `)
+        await db.query(`CREATE INDEX "IDX_4fd53f1c4c1fd2d492a8b7f2d8" ON "remove_liquidity" ("extrinsic_hash") `)
+        await db.query(`CREATE INDEX "IDX_00a05b50f711c4377f6965e321" ON "remove_liquidity" ("who_id") `)
         await db.query(`ALTER TABLE "transfer" ADD CONSTRAINT "FK_76bdfed1a7eb27c6d8ecbb73496" FOREIGN KEY ("from_id") REFERENCES "account"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
         await db.query(`ALTER TABLE "transfer" ADD CONSTRAINT "FK_0751309c66e97eac9ef11493623" FOREIGN KEY ("to_id") REFERENCES "account"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
         await db.query(`ALTER TABLE "withdraw" ADD CONSTRAINT "FK_aa40aea5349deafd36afb3009bd" FOREIGN KEY ("who_id") REFERENCES "account"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
@@ -56,6 +71,9 @@ module.exports = class Data1708239314715 {
         await db.query(`ALTER TABLE "cross_chain_commitment" ADD CONSTRAINT "FK_8f8e4c04b3778b79c9c35c52086" FOREIGN KEY ("from_id") REFERENCES "account"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
         await db.query(`ALTER TABLE "cross_chain_dispatch" ADD CONSTRAINT "FK_f781cf0868d5703ba7f7f5b1796" FOREIGN KEY ("to_id") REFERENCES "account"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
         await db.query(`ALTER TABLE "node_vote" ADD CONSTRAINT "FK_bc0da80f82334f63118852fb2a0" FOREIGN KEY ("beneficiary_voter_id") REFERENCES "account"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
+        await db.query(`ALTER TABLE "add_liquidity" ADD CONSTRAINT "FK_a71ff766eba3044479577db5e8f" FOREIGN KEY ("who_id") REFERENCES "account"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
+        await db.query(`ALTER TABLE "market_get_token" ADD CONSTRAINT "FK_ccd631d239c6df087028251fc97" FOREIGN KEY ("who_id") REFERENCES "account"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
+        await db.query(`ALTER TABLE "remove_liquidity" ADD CONSTRAINT "FK_00a05b50f711c4377f6965e321e" FOREIGN KEY ("who_id") REFERENCES "account"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
     }
 
     async down(db) {
@@ -104,7 +122,22 @@ module.exports = class Data1708239314715 {
         await db.query(`DROP INDEX "public"."IDX_a108b4d346deeccb79c58dafd9"`)
         await db.query(`DROP INDEX "public"."IDX_19117e8987ee1a74a4b03f3cfc"`)
         await db.query(`DROP INDEX "public"."IDX_bc0da80f82334f63118852fb2a"`)
+        await db.query(`DROP TABLE "add_liquidity"`)
+        await db.query(`DROP INDEX "public"."IDX_2c8aa318bcb1cbacba5f069a17"`)
+        await db.query(`DROP INDEX "public"."IDX_367492c5f8121421933eb9fb96"`)
+        await db.query(`DROP INDEX "public"."IDX_79d6fb9244930cac3fa7707d72"`)
+        await db.query(`DROP INDEX "public"."IDX_a71ff766eba3044479577db5e8"`)
+        await db.query(`DROP TABLE "market_get_token"`)
+        await db.query(`DROP INDEX "public"."IDX_7bd7025023339971093c3308a1"`)
+        await db.query(`DROP INDEX "public"."IDX_a295aee42a2f7dbf5f88ac6ebb"`)
+        await db.query(`DROP INDEX "public"."IDX_5a16c040909783c862b5cd0811"`)
+        await db.query(`DROP INDEX "public"."IDX_ccd631d239c6df087028251fc9"`)
         await db.query(`DROP TABLE "account"`)
+        await db.query(`DROP TABLE "remove_liquidity"`)
+        await db.query(`DROP INDEX "public"."IDX_71ae3a6406d9bfea065332c9e4"`)
+        await db.query(`DROP INDEX "public"."IDX_631ee3990b8d06fe34a638b782"`)
+        await db.query(`DROP INDEX "public"."IDX_4fd53f1c4c1fd2d492a8b7f2d8"`)
+        await db.query(`DROP INDEX "public"."IDX_00a05b50f711c4377f6965e321"`)
         await db.query(`ALTER TABLE "transfer" DROP CONSTRAINT "FK_76bdfed1a7eb27c6d8ecbb73496"`)
         await db.query(`ALTER TABLE "transfer" DROP CONSTRAINT "FK_0751309c66e97eac9ef11493623"`)
         await db.query(`ALTER TABLE "withdraw" DROP CONSTRAINT "FK_aa40aea5349deafd36afb3009bd"`)
@@ -113,5 +146,8 @@ module.exports = class Data1708239314715 {
         await db.query(`ALTER TABLE "cross_chain_commitment" DROP CONSTRAINT "FK_8f8e4c04b3778b79c9c35c52086"`)
         await db.query(`ALTER TABLE "cross_chain_dispatch" DROP CONSTRAINT "FK_f781cf0868d5703ba7f7f5b1796"`)
         await db.query(`ALTER TABLE "node_vote" DROP CONSTRAINT "FK_bc0da80f82334f63118852fb2a0"`)
+        await db.query(`ALTER TABLE "add_liquidity" DROP CONSTRAINT "FK_a71ff766eba3044479577db5e8f"`)
+        await db.query(`ALTER TABLE "market_get_token" DROP CONSTRAINT "FK_ccd631d239c6df087028251fc97"`)
+        await db.query(`ALTER TABLE "remove_liquidity" DROP CONSTRAINT "FK_00a05b50f711c4377f6965e321e"`)
     }
 }

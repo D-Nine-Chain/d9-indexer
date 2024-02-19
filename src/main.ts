@@ -4,7 +4,7 @@ import { processor } from './processor'
 import { handleTransferEvents } from './handlers/d9-transfer'
 import { handleWithdrawEvents } from './handlers/withdraw'
 
-// import { handleAmmContractEvent } from './handlers/amm'
+import { handleAmmContract } from './handlers/amm'
 import { handleMerchantContractEvent } from './handlers/merchant'
 import { handleCrossChainContractEvent } from './handlers/cross-chain'
 import { handleD9USDTContract } from './handlers/d9-usdt'
@@ -30,7 +30,7 @@ processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (ctx) => {
   }
   await handleTransferEvents(ctx)
   await handleWithdrawEvents(ctx)
-  // await handleAmmContractEvent(ctx)
+  await handleAmmContract(ctx)
   await handleBurnManagerContract(ctx)
   await handleMerchantContractEvent(ctx)
   await handleCrossChainContractEvent(ctx)
