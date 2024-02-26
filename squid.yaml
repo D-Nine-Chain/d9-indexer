@@ -1,17 +1,25 @@
 manifestVersion: subsquid.io/v0.1
 name: d9-indexer-subsquid
-version: 1
+version: 2
 description: Substrate squid template
-build: 
+build:
+  package_manager: pnpm
+  node_version: '20'
 deploy:
   addons:
-    postgres: 
+    postgres:
   processor:
     cmd:
       - sqd
       - process:prod
     env:
       RPC_ENDPOINT: ${{ secrets.RPC_ENDPOINT }}
+      # replace as mainnet contract address
+      CONTRACT_AMM: yWShiau2DPjTmooJCjbDoQuovfeYR8zFZ1ebH3fBr6joyC2
+      CONTRACT_CROSS_CHAIN: xAj5XAW9yMGA72ic2LLm4kGhBBdoE3tXi75XoAU4pR5ZZmJ
+      CONTRACT_D9_USDT: wZuUWGAtV2hyS3TNNWFzDr52C4KawVyZXboYZTKttgn2KVv
+      CONTRACT_MERCHANT: w2xHPQMKkZUdRqzTjXwmQdBWrYxHoofKd5AyBL8UQBKK6xK
+      CONTRACT_BURN_MANAGER: z8WF2W7gsy7SHmYeAZLzxts7L9WUPPgbrhYZHNwpoe48kdC
   api:
     cmd:
       - sqd

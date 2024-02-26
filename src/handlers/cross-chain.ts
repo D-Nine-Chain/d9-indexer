@@ -10,12 +10,14 @@ type Commitment = {
   txId: string
   from: string
   amount: bigint
+  fee: bigint
 } & BaseEntity
 
 type Dispatch = {
   txId: string
   to: string
   amount: bigint
+  fee: bigint
 } & BaseEntity
 
 // untested
@@ -28,6 +30,13 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
         continue
       if (isContractsEvent(event, ContractAddress.CROSS_CHAIN)) {
         const decoded = CrossChain.decodeEvent(event.args.data)
+        // console.info(
+        //   'CROSS_CHAIN',
+        //   '\n',
+        //   JSON.stringify(event),
+        //   '\n',
+        //   JSON.stringify(decoded),
+        // )
         switch (decoded.__kind) {
           case 'CommitCreated':
             entities.push({
@@ -36,8 +45,9 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
               timestamp: new Date(block.header.timestamp!),
               extrinsicHash: event.extrinsic?.hash,
               txId: decoded.transactionId,
-              from: decoded.fromAddress,
+              from: ss58Encode(decoded.fromAddress),
               amount: decoded.amount,
+              fee: event.extrinsic.fee ?? 0n,
             })
             break
           case 'DispatchCompleted':
@@ -47,8 +57,9 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
               timestamp: new Date(block.header.timestamp!),
               extrinsicHash: event.extrinsic?.hash,
               txId: decoded.txId,
-              to: decoded.toAddress,
+              to: ss58Encode(decoded.toAddress),
               amount: decoded.amount,
+              fee: event.extrinsic.fee ?? 0n,
             })
             break
         }
@@ -56,18 +67,18 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
     }
   }
 
-  const accounts = await getAccounts(ctx, entities.map((entity: any) => entity.from || entity.to))
+  const accounts = await getAccounts(ctx, entities.map((entity: any) => entity.from || entity.to), true)
 
   await ctx.store.insert(entities.map((entity) => {
     if ('to' in entity) {
       return new CrossChainDispatch({
         ...entity,
-        to: accounts.find(account => account.id === ss58Encode(entity.to)),
+        to: accounts.find(account => account.id === entity.to),
       })
     }
     return new CrossChainCommitment({
       ...entity,
-      from: accounts.find(account => account.id === ss58Encode(entity.from)),
+      from: accounts.find(account => account.id === entity.from),
     })
   }))
 }

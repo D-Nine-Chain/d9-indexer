@@ -1355,14 +1355,14 @@ export function decodeConstructor(bytes: Bytes): Constructor {
     return _abi.decodeConstructor(bytes)
 }
 
-export interface ChainRPC {
+export interface ChainRpc {
     rpc: {
         call<T=any>(method: string, params?: unknown[]): Promise<T>
     }
 }
 
 export interface ChainContext {
-    _chain: ChainRPC
+    _chain: ChainRpc
 }
 
 export class Contract {
