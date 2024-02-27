@@ -19,12 +19,12 @@
 * node 16.x
 * docker
 * npm or pnpm -- note that `yarn` package manager is not supported
+* Please [install](https://docs.subsquid.io/squid-cli/installation/) it before proceeding.
+`npm install -g @subsquid/cli`
 
 ## Development
 
 Example commands below use [sqd](https://docs.subsquid.io/squid-cli/).
-Please [install](https://docs.subsquid.io/squid-cli/installation/) it before proceeding.
-`npm install -g @subsquid/cli`
 
 ```bash
 # 1. Install dependencies
@@ -43,12 +43,17 @@ A GraphiQL playground will be available at [localhost:4350/graphql](http://local
 
 ## Production
 
-Log in and view the deployment [tutorial](https://app.subsquid.io/squids/deploy)
+- Log in and create a new organizations [Log in](https://app.subsquid.io/)
+
+- View the deployment [tutorial](https://app.subsquid.io/squids/deploy)
+
+- Add new secret [here](https://app.subsquid.io/secrets/add):
+  - RPC_ENDPOINT={{archive node ws url}}
 
 ```bash
 # 1. Configure the CLI
 sqd auth -k $SUBSQUID_AUTH
 
 # 2. Deploy
-sqd deploy --org d9-network ./
+sqd deploy --org $SUBSQUID_ORGANIZATION_NAME ./
 ```
