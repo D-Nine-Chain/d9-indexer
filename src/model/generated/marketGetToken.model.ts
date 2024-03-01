@@ -28,12 +28,18 @@ export class MarketGetToken {
     fee!: bigint
 
     @Column_("varchar", {length: 4, nullable: false})
-    token!: Token
+    fromToken!: Token
+
+    @Column_("varchar", {length: 4, nullable: false})
+    toToken!: Token
 
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})
     who!: Account
 
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    value!: bigint
+    fromAmount!: bigint
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    toAmount!: bigint
 }

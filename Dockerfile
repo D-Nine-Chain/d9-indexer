@@ -18,17 +18,17 @@ ADD tsconfig.json .
 ADD src src
 RUN npm run build
 
-FROM node-with-gyp AS deps
-WORKDIR /squid
-ADD package.json .
-ADD package-lock.json .
-RUN npm ci --production
+# FROM node-with-gyp AS deps
+# WORKDIR /squid
+# ADD package.json .
+# ADD package-lock.json .
+# RUN npm ci
 
 FROM node AS squid
 WORKDIR /squid
-COPY --from=deps /squid/package.json .
-COPY --from=deps /squid/package-lock.json .
-COPY --from=deps /squid/node_modules node_modules
+COPY --from=builder /squid/package.json .
+COPY --from=builder /squid/package-lock.json .
+COPY --from=builder /squid/node_modules node_modules
 COPY --from=builder /squid/lib lib
 # remove if no assets folder
 COPY --from=builder /squid/assets assets

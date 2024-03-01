@@ -127,7 +127,9 @@ type MarketGetToken @entity {
   timestamp: DateTime! @index
   extrinsicHash: String @index
   fee: BigInt!
-  token: Token!
+  fromToken: Token!
+  toToken: Token!
   who: Account!
-  value: BigInt!
+  fromAmount: BigInt!
+  toAmount: BigInt!
 }
