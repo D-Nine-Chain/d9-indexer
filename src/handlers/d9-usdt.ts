@@ -22,6 +22,18 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
       if (isContractsCall(call, ContractAddress.D9_USDT)) {
         const decoded = D9USDT.decodeMessage(call.args.data)
         switch (decoded.__kind) {
+          case 'PSP22_transfer_from':
+            entities.push({
+              id: call.id,
+              blockNumber: block.header.height,
+              extrinsicHash: call.extrinsic?.hash,
+              timestamp: new Date(block.header.timestamp!),
+              from: ss58Encode(decoded.from),
+              to: ss58Encode(decoded.to),
+              amount: decoded.value,
+              fee: call.extrinsic?.fee || 0n,
+            })
+            break
           case 'PSP22_transfer':
             entities.push({
               id: call.id,
