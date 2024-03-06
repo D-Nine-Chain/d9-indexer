@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0x1e8214fcbc1557ba5a3fe04225703542fa4b9392af39eaf4660f7d0be635f7cb",
+    "hash": "0x8a3c2b831b2b38a93b9a672052ef67e1e44752ef1a6657b2651fd990eafc52b8",
     "language": "ink! 4.3.0",
     "compiler": "rustc 1.72.0",
     "build_info": {
@@ -14,10 +14,10 @@
     }
   },
   "contract": {
-    "name": "d9-burn-mining",
+    "name": "node_reward",
     "version": "0.1.0",
     "authors": [
-      "D9Dev"
+      "[your_name] <[your_email]>"
     ]
   },
   "spec": {
@@ -25,28 +25,30 @@
       {
         "args": [
           {
-            "label": "burn_manager_contract",
+            "label": "mining_pool",
             "type": {
               "displayName": [
                 "AccountId"
               ],
-              "type": 1
+              "type": 0
             }
           },
           {
-            "label": "burn_minimum",
+            "label": "rewards_pallet",
             "type": {
               "displayName": [
-                "Balance"
+                "AccountId"
               ],
               "type": 0
             }
           }
         ],
         "default": false,
-        "docs": [],
+        "docs": [
+          "Constructor that initializes the `bool` value to the given `init_value`."
+        ],
         "label": "new",
-        "payable": true,
+        "payable": false,
         "returnType": {
           "displayName": [
             "ink_primitives",
@@ -63,31 +65,31 @@
         "displayName": [
           "AccountId"
         ],
-        "type": 1
+        "type": 0
       },
       "balance": {
         "displayName": [
           "Balance"
         ],
-        "type": 0
+        "type": 3
       },
       "blockNumber": {
         "displayName": [
           "BlockNumber"
         ],
-        "type": 23
+        "type": 12
       },
       "chainExtension": {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 24
+        "type": 22
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 22
+        "type": 21
       },
       "maxEventTopics": 4,
       "timestamp": {
@@ -97,7 +99,47 @@
         "type": 4
       }
     },
-    "events": [],
+    "events": [
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "node",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "receiver",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "amount",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 3
+            }
+          }
+        ],
+        "docs": [],
+        "label": "NodeRewardPaid"
+      }
+    ],
     "lang_error": {
       "displayName": [
         "ink",
@@ -109,19 +151,19 @@
       {
         "args": [
           {
-            "label": "account_id",
+            "label": "mining_pool",
             "type": {
               "displayName": [
                 "AccountId"
               ],
-              "type": 1
+              "type": 0
             }
           }
         ],
         "default": false,
         "docs": [],
-        "label": "get_account",
-        "mutates": false,
+        "label": "set_mining_pool",
+        "mutates": true,
         "payable": false,
         "returnType": {
           "displayName": [
@@ -130,37 +172,185 @@
           ],
           "type": 8
         },
-        "selector": "0xd0f48683"
+        "selector": "0xbad17c27"
       },
       {
         "args": [
           {
-            "label": "account_id",
+            "label": "rewards_pallet",
             "type": {
               "displayName": [
                 "AccountId"
-              ],
-              "type": 1
-            }
-          },
-          {
-            "label": "burn_amount",
-            "type": {
-              "displayName": [
-                "Balance"
               ],
               "type": 0
             }
           }
         ],
         "default": false,
-        "docs": [
-          " burn funcion callable by ownly master contract",
-          "",
-          " does the necessary checks then calls the internal burn function `_burn`"
-        ],
-        "label": "initiate_burn",
+        "docs": [],
+        "label": "set_rewards_pallet",
         "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0xe54af172"
+      },
+      {
+        "args": [
+          {
+            "label": "new_admin",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "relinquish_admin",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0xda7dbaee"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "accept_admin",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0x3830821d"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "cancel_admin_relinquish",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0xf9cc42d0"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_vote_limit",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 11
+        },
+        "selector": "0x345bb4a1"
+      },
+      {
+        "args": [
+          {
+            "label": "new_limit",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "change_vote_limit",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0x3b7e719a"
+      },
+      {
+        "args": [
+          {
+            "label": "node_id",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "receiver",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "withdraw_reward",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0x07fe6b9e"
+      },
+      {
+        "args": [
+          {
+            "label": "session_index",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 12
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "get_session_rewards_data",
+        "mutates": false,
         "payable": false,
         "returnType": {
           "displayName": [
@@ -169,26 +359,24 @@
           ],
           "type": 13
         },
-        "selector": "0x34aff0a0"
+        "selector": "0x5b4a8bb7"
       },
       {
         "args": [
           {
-            "label": "account_id",
+            "label": "node_id",
             "type": {
               "displayName": [
                 "AccountId"
               ],
-              "type": 1
+              "type": 0
             }
           }
         ],
         "default": false,
-        "docs": [
-          " calculate values to be used by the burn manager"
-        ],
-        "label": "prepare_withdrawal",
-        "mutates": true,
+        "docs": [],
+        "label": "get_node_reward_data",
+        "mutates": false,
         "payable": false,
         "returnType": {
           "displayName": [
@@ -197,23 +385,23 @@
           ],
           "type": 16
         },
-        "selector": "0x9c2e384b"
+        "selector": "0x72c500b8"
       },
       {
         "args": [
           {
-            "label": "account_id",
+            "label": "node_id",
             "type": {
               "displayName": [
                 "AccountId"
               ],
-              "type": 1
+              "type": 0
             }
           }
         ],
         "default": false,
         "docs": [],
-        "label": "get_ancestors",
+        "label": "get_authorized_receiver",
         "mutates": false,
         "payable": false,
         "returnType": {
@@ -221,9 +409,68 @@
             "ink",
             "MessageResult"
           ],
-          "type": 19
+          "type": 18
         },
-        "selector": "0xe2ee2364"
+        "selector": "0x7a99af59"
+      },
+      {
+        "args": [
+          {
+            "label": "last_session",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 12
+            }
+          },
+          {
+            "label": "sorted_nodes_and_votes",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 19
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "update_rewards",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0x93440f8d"
+      },
+      {
+        "args": [
+          {
+            "label": "code_hash",
+            "type": {
+              "displayName": [],
+              "type": 1
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "set_code",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 5
+        },
+        "selector": "0x694fb50f"
       }
     ]
   },
@@ -239,16 +486,34 @@
                   "ty": 0
                 }
               },
-              "name": "total_amount_burned"
+              "name": "admin"
             },
             {
               "layout": {
                 "leaf": {
                   "key": "0x00000000",
-                  "ty": 1
+                  "ty": 0
                 }
               },
-              "name": "burn_manager_contract"
+              "name": "new_admin"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 0
+                }
+              },
+              "name": "mining_pool"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 0
+                }
+              },
+              "name": "rewards_pallet"
             },
             {
               "layout": {
@@ -259,131 +524,57 @@
                         {
                           "layout": {
                             "leaf": {
-                              "key": "0x125717b1",
-                              "ty": 4
+                              "key": "0x57cf89ff",
+                              "ty": 3
                             }
                           },
-                          "name": "creation_timestamp"
+                          "name": "0"
                         },
                         {
                           "layout": {
                             "leaf": {
-                              "key": "0x125717b1",
-                              "ty": 0
+                              "key": "0x57cf89ff",
+                              "ty": 3
                             }
                           },
-                          "name": "amount_burned"
-                        },
-                        {
-                          "layout": {
-                            "leaf": {
-                              "key": "0x125717b1",
-                              "ty": 0
-                            }
-                          },
-                          "name": "balance_due"
-                        },
-                        {
-                          "layout": {
-                            "leaf": {
-                              "key": "0x125717b1",
-                              "ty": 0
-                            }
-                          },
-                          "name": "balance_paid"
-                        },
-                        {
-                          "layout": {
-                            "enum": {
-                              "dispatchKey": "0x125717b1",
-                              "name": "Option",
-                              "variants": {
-                                "0": {
-                                  "fields": [],
-                                  "name": "None"
-                                },
-                                "1": {
-                                  "fields": [
-                                    {
-                                      "layout": {
-                                        "leaf": {
-                                          "key": "0x125717b1",
-                                          "ty": 4
-                                        }
-                                      },
-                                      "name": "0"
-                                    }
-                                  ],
-                                  "name": "Some"
-                                }
-                              }
-                            }
-                          },
-                          "name": "last_withdrawal"
-                        },
-                        {
-                          "layout": {
-                            "leaf": {
-                              "key": "0x125717b1",
-                              "ty": 4
-                            }
-                          },
-                          "name": "last_burn"
-                        },
-                        {
-                          "layout": {
-                            "struct": {
-                              "fields": [
-                                {
-                                  "layout": {
-                                    "leaf": {
-                                      "key": "0x125717b1",
-                                      "ty": 0
-                                    }
-                                  },
-                                  "name": "0"
-                                },
-                                {
-                                  "layout": {
-                                    "leaf": {
-                                      "key": "0x125717b1",
-                                      "ty": 0
-                                    }
-                                  },
-                                  "name": "1"
-                                }
-                              ],
-                              "name": "(A, B)"
-                            }
-                          },
-                          "name": "referral_boost_coefficients"
-                        },
-                        {
-                          "layout": {
-                            "leaf": {
-                              "key": "0x125717b1",
-                              "ty": 4
-                            }
-                          },
-                          "name": "last_interaction"
+                          "name": "1"
                         }
                       ],
-                      "name": "Account"
+                      "name": "(A, B)"
                     }
                   },
-                  "root_key": "0x125717b1"
+                  "root_key": "0x57cf89ff"
                 }
               },
-              "name": "accounts"
+              "name": "session_rewards"
             },
             {
               "layout": {
-                "leaf": {
-                  "key": "0x00000000",
-                  "ty": 0
+                "root": {
+                  "layout": {
+                    "leaf": {
+                      "key": "0xce7978af",
+                      "ty": 3
+                    }
+                  },
+                  "root_key": "0xce7978af"
                 }
               },
-              "name": "burn_minimum"
+              "name": "node_reward"
+            },
+            {
+              "layout": {
+                "root": {
+                  "layout": {
+                    "leaf": {
+                      "key": "0x2802a071",
+                      "ty": 0
+                    }
+                  },
+                  "root_key": "0x2802a071"
+                }
+              },
+              "name": "authorized_reward_receiver"
             },
             {
               "layout": {
@@ -392,10 +583,10 @@
                   "ty": 4
                 }
               },
-              "name": "day_milliseconds"
+              "name": "vote_limit"
             }
           ],
-          "name": "D9burnMining"
+          "name": "NodeReward"
         }
       },
       "root_key": "0x00000000"
@@ -406,18 +597,10 @@
       "id": 0,
       "type": {
         "def": {
-          "primitive": "u128"
-        }
-      }
-    },
-    {
-      "id": 1,
-      "type": {
-        "def": {
           "composite": {
             "fields": [
               {
-                "type": 2,
+                "type": 1,
                 "typeName": "[u8; 32]"
               }
             ]
@@ -431,13 +614,21 @@
       }
     },
     {
-      "id": 2,
+      "id": 1,
       "type": {
         "def": {
           "array": {
             "len": 32,
-            "type": 3
+            "type": 2
           }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": {
+        "def": {
+          "primitive": "u8"
         }
       }
     },
@@ -445,7 +636,7 @@
       "id": 3,
       "type": {
         "def": {
-          "primitive": "u8"
+          "primitive": "u128"
         }
       }
     },
@@ -575,8 +766,13 @@
           "variant": {
             "variants": [
               {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
                 "index": 0,
-                "name": "None"
+                "name": "Ok"
               },
               {
                 "fields": [
@@ -585,7 +781,7 @@
                   }
                 ],
                 "index": 1,
-                "name": "Some"
+                "name": "Err"
               }
             ]
           }
@@ -593,11 +789,15 @@
         "params": [
           {
             "name": "T",
+            "type": 6
+          },
+          {
+            "name": "E",
             "type": 10
           }
         ],
         "path": [
-          "Option"
+          "Result"
         ]
       }
     },
@@ -605,54 +805,49 @@
       "id": 10,
       "type": {
         "def": {
-          "composite": {
-            "fields": [
+          "variant": {
+            "variants": [
               {
-                "name": "creation_timestamp",
-                "type": 4,
-                "typeName": "Timestamp"
+                "fields": [
+                  {
+                    "type": 0,
+                    "typeName": "AccountId"
+                  }
+                ],
+                "index": 0,
+                "name": "OnlyCallableBy"
               },
               {
-                "name": "amount_burned",
-                "type": 0,
-                "typeName": "Balance"
+                "index": 1,
+                "name": "BeyondQualificationForNodeStatus"
               },
               {
-                "name": "balance_due",
-                "type": 0,
-                "typeName": "Balance"
+                "index": 2,
+                "name": "ErrorIssuingPayment"
               },
               {
-                "name": "balance_paid",
-                "type": 0,
-                "typeName": "Balance"
+                "index": 3,
+                "name": "ErrorGettingSessionPoolFromMiningPoolContract"
               },
               {
-                "name": "last_withdrawal",
-                "type": 11,
-                "typeName": "Option<Timestamp>"
+                "index": 4,
+                "name": "NotAuthorizedToWithdraw"
               },
               {
-                "name": "last_burn",
-                "type": 4,
-                "typeName": "Timestamp"
+                "index": 5,
+                "name": "NothingToWithdraw"
               },
               {
-                "name": "referral_boost_coefficients",
-                "type": 12,
-                "typeName": "(Balance, Balance)"
-              },
-              {
-                "name": "last_interaction",
-                "type": 4,
-                "typeName": "Timestamp"
+                "index": 6,
+                "name": "ErrorGettingCurrentValidators"
               }
             ]
           }
         },
         "path": [
-          "d9_burn_common",
-          "Account"
+          "node_reward",
+          "node_reward",
+          "Error"
         ]
       }
     },
@@ -663,17 +858,22 @@
           "variant": {
             "variants": [
               {
-                "index": 0,
-                "name": "None"
-              },
-              {
                 "fields": [
                   {
                     "type": 4
                   }
                 ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
                 "index": 1,
-                "name": "Some"
+                "name": "Err"
               }
             ]
           }
@@ -682,10 +882,14 @@
           {
             "name": "T",
             "type": 4
+          },
+          {
+            "name": "E",
+            "type": 7
           }
         ],
         "path": [
-          "Option"
+          "Result"
         ]
       }
     },
@@ -693,10 +897,7 @@
       "id": 12,
       "type": {
         "def": {
-          "tuple": [
-            0,
-            0
-          ]
+          "primitive": "u32"
         }
       }
     },
@@ -749,13 +950,8 @@
           "variant": {
             "variants": [
               {
-                "fields": [
-                  {
-                    "type": 0
-                  }
-                ],
                 "index": 0,
-                "name": "Ok"
+                "name": "None"
               },
               {
                 "fields": [
@@ -764,7 +960,7 @@
                   }
                 ],
                 "index": 1,
-                "name": "Err"
+                "name": "Some"
               }
             ]
           }
@@ -772,15 +968,11 @@
         "params": [
           {
             "name": "T",
-            "type": 0
-          },
-          {
-            "name": "E",
             "type": 15
           }
         ],
         "path": [
-          "Result"
+          "Option"
         ]
       }
     },
@@ -788,75 +980,11 @@
       "id": 15,
       "type": {
         "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 0,
-                "name": "BurnAmountInsufficient"
-              },
-              {
-                "index": 1,
-                "name": "NoAccountFound"
-              },
-              {
-                "index": 2,
-                "name": "EarlyWithdrawalAttempt"
-              },
-              {
-                "index": 3,
-                "name": "ContractBalanceTooLow"
-              },
-              {
-                "index": 4,
-                "name": "RestrictedFunction"
-              },
-              {
-                "index": 5,
-                "name": "UsePortfolioExecuteFunction"
-              },
-              {
-                "index": 6,
-                "name": "WithdrawalExceedsBalance"
-              },
-              {
-                "index": 7,
-                "name": "TransferFailed"
-              },
-              {
-                "index": 8,
-                "name": "InvalidCaller"
-              },
-              {
-                "index": 9,
-                "name": "InvalidBurnContract"
-              },
-              {
-                "index": 10,
-                "name": "BurnContractAlreadyAdded"
-              },
-              {
-                "index": 11,
-                "name": "CrossContractCallFailed"
-              },
-              {
-                "index": 12,
-                "name": "WithdrawalNotAllowed"
-              },
-              {
-                "index": 13,
-                "name": "RuntimeErrorGettingAncestors"
-              },
-              {
-                "index": 14,
-                "name": "NoAncestorsFound"
-              }
-            ]
-          }
-        },
-        "path": [
-          "d9_burn_common",
-          "Error"
-        ]
+          "tuple": [
+            3,
+            3
+          ]
+        }
       }
     },
     {
@@ -908,22 +1036,17 @@
           "variant": {
             "variants": [
               {
-                "fields": [
-                  {
-                    "type": 18
-                  }
-                ],
                 "index": 0,
-                "name": "Ok"
+                "name": "None"
               },
               {
                 "fields": [
                   {
-                    "type": 15
+                    "type": 3
                   }
                 ],
                 "index": 1,
-                "name": "Err"
+                "name": "Some"
               }
             ]
           }
@@ -931,15 +1054,11 @@
         "params": [
           {
             "name": "T",
-            "type": 18
-          },
-          {
-            "name": "E",
-            "type": 15
+            "type": 3
           }
         ],
         "path": [
-          "Result"
+          "Option"
         ]
       }
     },
@@ -947,23 +1066,12 @@
       "id": 18,
       "type": {
         "def": {
-          "tuple": [
-            0,
-            4
-          ]
-        }
-      }
-    },
-    {
-      "id": 19,
-      "type": {
-        "def": {
           "variant": {
             "variants": [
               {
                 "fields": [
                   {
-                    "type": 20
+                    "type": 0
                   }
                 ],
                 "index": 0,
@@ -984,7 +1092,7 @@
         "params": [
           {
             "name": "T",
-            "type": 20
+            "type": 0
           },
           {
             "name": "E",
@@ -997,56 +1105,34 @@
       }
     },
     {
+      "id": 19,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 20
+          }
+        }
+      }
+    },
+    {
       "id": 20,
       "type": {
         "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 0,
-                "name": "None"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 21
-                  }
-                ],
-                "index": 1,
-                "name": "Some"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 21
-          }
-        ],
-        "path": [
-          "Option"
-        ]
+          "tuple": [
+            0,
+            4
+          ]
+        }
       }
     },
     {
       "id": 21,
       "type": {
         "def": {
-          "sequence": {
-            "type": 1
-          }
-        }
-      }
-    },
-    {
-      "id": 22,
-      "type": {
-        "def": {
           "composite": {
             "fields": [
               {
-                "type": 2,
+                "type": 1,
                 "typeName": "[u8; 32]"
               }
             ]
@@ -1060,15 +1146,7 @@
       }
     },
     {
-      "id": 23,
-      "type": {
-        "def": {
-          "primitive": "u32"
-        }
-      }
-    },
-    {
-      "id": 24,
+      "id": 22,
       "type": {
         "def": {
           "variant": {}

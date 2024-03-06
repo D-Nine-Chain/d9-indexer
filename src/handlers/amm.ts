@@ -36,7 +36,7 @@ export async function handleAmmContract(ctx: ProcessorContext<Store>) {
   for await (const block of ctx.blocks) {
     for await (const _call of block.calls) {
       if (!_call.extrinsic?.success)
-        return
+        continue
       if (isContractsCall(_call, ContractAddress.AMM)) {
         const call = AMM.decodeMessage(_call.args.data)
         switch (call.__kind) {

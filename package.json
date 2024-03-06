@@ -11,11 +11,11 @@
     "serve": "sqd serve",
     "gen": "squid-substrate-typegen ./typegen.json",
     "gen:burn-manager": "squid-ink-typegen --abi ABIs/burn-manager.json --output src/abi/burn-manager.ts",
-    "gen:burn-miner": "squid-ink-typegen --abi ABIs/burn-miner.json --output src/abi/burn-miner.ts",
-    "gen:cross-chain": "squid-ink-typegen --abi ABIs/cross-chain.json --output src/abi/cross-chain.ts",
+    "gen:burn-miner": "squid-ink-typegen --abi ABIs/burn-mining.json --output src/abi/burn-mining.ts",
+    "gen:cross-chain": "squid-ink-typegen --abi ABIs/cross-chain-transfer.json --output src/abi/cross-chain-transfer.ts",
     "gen:d9-usdt": "squid-ink-typegen --abi ABIs/d9-usdt.json --output src/abi/d9-usdt.ts",
     "gen:market-maker": "squid-ink-typegen --abi ABIs/market-maker.json --output src/abi/market-maker.ts",
-    "gen:merchant": "squid-ink-typegen --abi ABIs/merchant.json --output src/abi/merchant.ts",
+    "gen:merchant": "squid-ink-typegen --abi ABIs/d9-merchant-mining.json --output src/abi/d9-merchant-mining.ts",
     "gen:ink": "npm run gen:burn-manager && npm run gen:burn-miner && npm run gen:cross-chain && npm run gen:d9-usdt && npm run gen:market-maker && npm run gen:merchant"
   },
   "dependencies": {

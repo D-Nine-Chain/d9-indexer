@@ -1,6 +1,8 @@
-{
+import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
+
+export const metadata = {
   "source": {
-    "hash": "0x71c5c38a461bba5de941ceba398df1e20d9a43f8201bd829d472b0b95951edf3",
+    "hash": "0x956531498d1b36e7dddc4da9b0e5cbde61c466451b571290796ed1674533259d",
     "language": "ink! 4.3.0",
     "compiler": "rustc 1.72.0",
     "build_info": {
@@ -45,7 +47,7 @@
             "ink_primitives",
             "ConstructorResult"
           ],
-          "type": 6
+          "type": 7
         },
         "selector": "0x9bae9d5e"
       }
@@ -68,19 +70,19 @@
         "displayName": [
           "BlockNumber"
         ],
-        "type": 22
+        "type": 28
       },
       "chainExtension": {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 23
+        "type": 29
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 21
+        "type": 27
       },
       "maxEventTopics": 4,
       "timestamp": {
@@ -175,9 +177,129 @@
         "ink",
         "LangError"
       ],
-      "type": 8
+      "type": 9
     },
     "messages": [
+      {
+        "args": [
+          {
+            "label": "admin",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "add_transaction_admin",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0xec409e8a"
+      },
+      {
+        "args": [
+          {
+            "label": "admin",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "remove_transaction_admin",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0xb3e15c07"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_transaction_admins",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0xa81d32bb"
+      },
+      {
+        "args": [
+          {
+            "label": "admin",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "is_transaction_admin",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 15
+        },
+        "selector": "0x7a996b18"
+      },
+      {
+        "args": [
+          {
+            "label": "user_id",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "record_cancelled_tron_transfer",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0x1617c8b4"
+      },
       {
         "args": [
           {
@@ -200,7 +322,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 9
+          "type": 17
         },
         "selector": "0xfc9bd990"
       },
@@ -228,7 +350,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 10
+          "type": 18
         },
         "selector": "0x7081dd38"
       },
@@ -256,7 +378,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 17
+          "type": 24
         },
         "selector": "0xe5219595"
       },
@@ -282,9 +404,38 @@
             "ink",
             "MessageResult"
           ],
-          "type": 10
+          "type": 18
         },
         "selector": "0xfeeb858e"
+      },
+      {
+        "args": [
+          {
+            "label": "code_hash",
+            "type": {
+              "displayName": [],
+              "type": 2
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Modifies the code which is used to execute calls to this contract address (`AccountId`).",
+          "",
+          " We use this to upgrade the contract logic. We don't do any authorization here, any caller",
+          " can execute this method. In a production contract you would do some authorization here."
+        ],
+        "label": "set_code",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 7
+        },
+        "selector": "0x694fb50f"
       },
       {
         "args": [
@@ -310,7 +461,7 @@
             "label": "to_address",
             "type": {
               "displayName": [],
-              "type": 16
+              "type": 23
             }
           },
           {
@@ -333,7 +484,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 18
+          "type": 25
         },
         "selector": "0xc2ad66bb"
       },
@@ -343,7 +494,7 @@
             "label": "from_address",
             "type": {
               "displayName": [],
-              "type": 16
+              "type": 23
             }
           },
           {
@@ -375,7 +526,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 18
+          "type": 25
         },
         "selector": "0x535b25a5"
       },
@@ -401,7 +552,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 6
+          "type": 7
         },
         "selector": "0xc92e346d"
       },
@@ -427,7 +578,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 6
+          "type": 7
         },
         "selector": "0xda7dbaee"
       },
@@ -443,7 +594,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 6
+          "type": 7
         },
         "selector": "0xa8656c6c"
       },
@@ -459,7 +610,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 6
+          "type": 7
         },
         "selector": "0xd45e3d78"
       }
@@ -491,7 +642,7 @@
                   "ty": 1
                 }
               },
-              "name": "admin"
+              "name": "super_admin"
             },
             {
               "layout": {
@@ -689,6 +840,15 @@
                 }
               },
               "name": "transactions"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 6
+                }
+              },
+              "name": "transaction_admins"
             }
           ],
           "name": "CrossChainTransfer"
@@ -765,12 +925,22 @@
       "id": 6,
       "type": {
         "def": {
+          "sequence": {
+            "type": 1
+          }
+        }
+      }
+    },
+    {
+      "id": 7,
+      "type": {
+        "def": {
           "variant": {
             "variants": [
               {
                 "fields": [
                   {
-                    "type": 7
+                    "type": 8
                   }
                 ],
                 "index": 0,
@@ -779,7 +949,7 @@
               {
                 "fields": [
                   {
-                    "type": 8
+                    "type": 9
                   }
                 ],
                 "index": 1,
@@ -791,11 +961,11 @@
         "params": [
           {
             "name": "T",
-            "type": 7
+            "type": 8
           },
           {
             "name": "E",
-            "type": 8
+            "type": 9
           }
         ],
         "path": [
@@ -804,7 +974,7 @@
       }
     },
     {
-      "id": 7,
+      "id": 8,
       "type": {
         "def": {
           "tuple": []
@@ -812,7 +982,7 @@
       }
     },
     {
-      "id": 8,
+      "id": 9,
       "type": {
         "def": {
           "variant": {
@@ -827,48 +997,6 @@
         "path": [
           "ink_primitives",
           "LangError"
-        ]
-      }
-    },
-    {
-      "id": 9,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 4
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 8
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 4
-          },
-          {
-            "name": "E",
-            "type": 8
-          }
-        ],
-        "path": [
-          "Result"
         ]
       }
     },
@@ -890,7 +1018,7 @@
               {
                 "fields": [
                   {
-                    "type": 8
+                    "type": 9
                   }
                 ],
                 "index": 1,
@@ -906,7 +1034,7 @@
           },
           {
             "name": "E",
-            "type": 8
+            "type": 9
           }
         ],
         "path": [
@@ -921,8 +1049,13 @@
           "variant": {
             "variants": [
               {
+                "fields": [
+                  {
+                    "type": 8
+                  }
+                ],
                 "index": 0,
-                "name": "None"
+                "name": "Ok"
               },
               {
                 "fields": [
@@ -931,7 +1064,7 @@
                   }
                 ],
                 "index": 1,
-                "name": "Some"
+                "name": "Err"
               }
             ]
           }
@@ -939,288 +1072,20 @@
         "params": [
           {
             "name": "T",
+            "type": 8
+          },
+          {
+            "name": "E",
             "type": 12
           }
         ],
         "path": [
-          "Option"
+          "Result"
         ]
       }
     },
     {
       "id": 12,
-      "type": {
-        "def": {
-          "composite": {
-            "fields": [
-              {
-                "name": "transaction_id",
-                "type": 4,
-                "typeName": "String"
-              },
-              {
-                "name": "transaction_type",
-                "type": 13,
-                "typeName": "TransactionType"
-              },
-              {
-                "name": "from_chain",
-                "type": 14,
-                "typeName": "Chain"
-              },
-              {
-                "name": "from_address",
-                "type": 15,
-                "typeName": "AddressType"
-              },
-              {
-                "name": "to_address",
-                "type": 15,
-                "typeName": "AddressType"
-              },
-              {
-                "name": "amount",
-                "type": 5,
-                "typeName": "u128"
-              },
-              {
-                "name": "timestamp",
-                "type": 0,
-                "typeName": "Timestamp"
-              }
-            ]
-          }
-        },
-        "path": [
-          "cross_chain_transfer",
-          "cross_chain_transfer",
-          "Transaction"
-        ]
-      }
-    },
-    {
-      "id": 13,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 0,
-                "name": "Commit"
-              },
-              {
-                "index": 1,
-                "name": "Dispatch"
-              }
-            ]
-          }
-        },
-        "path": [
-          "cross_chain_transfer",
-          "cross_chain_transfer",
-          "TransactionType"
-        ]
-      }
-    },
-    {
-      "id": 14,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 0,
-                "name": "D9"
-              },
-              {
-                "index": 1,
-                "name": "TRON"
-              }
-            ]
-          }
-        },
-        "path": [
-          "cross_chain_transfer",
-          "cross_chain_transfer",
-          "Chain"
-        ]
-      }
-    },
-    {
-      "id": 15,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 16,
-                    "typeName": "[u8; 21]"
-                  }
-                ],
-                "index": 0,
-                "name": "Tron"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 1,
-                    "typeName": "AccountId"
-                  }
-                ],
-                "index": 1,
-                "name": "D9"
-              }
-            ]
-          }
-        },
-        "path": [
-          "cross_chain_transfer",
-          "cross_chain_transfer",
-          "AddressType"
-        ]
-      }
-    },
-    {
-      "id": 16,
-      "type": {
-        "def": {
-          "array": {
-            "len": 21,
-            "type": 3
-          }
-        }
-      }
-    },
-    {
-      "id": 17,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 0
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 8
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 0
-          },
-          {
-            "name": "E",
-            "type": 8
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 18,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 19
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 8
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 19
-          },
-          {
-            "name": "E",
-            "type": 8
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 19,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 4
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 20
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 4
-          },
-          {
-            "name": "E",
-            "type": 20
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 20,
       "type": {
         "def": {
           "variant": {
@@ -1246,7 +1111,7 @@
               {
                 "fields": [
                   {
-                    "type": 14,
+                    "type": 13,
                     "typeName": "Chain"
                   }
                 ],
@@ -1284,6 +1149,14 @@
               {
                 "index": 11,
                 "name": "UserUSDTBalanceInsufficient"
+              },
+              {
+                "index": 12,
+                "name": "D9orUSDTProvidedLiquidityAtZero"
+              },
+              {
+                "index": 13,
+                "name": "AlreadyTransactionAdmin"
               }
             ]
           }
@@ -1296,7 +1169,488 @@
       }
     },
     {
+      "id": 13,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "D9"
+              },
+              {
+                "index": 1,
+                "name": "TRON"
+              }
+            ]
+          }
+        },
+        "path": [
+          "cross_chain_transfer",
+          "cross_chain_transfer",
+          "Chain"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 6
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 16
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 16
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "primitive": "bool"
+        }
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 19
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 19
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 20
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 20
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "transaction_id",
+                "type": 4,
+                "typeName": "String"
+              },
+              {
+                "name": "transaction_type",
+                "type": 21,
+                "typeName": "TransactionType"
+              },
+              {
+                "name": "from_chain",
+                "type": 13,
+                "typeName": "Chain"
+              },
+              {
+                "name": "from_address",
+                "type": 22,
+                "typeName": "AddressType"
+              },
+              {
+                "name": "to_address",
+                "type": 22,
+                "typeName": "AddressType"
+              },
+              {
+                "name": "amount",
+                "type": 5,
+                "typeName": "u128"
+              },
+              {
+                "name": "timestamp",
+                "type": 0,
+                "typeName": "Timestamp"
+              }
+            ]
+          }
+        },
+        "path": [
+          "cross_chain_transfer",
+          "cross_chain_transfer",
+          "Transaction"
+        ]
+      }
+    },
+    {
       "id": 21,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "Commit"
+              },
+              {
+                "index": 1,
+                "name": "Dispatch"
+              }
+            ]
+          }
+        },
+        "path": [
+          "cross_chain_transfer",
+          "cross_chain_transfer",
+          "TransactionType"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 23,
+                    "typeName": "[u8; 21]"
+                  }
+                ],
+                "index": 0,
+                "name": "Tron"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 1,
+                    "typeName": "AccountId"
+                  }
+                ],
+                "index": 1,
+                "name": "D9"
+              }
+            ]
+          }
+        },
+        "path": [
+          "cross_chain_transfer",
+          "cross_chain_transfer",
+          "AddressType"
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "type": {
+        "def": {
+          "array": {
+            "len": 21,
+            "type": 3
+          }
+        }
+      }
+    },
+    {
+      "id": 24,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 26
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 26
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 12
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 12
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 27,
       "type": {
         "def": {
           "composite": {
@@ -1316,7 +1670,7 @@
       }
     },
     {
-      "id": 22,
+      "id": 28,
       "type": {
         "def": {
           "primitive": "u32"
@@ -1324,7 +1678,7 @@
       }
     },
     {
-      "id": 23,
+      "id": 29,
       "type": {
         "def": {
           "variant": {}
@@ -1338,3 +1692,239 @@
   ],
   "version": "4"
 }
+
+const _abi = new Abi(metadata)
+
+export function decodeEvent(bytes: Bytes): Event {
+    return _abi.decodeEvent(bytes)
+}
+
+export function decodeMessage(bytes: Bytes): Message {
+    return _abi.decodeMessage(bytes)
+}
+
+export function decodeConstructor(bytes: Bytes): Constructor {
+    return _abi.decodeConstructor(bytes)
+}
+
+export interface RpcChain {
+    rpc: {
+        call<T=any>(method: string, params?: unknown[]): Promise<T>
+    }
+}
+
+export interface ChainContext {
+    _chain: RpcChain
+}
+
+export class Contract {
+    constructor(private ctx: ChainContext, private address: Bytes, private blockHash?: Bytes) { }
+
+    get_transaction_admins(): Promise<Result<AccountId[], LangError>> {
+        return this.stateCall('0xa81d32bb', [])
+    }
+
+    is_transaction_admin(admin: AccountId): Promise<Result<boolean, LangError>> {
+        return this.stateCall('0x7a996b18', [admin])
+    }
+
+    generate_tx_id(user_id: AccountId): Promise<Result<String, LangError>> {
+        return this.stateCall('0xfc9bd990', [user_id])
+    }
+
+    get_last_transaction(user_id: AccountId): Promise<Result<(Transaction | undefined), LangError>> {
+        return this.stateCall('0x7081dd38', [user_id])
+    }
+
+    get_current_nonce(user_id: AccountId): Promise<Result<bigint, LangError>> {
+        return this.stateCall('0xe5219595', [user_id])
+    }
+
+    get_transaction(tx_id: String): Promise<Result<(Transaction | undefined), LangError>> {
+        return this.stateCall('0xfeeb858e', [tx_id])
+    }
+
+    private async stateCall<T>(selector: string, args: any[]): Promise<T> {
+        let input = _abi.encodeMessageInput(selector, args)
+        let data = encodeCall(this.address, input)
+        let result = await this.ctx._chain.rpc.call('state_call', ['ContractsApi_call', data, this.blockHash])
+        let value = decodeResult(result)
+        return _abi.decodeMessageOutput(selector, value)
+    }
+}
+
+export interface Transaction {
+    transactionId: String
+    transactionType: TransactionType
+    fromChain: Chain
+    fromAddress: AddressType
+    toAddress: AddressType
+    amount: bigint
+    timestamp: bigint
+}
+
+export type AddressType = AddressType_D9 | AddressType_Tron
+
+export interface AddressType_D9 {
+    __kind: 'D9'
+    value: AccountId
+}
+
+export interface AddressType_Tron {
+    __kind: 'Tron'
+    value: Bytes
+}
+
+export type Chain = Chain_D9 | Chain_TRON
+
+export interface Chain_D9 {
+    __kind: 'D9'
+}
+
+export interface Chain_TRON {
+    __kind: 'TRON'
+}
+
+export type TransactionType = TransactionType_Commit | TransactionType_Dispatch
+
+export interface TransactionType_Commit {
+    __kind: 'Commit'
+}
+
+export interface TransactionType_Dispatch {
+    __kind: 'Dispatch'
+}
+
+export type String = string
+
+export type LangError = LangError_CouldNotReadInput
+
+export interface LangError_CouldNotReadInput {
+    __kind: 'CouldNotReadInput'
+}
+
+export type AccountId = Bytes
+
+export type Constructor = Constructor_new
+
+/**
+ * Constructor that initializes the `bool` value to the given `init_value`.
+ */
+export interface Constructor_new {
+    __kind: 'new'
+    usdtContract: AccountId
+}
+
+export type Message = Message_add_transaction_admin | Message_asset_commit | Message_asset_dispatch | Message_cancel_admin_transfer | Message_change_controller | Message_claim_admin | Message_generate_tx_id | Message_get_current_nonce | Message_get_last_transaction | Message_get_transaction | Message_get_transaction_admins | Message_is_transaction_admin | Message_record_cancelled_tron_transfer | Message_relinquish_admin | Message_remove_transaction_admin | Message_set_code
+
+export interface Message_add_transaction_admin {
+    __kind: 'add_transaction_admin'
+    admin: AccountId
+}
+
+export interface Message_asset_commit {
+    __kind: 'asset_commit'
+    transactionId: String
+    fromAddress: AccountId
+    toAddress: Bytes
+    amount: bigint
+}
+
+export interface Message_asset_dispatch {
+    __kind: 'asset_dispatch'
+    fromAddress: Bytes
+    toAddress: AccountId
+    amount: bigint
+}
+
+export interface Message_cancel_admin_transfer {
+    __kind: 'cancel_admin_transfer'
+}
+
+export interface Message_change_controller {
+    __kind: 'change_controller'
+    newController: AccountId
+}
+
+export interface Message_claim_admin {
+    __kind: 'claim_admin'
+}
+
+export interface Message_generate_tx_id {
+    __kind: 'generate_tx_id'
+    userId: AccountId
+}
+
+/**
+ *  Helper function to get the current transaction nonce for a user
+ */
+export interface Message_get_current_nonce {
+    __kind: 'get_current_nonce'
+    userId: AccountId
+}
+
+/**
+ *  get last transaction. function is called on both chains.
+ */
+export interface Message_get_last_transaction {
+    __kind: 'get_last_transaction'
+    userId: AccountId
+}
+
+export interface Message_get_transaction {
+    __kind: 'get_transaction'
+    txId: String
+}
+
+export interface Message_get_transaction_admins {
+    __kind: 'get_transaction_admins'
+}
+
+export interface Message_is_transaction_admin {
+    __kind: 'is_transaction_admin'
+    admin: AccountId
+}
+
+export interface Message_record_cancelled_tron_transfer {
+    __kind: 'record_cancelled_tron_transfer'
+    userId: AccountId
+}
+
+export interface Message_relinquish_admin {
+    __kind: 'relinquish_admin'
+    newAdmin: AccountId
+}
+
+export interface Message_remove_transaction_admin {
+    __kind: 'remove_transaction_admin'
+    admin: AccountId
+}
+
+/**
+ *  Modifies the code which is used to execute calls to this contract address (`AccountId`).
+ * 
+ *  We use this to upgrade the contract logic. We don't do any authorization here, any caller
+ *  can execute this method. In a production contract you would do some authorization here.
+ */
+export interface Message_set_code {
+    __kind: 'set_code'
+    codeHash: Bytes
+}
+
+export type Event = Event_CommitCreated | Event_DispatchCompleted
+
+export interface Event_CommitCreated {
+    __kind: 'CommitCreated'
+    transactionId: String
+    fromAddress: AccountId
+    amount: bigint
+}
+
+export interface Event_DispatchCompleted {
+    __kind: 'DispatchCompleted'
+    txId: String
+    toAddress: AccountId
+    amount: bigint
+}
+
+export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

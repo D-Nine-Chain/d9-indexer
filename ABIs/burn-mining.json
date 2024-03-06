@@ -1,8 +1,6 @@
-import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
-
-export const metadata = {
+{
   "source": {
-    "hash": "0x1e8214fcbc1557ba5a3fe04225703542fa4b9392af39eaf4660f7d0be635f7cb",
+    "hash": "0xa1245e9aaa904fd32b47665ecb84bff4d2357eea3d82257d092e3e05b66b3904",
     "language": "ink! 4.3.0",
     "compiler": "rustc 1.72.0",
     "build_info": {
@@ -27,7 +25,7 @@ export const metadata = {
       {
         "args": [
           {
-            "label": "burn_manager_contract",
+            "label": "main_pool",
             "type": {
               "displayName": [
                 "AccountId"
@@ -77,19 +75,19 @@ export const metadata = {
         "displayName": [
           "BlockNumber"
         ],
-        "type": 23
+        "type": 25
       },
       "chainExtension": {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 24
+        "type": 26
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 22
+        "type": 24
       },
       "maxEventTopics": 4,
       "timestamp": {
@@ -108,6 +106,58 @@ export const metadata = {
       "type": 7
     },
     "messages": [
+      {
+        "args": [
+          {
+            "label": "new_main",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "change_main",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0x6cfbbb35"
+      },
+      {
+        "args": [
+          {
+            "label": "new_day_milliseconds",
+            "type": {
+              "displayName": [
+                "Timestamp"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "set_day_milliseconds",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0x57d2bc7f"
+      },
       {
         "args": [
           {
@@ -130,7 +180,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 8
+          "type": 11
         },
         "selector": "0xd0f48683"
       },
@@ -169,7 +219,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 13
+          "type": 16
         },
         "selector": "0x34aff0a0"
       },
@@ -197,7 +247,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 16
+          "type": 18
         },
         "selector": "0x9c2e384b"
       },
@@ -223,9 +273,73 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 19
+          "type": 21
         },
         "selector": "0xe2ee2364"
+      },
+      {
+        "args": [
+          {
+            "label": "user",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "label": "amount_burned",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "update_data",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0x0590a9a1"
+      },
+      {
+        "args": [
+          {
+            "label": "code_hash",
+            "type": {
+              "displayName": [],
+              "type": 2
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Modifies the code which is used to execute calls to this contract address (`AccountId`).",
+          "",
+          " We use this to upgrade the contract logic. We don't do any authorization here, any caller",
+          " can execute this method. In a production contract you would do some authorization here."
+        ],
+        "label": "set_code",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 5
+        },
+        "selector": "0x694fb50f"
       }
     ]
   },
@@ -250,7 +364,7 @@ export const metadata = {
                   "ty": 1
                 }
               },
-              "name": "burn_manager_contract"
+              "name": "main_pool"
             },
             {
               "layout": {
@@ -395,6 +509,15 @@ export const metadata = {
                 }
               },
               "name": "day_milliseconds"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 1
+                }
+              },
+              "name": "admin"
             }
           ],
           "name": "D9burnMining"
@@ -577,8 +700,13 @@ export const metadata = {
           "variant": {
             "variants": [
               {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
                 "index": 0,
-                "name": "None"
+                "name": "Ok"
               },
               {
                 "fields": [
@@ -587,7 +715,7 @@ export const metadata = {
                   }
                 ],
                 "index": 1,
-                "name": "Some"
+                "name": "Err"
               }
             ]
           }
@@ -595,199 +723,20 @@ export const metadata = {
         "params": [
           {
             "name": "T",
+            "type": 6
+          },
+          {
+            "name": "E",
             "type": 10
           }
         ],
         "path": [
-          "Option"
+          "Result"
         ]
       }
     },
     {
       "id": 10,
-      "type": {
-        "def": {
-          "composite": {
-            "fields": [
-              {
-                "name": "creation_timestamp",
-                "type": 4,
-                "typeName": "Timestamp"
-              },
-              {
-                "name": "amount_burned",
-                "type": 0,
-                "typeName": "Balance"
-              },
-              {
-                "name": "balance_due",
-                "type": 0,
-                "typeName": "Balance"
-              },
-              {
-                "name": "balance_paid",
-                "type": 0,
-                "typeName": "Balance"
-              },
-              {
-                "name": "last_withdrawal",
-                "type": 11,
-                "typeName": "Option<Timestamp>"
-              },
-              {
-                "name": "last_burn",
-                "type": 4,
-                "typeName": "Timestamp"
-              },
-              {
-                "name": "referral_boost_coefficients",
-                "type": 12,
-                "typeName": "(Balance, Balance)"
-              },
-              {
-                "name": "last_interaction",
-                "type": 4,
-                "typeName": "Timestamp"
-              }
-            ]
-          }
-        },
-        "path": [
-          "d9_burn_common",
-          "Account"
-        ]
-      }
-    },
-    {
-      "id": 11,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 0,
-                "name": "None"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 4
-                  }
-                ],
-                "index": 1,
-                "name": "Some"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 4
-          }
-        ],
-        "path": [
-          "Option"
-        ]
-      }
-    },
-    {
-      "id": 12,
-      "type": {
-        "def": {
-          "tuple": [
-            0,
-            0
-          ]
-        }
-      }
-    },
-    {
-      "id": 13,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 14
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 7
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 14
-          },
-          {
-            "name": "E",
-            "type": 7
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 14,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 0
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 15
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 0
-          },
-          {
-            "name": "E",
-            "type": 15
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 15,
       "type": {
         "def": {
           "variant": {
@@ -838,19 +787,111 @@ export const metadata = {
               },
               {
                 "index": 11,
-                "name": "CrossContractCallFailed"
+                "name": "BurnAmountNotMultipleOf100"
               },
               {
                 "index": 12,
-                "name": "WithdrawalNotAllowed"
+                "name": "CrossContractCallFailed"
               },
               {
                 "index": 13,
-                "name": "RuntimeErrorGettingAncestors"
+                "name": "WithdrawalNotAllowed"
               },
               {
                 "index": 14,
+                "name": "WithdrawalAmountZero"
+              },
+              {
+                "index": 15,
+                "name": "RuntimeErrorGettingAncestors"
+              },
+              {
+                "index": 16,
                 "name": "NoAncestorsFound"
+              },
+              {
+                "index": 17,
+                "name": "MustBeMultipleOf100"
+              },
+              {
+                "index": 18,
+                "name": "RemoteCallToBurnContractFailed"
+              },
+              {
+                "index": 19,
+                "name": "RemoteCallToMiningPoolFailed"
+              },
+              {
+                "index": 20,
+                "name": "SomeEnvironmentError"
+              },
+              {
+                "index": 21,
+                "name": "CalledContractTrapped"
+              },
+              {
+                "index": 22,
+                "name": "CalledContractReverted"
+              },
+              {
+                "index": 23,
+                "name": "NotCallable"
+              },
+              {
+                "index": 24,
+                "name": "SomeDecodeError"
+              },
+              {
+                "index": 25,
+                "name": "SomeOffChainError"
+              },
+              {
+                "index": 26,
+                "name": "CalleeTrapped"
+              },
+              {
+                "index": 27,
+                "name": "CalleeReverted"
+              },
+              {
+                "index": 28,
+                "name": "KeyNotFound"
+              },
+              {
+                "index": 29,
+                "name": "_BelowSubsistenceThreshold"
+              },
+              {
+                "index": 30,
+                "name": "EnvironmentalTransferFailed"
+              },
+              {
+                "index": 31,
+                "name": "_EndowmentTooLow"
+              },
+              {
+                "index": 32,
+                "name": "CodeNotFound"
+              },
+              {
+                "index": 33,
+                "name": "Unknown"
+              },
+              {
+                "index": 34,
+                "name": "LoggingDisabled"
+              },
+              {
+                "index": 35,
+                "name": "CallRuntimeFailed"
+              },
+              {
+                "index": 36,
+                "name": "EcdsaRecoveryFailed"
+              },
+              {
+                "index": 37,
+                "name": "WithdrawalAmountExceedsBalance"
               }
             ]
           }
@@ -859,6 +900,180 @@ export const metadata = {
           "d9_burn_common",
           "Error"
         ]
+      }
+    },
+    {
+      "id": 11,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 12
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 12
+          },
+          {
+            "name": "E",
+            "type": 7
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 13
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 13
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "creation_timestamp",
+                "type": 4,
+                "typeName": "Timestamp"
+              },
+              {
+                "name": "amount_burned",
+                "type": 0,
+                "typeName": "Balance"
+              },
+              {
+                "name": "balance_due",
+                "type": 0,
+                "typeName": "Balance"
+              },
+              {
+                "name": "balance_paid",
+                "type": 0,
+                "typeName": "Balance"
+              },
+              {
+                "name": "last_withdrawal",
+                "type": 14,
+                "typeName": "Option<Timestamp>"
+              },
+              {
+                "name": "last_burn",
+                "type": 4,
+                "typeName": "Timestamp"
+              },
+              {
+                "name": "referral_boost_coefficients",
+                "type": 15,
+                "typeName": "(Balance, Balance)"
+              },
+              {
+                "name": "last_interaction",
+                "type": 4,
+                "typeName": "Timestamp"
+              }
+            ]
+          }
+        },
+        "path": [
+          "d9_burn_common",
+          "Account"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "tuple": [
+            0,
+            0
+          ]
+        }
       }
     },
     {
@@ -912,7 +1127,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 18
+                    "type": 0
                   }
                 ],
                 "index": 0,
@@ -921,7 +1136,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 15
+                    "type": 10
                   }
                 ],
                 "index": 1,
@@ -933,11 +1148,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 18
+            "type": 0
           },
           {
             "name": "E",
-            "type": 15
+            "type": 10
           }
         ],
         "path": [
@@ -949,23 +1164,12 @@ export const metadata = {
       "id": 18,
       "type": {
         "def": {
-          "tuple": [
-            0,
-            4
-          ]
-        }
-      }
-    },
-    {
-      "id": 19,
-      "type": {
-        "def": {
           "variant": {
             "variants": [
               {
                 "fields": [
                   {
-                    "type": 20
+                    "type": 19
                   }
                 ],
                 "index": 0,
@@ -986,7 +1190,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 20
+            "type": 19
           },
           {
             "name": "E",
@@ -999,7 +1203,102 @@ export const metadata = {
       }
     },
     {
+      "id": 19,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 20
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 10
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 20
+          },
+          {
+            "name": "E",
+            "type": 10
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
       "id": 20,
+      "type": {
+        "def": {
+          "tuple": [
+            0,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": 21,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 22
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 22
+          },
+          {
+            "name": "E",
+            "type": 7
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 22,
       "type": {
         "def": {
           "variant": {
@@ -1011,7 +1310,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 21
+                    "type": 23
                   }
                 ],
                 "index": 1,
@@ -1023,7 +1322,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 21
+            "type": 23
           }
         ],
         "path": [
@@ -1032,7 +1331,7 @@ export const metadata = {
       }
     },
     {
-      "id": 21,
+      "id": 23,
       "type": {
         "def": {
           "sequence": {
@@ -1042,7 +1341,7 @@ export const metadata = {
       }
     },
     {
-      "id": 22,
+      "id": 24,
       "type": {
         "def": {
           "composite": {
@@ -1062,7 +1361,7 @@ export const metadata = {
       }
     },
     {
-      "id": 23,
+      "id": 25,
       "type": {
         "def": {
           "primitive": "u32"
@@ -1070,7 +1369,7 @@ export const metadata = {
       }
     },
     {
-      "id": 24,
+      "id": 26,
       "type": {
         "def": {
           "variant": {}
@@ -1084,111 +1383,3 @@ export const metadata = {
   ],
   "version": "4"
 }
-
-const _abi = new Abi(metadata)
-
-export function decodeEvent(bytes: Bytes): Event {
-    return _abi.decodeEvent(bytes)
-}
-
-export function decodeMessage(bytes: Bytes): Message {
-    return _abi.decodeMessage(bytes)
-}
-
-export function decodeConstructor(bytes: Bytes): Constructor {
-    return _abi.decodeConstructor(bytes)
-}
-
-export interface Chain {
-    rpc: {
-        call<T=any>(method: string, params?: unknown[]): Promise<T>
-    }
-}
-
-export interface ChainContext {
-    _chain: Chain
-}
-
-export class Contract {
-    constructor(private ctx: ChainContext, private address: Bytes, private blockHash?: Bytes) { }
-
-    get_account(account_id: AccountId): Promise<Result<(Account | undefined), LangError>> {
-        return this.stateCall('0xd0f48683', [account_id])
-    }
-
-    get_ancestors(account_id: AccountId): Promise<Result<(AccountId[] | undefined), LangError>> {
-        return this.stateCall('0xe2ee2364', [account_id])
-    }
-
-    private async stateCall<T>(selector: string, args: any[]): Promise<T> {
-        let input = _abi.encodeMessageInput(selector, args)
-        let data = encodeCall(this.address, input)
-        let result = await this.ctx._chain.rpc.call('state_call', ['ContractsApi_call', data, this.blockHash])
-        let value = decodeResult(result)
-        return _abi.decodeMessageOutput(selector, value)
-    }
-}
-
-export type LangError = LangError_CouldNotReadInput
-
-export interface LangError_CouldNotReadInput {
-    __kind: 'CouldNotReadInput'
-}
-
-export interface Account {
-    creationTimestamp: bigint
-    amountBurned: Balance
-    balanceDue: Balance
-    balancePaid: Balance
-    lastWithdrawal?: (bigint | undefined)
-    lastBurn: bigint
-    referralBoostCoefficients: [Balance, Balance]
-    lastInteraction: bigint
-}
-
-export type Balance = bigint
-
-export type AccountId = Bytes
-
-export type Constructor = Constructor_new
-
-export interface Constructor_new {
-    __kind: 'new'
-    burnManagerContract: AccountId
-    burnMinimum: Balance
-}
-
-export type Message = Message_get_account | Message_get_ancestors | Message_initiate_burn | Message_prepare_withdrawal
-
-export interface Message_get_account {
-    __kind: 'get_account'
-    accountId: AccountId
-}
-
-export interface Message_get_ancestors {
-    __kind: 'get_ancestors'
-    accountId: AccountId
-}
-
-/**
- *  burn funcion callable by ownly master contract
- * 
- *  does the necessary checks then calls the internal burn function `_burn`
- */
-export interface Message_initiate_burn {
-    __kind: 'initiate_burn'
-    accountId: AccountId
-    burnAmount: Balance
-}
-
-/**
- *  calculate values to be used by the burn manager
- */
-export interface Message_prepare_withdrawal {
-    __kind: 'prepare_withdrawal'
-    accountId: AccountId
-}
-
-export type Event = never
-
-export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

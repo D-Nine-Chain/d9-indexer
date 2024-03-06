@@ -2,7 +2,7 @@ import { Store } from '@subsquid/typeorm-store'
 import { ProcessorContext } from '../processor'
 import { BaseEntity, isContractsEvent, ss58Encode } from '../utils'
 import { ContractAddress } from '../constant'
-import * as CrossChain from '../abi/cross-chain'
+import * as CrossChain from '../abi/cross-chain-transfer'
 import { CrossChainCommitment, CrossChainDispatch } from '../model'
 import { getAccounts } from './account'
 
