@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 import { Entity, Store } from '@subsquid/typeorm-store'
 import { ProcessorContext } from '../processor'
-import { BaseEntity, isContractsCall, ss58Encode } from '../utils'
+import { BaseEntity, isContractsCall, isContractsEvent, ss58Encode } from '../utils'
 import { ContractAddress } from '../constant'
 import * as AMM from '../abi/market-maker'
 import { AddLiquidity, MarketGetToken, RemoveLiquidity, Token } from '../model'
@@ -34,11 +34,20 @@ type _Entity = _AddLiquidity | _RemoveLiquidity | _GetToken
 export async function handleAmmContract(ctx: ProcessorContext<Store>) {
   const entities = [] as _Entity[]
   for await (const block of ctx.blocks) {
+    for await (const event of block.events) {
+      if (!event.extrinsic?.success)
+        continue
+      if (isContractsEvent(event, ContractAddress.AMM)) {
+        const decoded = AMM.decodeEvent(event.args.data)
+        console.info(decoded)
+      }
+    }
     for await (const _call of block.calls) {
       if (!_call.extrinsic?.success)
         continue
       if (isContractsCall(_call, ContractAddress.AMM)) {
         const call = AMM.decodeMessage(_call.args.data)
+        console.info(call)
         switch (call.__kind) {
           case 'add_liquidity':
             entities.push({

@@ -8,6 +8,8 @@ import {CrossChainDispatch} from "./crossChainDispatch.model"
 import {NodeVote} from "./nodeVote.model"
 import {AddLiquidity} from "./addLiquidity.model"
 import {MarketGetToken} from "./marketGetToken.model"
+import {MerchantSubscription} from "./merchantSubscription.model"
+import {GreenPointsTransaction} from "./greenPointsTransaction.model"
 
 @Entity_()
 export class Account {
@@ -53,4 +55,13 @@ export class Account {
 
     @OneToMany_(() => MarketGetToken, e => e.who)
     marketGetTokens!: MarketGetToken[]
+
+    @OneToMany_(() => MerchantSubscription, e => e.who)
+    merchantSubscriptions!: MerchantSubscription[]
+
+    @OneToMany_(() => GreenPointsTransaction, e => e.consumer)
+    greenPointsTrxAsConsumer!: GreenPointsTransaction[]
+
+    @OneToMany_(() => GreenPointsTransaction, e => e.merchant)
+    greenPointsTrxAsMerchant!: GreenPointsTransaction[]
 }

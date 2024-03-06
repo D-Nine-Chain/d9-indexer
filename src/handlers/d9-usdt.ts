@@ -21,6 +21,7 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
         continue
       if (isContractsEvent(event, ContractAddress.D9_USDT)) {
         const decoded = D9USDT.decodeEvent(event.args.data)
+        console.info(decoded)
         switch (decoded.__kind) {
           case 'D9USDTTransfer':
             entities.push({
@@ -37,39 +38,40 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
         }
       }
     }
-    // for await (const call of block.calls) {
-    //   if (!call.extrinsic?.success)
-    //     continue
-    //   if (isContractsCall(call, ContractAddress.D9_USDT)) {
-    //     const decoded = D9USDT.decodeMessage(call.args.data)
-    //     switch (decoded.__kind) {
-    //       case 'PSP22_transfer_from':
-    //         entities.push({
-    //           id: call.id,
-    //           blockNumber: block.header.height,
-    //           extrinsicHash: call.extrinsic?.hash,
-    //           timestamp: new Date(block.header.timestamp!),
-    //           from: ss58Encode(decoded.from),
-    //           to: ss58Encode(decoded.to),
-    //           amount: decoded.value,
-    //           fee: call.extrinsic?.fee || 0n,
-    //         })
-    //         break
-    //       case 'PSP22_transfer':
-    //         entities.push({
-    //           id: call.id,
-    //           blockNumber: block.header.height,
-    //           extrinsicHash: call.extrinsic?.hash,
-    //           timestamp: new Date(block.header.timestamp!),
-    //           from: ss58Encode(call.origin.value.value),
-    //           to: ss58Encode(decoded.to),
-    //           amount: decoded.value,
-    //           fee: call.extrinsic?.fee || 0n,
-    //         })
-    //         break
-    //     }
-    //   }
-    // }
+    for await (const call of block.calls) {
+      if (!call.extrinsic?.success)
+        continue
+      if (isContractsCall(call, ContractAddress.D9_USDT)) {
+        const decoded = D9USDT.decodeMessage(call.args.data)
+        console.info(decoded)
+        switch (decoded.__kind) {
+          case 'PSP22_transfer_from':
+            entities.push({
+              id: call.id,
+              blockNumber: block.header.height,
+              extrinsicHash: call.extrinsic?.hash,
+              timestamp: new Date(block.header.timestamp!),
+              from: ss58Encode(decoded.from),
+              to: ss58Encode(decoded.to),
+              amount: decoded.value,
+              fee: call.extrinsic?.fee || 0n,
+            })
+            break
+          case 'PSP22_transfer':
+            entities.push({
+              id: call.id,
+              blockNumber: block.header.height,
+              extrinsicHash: call.extrinsic?.hash,
+              timestamp: new Date(block.header.timestamp!),
+              from: ss58Encode(call.origin.value.value),
+              to: ss58Encode(decoded.to),
+              amount: decoded.value,
+              fee: call.extrinsic?.fee || 0n,
+            })
+            break
+        }
+      }
+    }
   }
 
   const accounts = await getAccounts(ctx, entities.map(entity => entity.to), true)

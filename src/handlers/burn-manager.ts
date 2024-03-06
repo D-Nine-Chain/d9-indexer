@@ -16,20 +16,21 @@ type _Record = {
 export async function handleBurnManagerContract(ctx: ProcessorContext<Store>) {
   const entities = [] as _Record[]
   for await (const block of ctx.blocks) {
-    for await (const _event of block.events) {
-      if (!_event.extrinsic?.success)
+    for await (const event of block.events) {
+      if (!event.extrinsic?.success)
         continue
-      if (isContractsEvent(_event, ContractAddress.BURN_MANAGER)) {
-        const event = BurnManager.decodeEvent(_event.args.data)
+      if (isContractsEvent(event, ContractAddress.BURN_MANAGER)) {
+        const decoded = BurnManager.decodeEvent(event.args.data)
+        console.info(decoded)
         entities.push({
-          id: _event.id,
-          blockNumber: _event.block.height,
-          timestamp: new Date(_event.block.timestamp!),
-          extrinsicHash: _event.extrinsic?.hash,
-          fee: _event.extrinsic?.fee ?? 0n,
-          from: event.from,
-          amount: event.amount,
-          type: event.__kind,
+          id: event.id,
+          blockNumber: event.block.height,
+          timestamp: new Date(event.block.timestamp!),
+          extrinsicHash: event.extrinsic?.hash,
+          fee: event.extrinsic?.fee ?? 0n,
+          from: decoded.from,
+          amount: decoded.amount,
+          type: decoded.__kind,
         })
         // switch (event.__kind) {
         //   case 'WithdrawalExecuted':

@@ -16,6 +16,10 @@ type Account @entity {
   addedLiquidity: [AddLiquidity!] @derivedFrom(field: "who")
   removedLiquidity: [AddLiquidity!] @derivedFrom(field: "who")
   marketGetTokens: [MarketGetToken!] @derivedFrom(field: "who")
+
+  merchantSubscriptions: [MerchantSubscription!] @derivedFrom(field: "who")
+  greenPointsTrxAsConsumer: [GreenPointsTransaction!] @derivedFrom(field: "consumer")
+  greenPointsTrxAsMerchant: [GreenPointsTransaction!] @derivedFrom(field: "merchant")
 }
 
 enum Token {
@@ -130,4 +134,26 @@ type MarketGetToken @entity {
   token: Token!
   who: Account!
   value: BigInt!
+}
+
+type MerchantSubscription @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
+  fee: BigInt!
+  expiry: DateTime!
+  who: Account!
+}
+
+type GreenPointsTransaction @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
+  fee: BigInt!
+  merchant: Account!
+  merchantGP: BigInt!
+  consumer: Account!
+  consumerGP: BigInt!
 }

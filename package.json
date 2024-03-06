@@ -7,7 +7,7 @@
   "scripts": {
     "build": "rm -rf lib && tsc",
     "start": "rm -rf lib && tsc && node --require=dotenv/config lib/main.js",
-    "metadata": "squid-substrate-metadata-explorer --rpc ws://54.172.121.107:40300 --out d9.jsonl",
+    "metadata": "squid-substrate-metadata-explorer --rpc http://34.229.77.5:40300 --out d9.jsonl",
     "serve": "sqd serve",
     "gen": "squid-substrate-typegen ./typegen.json",
     "gen:burn-manager": "squid-ink-typegen --abi ABIs/burn-manager.json --output src/abi/burn-manager.ts",

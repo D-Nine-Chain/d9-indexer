@@ -30,6 +30,7 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
         continue
       if (isContractsEvent(event, ContractAddress.CROSS_CHAIN)) {
         const decoded = CrossChain.decodeEvent(event.args.data)
+        console.info(decoded)
         // console.info(
         //   'CROSS_CHAIN',
         //   '\n',
