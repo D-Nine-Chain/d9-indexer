@@ -74,13 +74,13 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
     }
   }
 
-  const accounts = await getAccounts(ctx, entities.map(entity => entity.to), true)
+  const accounts = await getAccounts(ctx, entities.flatMap(entity => [entity.to, entity.from]), true)
 
   await ctx.store.insert(entities.map((entity) => {
     return new Transfer({
       ...entity,
       from: accounts.find(({ id }) => id === entity.from),
-      to: accounts.find(({ id }) => id === entity.from),
+      to: accounts.find(({ id }) => id === entity.to),
       token: Token.USDT,
     })
   }))

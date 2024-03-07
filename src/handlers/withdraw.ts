@@ -26,19 +26,19 @@ export async function handleWithdrawEvents(ctx: ProcessorContext<Store>) {
           timestamp: new Date(block.header.timestamp!),
           extrinsicHash: event.extrinsic?.hash,
           fee: event.extrinsic?.fee || 0n,
-          who: rec.who,
+          who: ss58Encode(rec.who),
           amount: rec.amount,
         })
       }
     }
   }
 
-  const accounts = await getAccounts(ctx, entities.map(({ who }) => who))
+  const accounts = await getAccounts(ctx, entities.map(({ who }) => who), true)
 
   await ctx.store.insert(entities.map((entity) => {
     return new Withdraw({
       ...entity,
-      who: accounts.find(account => account.id === ss58Encode(entity.who)),
+      who: accounts.find(account => account.id === entity.who),
     })
   }))
 }

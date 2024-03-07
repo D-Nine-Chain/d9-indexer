@@ -27,7 +27,7 @@ export async function handleD9NodeVoting(ctx: ProcessorContext<Store>) {
           extrinsicHash: call.extrinsic?.hash,
           timestamp: new Date(call.block.timestamp!),
           amount: amountToBurn,
-          beneficiaryVoter,
+          beneficiaryVoter: ss58Encode(beneficiaryVoter),
           burnContract,
           mainPool,
           fee: call.extrinsic?.fee ?? 0n,
@@ -36,12 +36,12 @@ export async function handleD9NodeVoting(ctx: ProcessorContext<Store>) {
     }
   }
 
-  const accounts = await getAccounts(ctx, entities.map(entity => entity.beneficiaryVoter))
+  const accounts = await getAccounts(ctx, entities.map(entity => entity.beneficiaryVoter), true)
 
   await ctx.store.insert(entities.map((entity) => {
     return new NodeVote({
       ...entity,
-      beneficiaryVoter: accounts.find(account => account.id === ss58Encode(entity.beneficiaryVoter)),
+      beneficiaryVoter: accounts.find(account => account.id === entity.beneficiaryVoter),
       burnContract: ss58Encode(entity.burnContract),
       mainPool: ss58Encode(entity.mainPool),
     })

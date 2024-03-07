@@ -1,6 +1,6 @@
 import { Store } from '@subsquid/typeorm-store'
 import { ProcessorContext } from '../processor'
-import { BaseEntity, isContractsEvent } from '../utils'
+import { BaseEntity, isContractsEvent, ss58Encode } from '../utils'
 import { ContractAddress } from '../constant'
 import * as Merchant from '../abi/d9-merchant-mining'
 import { GreenPointsTransaction, MerchantSubscription } from '../model'
@@ -37,7 +37,7 @@ export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) 
               extrinsicHash: event.extrinsic?.hash,
               fee: event.extrinsic.fee ?? 0n,
               expiry: new Date(Number(decoded.expiry)),
-              who: decoded.accountId,
+              who: ss58Encode(decoded.accountId),
             })
             break
           case 'GreenPointsTransaction':
@@ -47,9 +47,9 @@ export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) 
               timestamp: new Date(block.header.timestamp!),
               extrinsicHash: event.extrinsic?.hash,
               fee: event.extrinsic.fee ?? 0n,
-              consumer: decoded.consumer.accountId,
+              consumer: ss58Encode(decoded.consumer.accountId),
               consumerGP: decoded.consumer.greenPoints,
-              merchant: decoded.merchant.accountId,
+              merchant: ss58Encode(decoded.merchant.accountId),
               merchantGP: decoded.merchant.greenPoints,
             })
             break

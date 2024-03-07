@@ -28,7 +28,7 @@ export async function handleBurnManagerContract(ctx: ProcessorContext<Store>) {
           timestamp: new Date(event.block.timestamp!),
           extrinsicHash: event.extrinsic?.hash,
           fee: event.extrinsic?.fee ?? 0n,
-          from: decoded.from,
+          from: ss58Encode(decoded.from),
           amount: decoded.amount,
           type: decoded.__kind,
         })
@@ -44,15 +44,15 @@ export async function handleBurnManagerContract(ctx: ProcessorContext<Store>) {
     }
   }
 
-  const accounts = await getAccounts(ctx, entities.map(entity => entity.from))
+  const accounts = await getAccounts(ctx, entities.map(entity => entity.from), true)
 
   await ctx.store.insert(entities.filter(({ type }) => type === 'BurnExecuted').map(entity => new Burn({
     ...entity,
-    from: accounts.find(account => account.id === ss58Encode(entity.from)),
+    from: accounts.find(account => account.id === entity.from),
   })))
 
   await ctx.store.insert(entities.filter(({ type }) => type === 'WithdrawalExecuted').map(entity => new BurnWithdrawal({
     ...entity,
-    from: accounts.find(account => account.id === ss58Encode(entity.from)),
+    from: accounts.find(account => account.id === entity.from),
   })))
 }
