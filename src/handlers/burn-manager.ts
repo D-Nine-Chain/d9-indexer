@@ -46,19 +46,13 @@ export async function handleBurnManagerContract(ctx: ProcessorContext<Store>) {
 
   const accounts = await getAccounts(ctx, entities.map(entity => entity.from))
 
-  // eslint-disable-next-line array-callback-return
-  await ctx.store.insert(entities.map((entity) => {
-    switch (entity.type) {
-      case 'BurnExecuted':
-        return new Burn({
-          ...entity,
-          from: accounts.find(account => account.id === ss58Encode(entity.from)),
-        })
-      case 'WithdrawalExecuted':
-        return new BurnWithdrawal({
-          ...entity,
-          from: accounts.find(account => account.id === ss58Encode(entity.from)),
-        })
-    }
-  }))
+  await ctx.store.insert(entities.filter(({ type }) => type === 'BurnExecuted').map(entity => new Burn({
+    ...entity,
+    from: accounts.find(account => account.id === ss58Encode(entity.from)),
+  })))
+
+  await ctx.store.insert(entities.filter(({ type }) => type === 'WithdrawalExecuted').map(entity => new BurnWithdrawal({
+    ...entity,
+    from: accounts.find(account => account.id === ss58Encode(entity.from)),
+  })))
 }

@@ -70,16 +70,13 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
 
   const accounts = await getAccounts(ctx, entities.map((entity: any) => entity.from || entity.to), true)
 
-  await ctx.store.insert(entities.map((entity) => {
-    if ('to' in entity) {
-      return new CrossChainDispatch({
-        ...entity,
-        to: accounts.find(account => account.id === entity.to),
-      })
-    }
-    return new CrossChainCommitment({
-      ...entity,
-      from: accounts.find(account => account.id === entity.from),
-    })
-  }))
+  await ctx.store.insert(entities.filter(entity => 'to' in entity).map(entity => new CrossChainDispatch({
+    ...entity,
+    to: accounts.find(account => account.id === (entity as Dispatch).to),
+  })))
+
+  await ctx.store.insert(entities.filter(entity => !('to' in entity)).map(entity => new CrossChainCommitment({
+    ...entity,
+    from: accounts.find(account => account.id === (entity as Commitment).from),
+  })))
 }

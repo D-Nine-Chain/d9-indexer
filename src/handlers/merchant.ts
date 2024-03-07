@@ -19,7 +19,6 @@ interface GreenPointsTrx extends BaseEntity {
   merchantGP: bigint
 }
 
-// TODO: GreenPointsTransaction event, SubscriptionCreated event
 export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) {
   const entities: (Subscription | GreenPointsTrx)[] = []
   for await (const block of ctx.blocks) {
@@ -61,17 +60,14 @@ export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) 
 
   const accounts = await getAccounts(ctx, entities.flatMap(entity => 'who' in entity ? [entity.who] : [entity.consumer, entity.merchant]), true)
 
-  await ctx.store.insert(entities.map((entity) => {
-    if ('who' in entity) {
-      return new MerchantSubscription({
-        ...entity,
-        who: accounts.find(account => account.id === entity.who),
-      })
-    }
-    return new GreenPointsTransaction({
-      ...entity,
-      merchant: accounts.find(account => account.id === entity.merchant),
-      consumer: accounts.find(account => account.id === entity.consumer),
-    })
-  }))
+  await ctx.store.insert(entities.filter(entity => 'who' in entity).map(entity => new MerchantSubscription({
+    ...entity,
+    who: accounts.find(account => account.id === (entity as Subscription).who),
+  })))
+
+  await ctx.store.insert(entities.filter(entity => !('who' in entity)).map(entity => new GreenPointsTransaction({
+    ...entity,
+    merchant: accounts.find(account => account.id === (entity as GreenPointsTrx).merchant),
+    consumer: accounts.find(account => account.id === (entity as GreenPointsTrx).consumer),
+  })))
 }

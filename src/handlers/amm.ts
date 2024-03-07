@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import { Entity, Store } from '@subsquid/typeorm-store'
 import { ProcessorContext } from '../processor'
 import { BaseEntity, isContractsCall, isContractsEvent, ss58Encode } from '../utils'
@@ -106,24 +105,18 @@ export async function handleAmmContract(ctx: ProcessorContext<Store>) {
 
   const accounts = await getAccounts(ctx, entities.map(({ who }) => who), true)
 
-  await ctx.store.insert(entities.map((entity) => {
-    switch (entity.kind) {
-      case 'add_liquidity':
-        return new AddLiquidity({
-          ...entity,
-          who: accounts.find(({ id }) => id === entity.who),
-        })
-      case 'remove_liquidity':
-        return new RemoveLiquidity({
-          ...entity,
-          who: accounts.find(({ id }) => id === entity.who),
-        })
-      case 'get_usdt':
-      case 'get_d9':
-        return new MarketGetToken({
-          ...entity,
-          who: accounts.find(({ id }) => id === entity.who),
-        })
-    }
-  }) satisfies Entity[])
+  await ctx.store.insert(entities.filter(({ kind }) => kind === 'add_liquidity').map(entity => new AddLiquidity({
+    ...entity,
+    who: accounts.find(({ id }) => id === entity.who),
+  })))
+
+  await ctx.store.insert(entities.filter(({ kind }) => kind === 'remove_liquidity').map(entity => new RemoveLiquidity({
+    ...entity,
+    who: accounts.find(({ id }) => id === entity.who),
+  })))
+
+  await ctx.store.insert(entities.filter(({ kind }) => ['get_usdt', 'get_d9'].includes(kind)).map(entity => new MarketGetToken({
+    ...entity,
+    who: accounts.find(({ id }) => id === entity.who),
+  })))
 }
