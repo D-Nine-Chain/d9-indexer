@@ -1,12 +1,12 @@
 {
   "source": {
-    "hash": "0x98c54be35f62eebd1cb35bb85f5faae3180b44cf852bd98927a429eec022ece6",
+    "hash": "0xa3a88043cfcc4d27923a50d902ae2aeaf8a504e4514d905e86c6e7a98a9ce9ae",
     "language": "ink! 4.3.0",
-    "compiler": "rustc 1.72.0",
+    "compiler": "rustc 1.72.1",
     "build_info": {
       "build_mode": "Release",
       "cargo_contract_version": "3.2.0",
-      "rust_toolchain": "stable-aarch64-apple-darwin",
+      "rust_toolchain": "stable-x86_64-apple-darwin",
       "wasm_opt_settings": {
         "keep_debug_symbols": false,
         "optimization_passes": "Z"
@@ -34,7 +34,7 @@
             }
           },
           {
-            "label": "main_contract",
+            "label": "mining_pool",
             "type": {
               "displayName": [
                 "AccountId"
@@ -86,19 +86,19 @@
         "displayName": [
           "BlockNumber"
         ],
-        "type": 25
+        "type": 27
       },
       "chainExtension": {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 26
+        "type": 28
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 24
+        "type": 26
       },
       "maxEventTopics": 4,
       "timestamp": {
@@ -109,6 +109,218 @@
       }
     },
     "events": [
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "account_id",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "usdt",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "expiry",
+            "type": {
+              "displayName": [
+                "Timestamp"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "docs": [],
+        "label": "SubscriptionUpdated"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "account_id",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "redeemed_d9",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "D9Redeemed"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "amount",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "purpose",
+            "type": {
+              "displayName": [
+                "USDTConsumptionPurpose"
+              ],
+              "type": 23
+            }
+          }
+        ],
+        "docs": [],
+        "label": "USDTConsumed"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "merchant_account",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "consumer_account",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "points",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ConsumerReceivedPoints"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "merchant_account",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "points",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "MerchantReceivedPoints"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "merchant_account",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "consumer_account",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "amount",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "currency",
+            "type": {
+              "displayName": [
+                "Currency"
+              ],
+              "type": 24
+            }
+          }
+        ],
+        "docs": [],
+        "label": "PaymentSent"
+      },
       {
         "args": [
           {
@@ -147,7 +359,7 @@
               "displayName": [
                 "GreenPointsCreated"
               ],
-              "type": 23
+              "type": 25
             }
           },
           {
@@ -158,7 +370,7 @@
               "displayName": [
                 "GreenPointsCreated"
               ],
-              "type": 23
+              "type": 25
             }
           }
         ],
@@ -230,6 +442,32 @@
               ],
               "type": 2
             }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "give_green_points_d9",
+        "mutates": true,
+        "payable": true,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 13
+        },
+        "selector": "0x88b8f067"
+      },
+      {
+        "args": [
+          {
+            "label": "consumer_id",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
           },
           {
             "label": "usdt_payment",
@@ -258,32 +496,6 @@
       {
         "args": [
           {
-            "label": "consumer_id",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 2
-            }
-          }
-        ],
-        "default": false,
-        "docs": [],
-        "label": "give_green_points_d9",
-        "mutates": true,
-        "payable": true,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 13
-        },
-        "selector": "0x88b8f067"
-      },
-      {
-        "args": [
-          {
             "label": "merchant_id",
             "type": {
               "displayName": [
@@ -304,7 +516,7 @@
         ],
         "default": false,
         "docs": [],
-        "label": "sendUsdtPaymentToMerchant",
+        "label": "send_usdt_payment_to_merchant",
         "mutates": true,
         "payable": true,
         "returnType": {
@@ -314,7 +526,7 @@
           ],
           "type": 13
         },
-        "selector": "0xedd032e0"
+        "selector": "0xa69d4305"
       },
       {
         "args": [
@@ -332,7 +544,7 @@
         "docs": [
           " a customer pays a merchant using d9"
         ],
-        "label": "sendD9PaymentToMerchant",
+        "label": "send_d9_payment_to_merchant",
         "mutates": true,
         "payable": true,
         "returnType": {
@@ -342,7 +554,7 @@
           ],
           "type": 13
         },
-        "selector": "0x95d33766"
+        "selector": "0xb0e55803"
       },
       {
         "args": [
@@ -449,6 +661,61 @@
           "type": 21
         },
         "selector": "0xafda72a6"
+      },
+      {
+        "args": [
+          {
+            "label": "code_hash",
+            "type": {
+              "displayName": [],
+              "type": 3
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Modifies the code which is used to execute calls to this contract address (`AccountId`).",
+          "",
+          " We use this to upgrade the contract logic. We don't do any authorization here, any caller",
+          " can execute this method. In a production contract you would do some authorization here."
+        ],
+        "label": "set_code",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 5
+        },
+        "selector": "0x694fb50f"
+      },
+      {
+        "args": [
+          {
+            "label": "new_admin",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "change_admin",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 21
+        },
+        "selector": "0x61ae97d7"
       }
     ]
   },
@@ -613,7 +880,7 @@
                   "ty": 2
                 }
               },
-              "name": "main_contract"
+              "name": "mining_pool"
             },
             {
               "layout": {
@@ -938,6 +1205,78 @@
               {
                 "index": 20,
                 "name": "RedeemD9TransferFailed"
+              },
+              {
+                "index": 21,
+                "name": "SomeEnvironmentError"
+              },
+              {
+                "index": 22,
+                "name": "CalledContractTrapped"
+              },
+              {
+                "index": 23,
+                "name": "CalledContractReverted"
+              },
+              {
+                "index": 24,
+                "name": "NotCallable"
+              },
+              {
+                "index": 25,
+                "name": "SomeDecodeError"
+              },
+              {
+                "index": 26,
+                "name": "SomeOffChainError"
+              },
+              {
+                "index": 27,
+                "name": "CalleeTrapped"
+              },
+              {
+                "index": 28,
+                "name": "CalleeReverted"
+              },
+              {
+                "index": 29,
+                "name": "KeyNotFound"
+              },
+              {
+                "index": 30,
+                "name": "_BelowSubsistenceThreshold"
+              },
+              {
+                "index": 31,
+                "name": "TransferFailed"
+              },
+              {
+                "index": 32,
+                "name": "_EndowmentTooLow"
+              },
+              {
+                "index": 33,
+                "name": "CodeNotFound"
+              },
+              {
+                "index": 34,
+                "name": "Unknown"
+              },
+              {
+                "index": 35,
+                "name": "LoggingDisabled"
+              },
+              {
+                "index": 36,
+                "name": "CallRuntimeFailed"
+              },
+              {
+                "index": 37,
+                "name": "EcdsaRecoveryFailed"
+              },
+              {
+                "index": 38,
+                "name": "ErrorGettingEstimate"
               }
             ]
           }
@@ -1396,6 +1735,58 @@
       "id": 23,
       "type": {
         "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "Gift"
+              },
+              {
+                "index": 1,
+                "name": "Payment"
+              },
+              {
+                "index": 2,
+                "name": "Subscription"
+              }
+            ]
+          }
+        },
+        "path": [
+          "d9_merchant_mining",
+          "d9_merchant_mining",
+          "USDTConsumptionPurpose"
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "D9"
+              },
+              {
+                "index": 1,
+                "name": "USDT"
+              }
+            ]
+          }
+        },
+        "path": [
+          "d9_merchant_mining",
+          "d9_merchant_mining",
+          "Currency"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "type": {
+        "def": {
           "composite": {
             "fields": [
               {
@@ -1419,7 +1810,7 @@
       }
     },
     {
-      "id": 24,
+      "id": 26,
       "type": {
         "def": {
           "composite": {
@@ -1439,7 +1830,7 @@
       }
     },
     {
-      "id": 25,
+      "id": 27,
       "type": {
         "def": {
           "primitive": "u32"
@@ -1447,7 +1838,7 @@
       }
     },
     {
-      "id": 26,
+      "id": 28,
       "type": {
         "def": {
           "variant": {}
