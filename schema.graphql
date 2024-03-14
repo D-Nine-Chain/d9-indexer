@@ -1,25 +1,36 @@
 type Account @entity {
   "Account address"
   id: ID!
-  transfersTo: [Transfer!] @derivedFrom(field: "to")
-  transfersFrom: [Transfer!] @derivedFrom(field: "from")
+  receivedTransfers: [Transfer!] @derivedFrom(field: "to")
+  sendTransfers: [Transfer!] @derivedFrom(field: "from")
   withdrawals: [Withdraw!] @derivedFrom(field: "who")
-
-  burns: [Burn!] @derivedFrom(field: "from")
-  burnWithdrawals: [BurnWithdrawal!] @derivedFrom(field: "from")
-
-  crossChainCommitmentsFrom: [CrossChainCommitment!] @derivedFrom(field: "from")
-  crossChainDispatchesTo: [CrossChainDispatch!] @derivedFrom(field: "to")
   
   asNodeVotingBeneficiary: [NodeVote!] @derivedFrom(field: "beneficiaryVoter")
 
-  addedLiquidity: [AddLiquidity!] @derivedFrom(field: "who")
-  removedLiquidity: [AddLiquidity!] @derivedFrom(field: "who")
-  marketGetTokens: [MarketGetToken!] @derivedFrom(field: "who")
+# Burn Manager
+  burnExecutes: [BurnExecuted!] @derivedFrom(field: "from")
+  burnWithdrawals: [BurnWithdrawal!] @derivedFrom(field: "from")
 
-  merchantSubscriptions: [MerchantSubscription!] @derivedFrom(field: "who")
-  greenPointsTrxAsConsumer: [GreenPointsTransaction!] @derivedFrom(field: "consumer")
-  greenPointsTrxAsMerchant: [GreenPointsTransaction!] @derivedFrom(field: "merchant")
+# Cross Chain Transfer
+  chainCommitments: [CrossChainCommitCreated!] @derivedFrom(field: "from")
+  crossChainDispatches: [CrossChainDispatchCompleted!] @derivedFrom(field: "to")
+
+# Market Maker
+  liquidityAddeds: [LiquidityAdded!] @derivedFrom(field: "who")
+  liquidityRemoves: [LiquidityRemoved!] @derivedFrom(field: "who")
+  marketConversions: [MarketConversion!] @derivedFrom(field: "who")
+
+# Merchant
+  merchantSubscriptions: [MerchantSubscriptionExtended!] @derivedFrom(field: "who")
+  merchantRedeemeds: [MerchantRedeemed!] @derivedFrom(field: "who")
+  sentGreenPointsTransactions: [GreenPointsTransaction!] @derivedFrom(field: "consumer")
+  receivedGreenPointsTransactions: [GreenPointsTransaction!] @derivedFrom(field: "merchant")
+  sentMerchantPayments: [MerchantPaymentSent!] @derivedFrom(field: "consumer")
+  receivedMerchantPayments: [MerchantPaymentSent!] @derivedFrom(field: "merchant")
+
+# Node Reward
+  asNodeRewardNode: [NodeRewardPaid!] @derivedFrom(field: "node")
+  receivedNodeRewards: [NodeRewardPaid!] @derivedFrom(field: "receiver")
 }
 
 enum Token {
@@ -30,64 +41,27 @@ enum Token {
 type Transfer @entity {
   id: ID!
   blockNumber: Int! @index
+  blockHash: String! @index
   timestamp: DateTime! @index
-  extrinsicHash: String @index
+  extrinsicHash: String! @index
   fee: BigInt!
+
   from: Account!
   to: Account!
-  token: Token! @index
   amount: BigInt! @index
+  
+  token: Token! @index
 }
 
 type Withdraw @entity {
   id: ID!
   blockNumber: Int! @index
+  blockHash: String! @index
   timestamp: DateTime! @index
-  extrinsicHash: String @index
+  extrinsicHash: String! @index
   fee: BigInt!
+
   who: Account!
-  amount: BigInt! @index
-}
-
-# Burn manager withdrawal executed
-type BurnWithdrawal @entity {
-  id: ID!
-  blockNumber: Int! @index
-  timestamp: DateTime! @index
-  extrinsicHash: String @index
-  fee: BigInt!
-  from: Account!
-  amount: BigInt! @index
-}
-
-type Burn @entity {
-  id: ID!
-  blockNumber: Int! @index
-  timestamp: DateTime! @index
-  extrinsicHash: String @index
-  fee: BigInt!
-  from: Account!
-  amount: BigInt! @index
-}
-
-# Cross-chain
-type CrossChainCommitment @entity {
-  id: ID!
-  blockNumber: Int! @index
-  timestamp: DateTime! @index
-  extrinsicHash: String @index
-  txId: String! @index
-  from: Account!
-  amount: BigInt! @index
-}
-
-type CrossChainDispatch @entity {
-  id: ID!
-  blockNumber: Int! @index
-  timestamp: DateTime! @index
-  extrinsicHash: String @index
-  txId: String! @index
-  to: Account!
   amount: BigInt! @index
 }
 
@@ -95,65 +69,176 @@ type CrossChainDispatch @entity {
 type NodeVote @entity {
   id: ID!
   blockNumber: Int! @index
+  blockHash: String! @index
   timestamp: DateTime! @index
-  extrinsicHash: String @index
+  extrinsicHash: String! @index
   fee: BigInt!
+
   amount: BigInt!
   beneficiaryVoter: Account!
   burnContract: String!
   mainPool: String!
 }
 
-#amm
-type AddLiquidity @entity {
+# Burn manager withdrawal executed
+type BurnWithdrawal @entity {
   id: ID!
   blockNumber: Int! @index
+  blockHash: String! @index
   timestamp: DateTime! @index
-  extrinsicHash: String @index
+  extrinsicHash: String! @index
   fee: BigInt!
+
+  from: Account!
+  amount: BigInt! @index
+}
+
+type BurnExecuted @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockHash: String! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String! @index
+  fee: BigInt!
+
+  from: Account!
+  amount: BigInt! @index
+}
+
+# Cross-chain
+type CrossChainCommitCreated @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockHash: String! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String! @index
+  
+  txId: String! @index
+  from: Account!
+  amount: BigInt! @index
+}
+
+type CrossChainDispatchCompleted @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockHash: String! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String! @index
+
+  txId: String! @index
+  to: Account!
+  amount: BigInt! @index
+}
+
+# Market-Maker
+type LiquidityAdded @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockHash: String! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String! @index
+  fee: BigInt!
+
   who: Account!
   d9: BigInt!
   usdt: BigInt!
 }
 
-type RemoveLiquidity @entity {
+type LiquidityRemoved @entity {
   id: ID!
   blockNumber: Int! @index
+  blockHash: String! @index
   timestamp: DateTime! @index
-  extrinsicHash: String @index
+  extrinsicHash: String! @index
   fee: BigInt!
+
+  who: Account!
+  d9: BigInt!
+  usdt: BigInt!
+}
+
+type MarketConversion @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockHash: String! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String! @index
+  fee: BigInt!
+
+  fromToken: Token!
+  toToken: Token!
+  lost: BigInt!
+  got: BigInt!
   who: Account!
 }
 
-type MarketGetToken @entity {
-  id: ID!
-  blockNumber: Int! @index
-  timestamp: DateTime! @index
-  extrinsicHash: String @index
-  fee: BigInt!
-  token: Token!
-  who: Account!
-  value: BigInt!
-}
+# Merchant
 
-type MerchantSubscription @entity {
+type MerchantSubscriptionExtended @entity {
   id: ID!
   blockNumber: Int! @index
+  blockHash: String! @index
   timestamp: DateTime! @index
-  extrinsicHash: String @index
+  extrinsicHash: String! @index
   fee: BigInt!
+
   expiry: DateTime!
+  amount: BigInt!
+  paymentToken: Token!
   who: Account!
+}
+
+type MerchantRedeemed @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockHash: String! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String! @index
+  fee: BigInt!
+
+  who: Account!
+  token: Token!
+  amount: BigInt!
 }
 
 type GreenPointsTransaction @entity {
   id: ID!
   blockNumber: Int! @index
+  blockHash: String! @index
   timestamp: DateTime! @index
-  extrinsicHash: String @index
+  extrinsicHash: String! @index
   fee: BigInt!
+
   merchant: Account!
   merchantGP: BigInt!
   consumer: Account!
   consumerGP: BigInt!
+}
+
+type MerchantPaymentSent @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockHash: String! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String! @index
+  fee: BigInt!
+
+  merchant: Account!
+  consumer: Account!
+  amount: BigInt!
+  paymentToken: Token!
+}
+
+# Node Reward
+type NodeRewardPaid @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockHash: String! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String! @index
+  fee: BigInt!
+
+  node: Account!
+  receiver: Account!
+  amount: BigInt!
 }

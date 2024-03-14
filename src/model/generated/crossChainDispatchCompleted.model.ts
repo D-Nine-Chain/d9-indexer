@@ -3,8 +3,8 @@ import * as marshal from "./marshal"
 import {Account} from "./account.model"
 
 @Entity_()
-export class GreenPointsTransaction {
-    constructor(props?: Partial<GreenPointsTransaction>) {
+export class CrossChainDispatchCompleted {
+    constructor(props?: Partial<CrossChainDispatchCompleted>) {
         Object.assign(this, props)
     }
 
@@ -27,20 +27,15 @@ export class GreenPointsTransaction {
     @Column_("text", {nullable: false})
     extrinsicHash!: string
 
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    fee!: bigint
+    @Index_()
+    @Column_("text", {nullable: false})
+    txId!: string
 
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})
-    merchant!: Account
-
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    merchantGP!: bigint
+    to!: Account
 
     @Index_()
-    @ManyToOne_(() => Account, {nullable: true})
-    consumer!: Account
-
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    consumerGP!: bigint
+    amount!: bigint
 }

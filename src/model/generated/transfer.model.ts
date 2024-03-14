@@ -17,12 +17,16 @@ export class Transfer {
     blockNumber!: number
 
     @Index_()
+    @Column_("text", {nullable: false})
+    blockHash!: string
+
+    @Index_()
     @Column_("timestamp with time zone", {nullable: false})
     timestamp!: Date
 
     @Index_()
-    @Column_("text", {nullable: true})
-    extrinsicHash!: string | undefined | null
+    @Column_("text", {nullable: false})
+    extrinsicHash!: string
 
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
     fee!: bigint
@@ -36,10 +40,10 @@ export class Transfer {
     to!: Account
 
     @Index_()
-    @Column_("varchar", {length: 4, nullable: false})
-    token!: Token
-
-    @Index_()
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
     amount!: bigint
+
+    @Index_()
+    @Column_("varchar", {length: 4, nullable: false})
+    token!: Token
 }

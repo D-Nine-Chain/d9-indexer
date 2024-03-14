@@ -1,15 +1,19 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "typeorm"
 import {Transfer} from "./transfer.model"
 import {Withdraw} from "./withdraw.model"
-import {Burn} from "./burn.model"
-import {BurnWithdrawal} from "./burnWithdrawal.model"
-import {CrossChainCommitment} from "./crossChainCommitment.model"
-import {CrossChainDispatch} from "./crossChainDispatch.model"
 import {NodeVote} from "./nodeVote.model"
-import {AddLiquidity} from "./addLiquidity.model"
-import {MarketGetToken} from "./marketGetToken.model"
-import {MerchantSubscription} from "./merchantSubscription.model"
+import {BurnExecuted} from "./burnExecuted.model"
+import {BurnWithdrawal} from "./burnWithdrawal.model"
+import {CrossChainCommitCreated} from "./crossChainCommitCreated.model"
+import {CrossChainDispatchCompleted} from "./crossChainDispatchCompleted.model"
+import {LiquidityAdded} from "./liquidityAdded.model"
+import {LiquidityRemoved} from "./liquidityRemoved.model"
+import {MarketConversion} from "./marketConversion.model"
+import {MerchantSubscriptionExtended} from "./merchantSubscriptionExtended.model"
+import {MerchantRedeemed} from "./merchantRedeemed.model"
 import {GreenPointsTransaction} from "./greenPointsTransaction.model"
+import {MerchantPaymentSent} from "./merchantPaymentSent.model"
+import {NodeRewardPaid} from "./nodeRewardPaid.model"
 
 @Entity_()
 export class Account {
@@ -24,44 +28,59 @@ export class Account {
     id!: string
 
     @OneToMany_(() => Transfer, e => e.to)
-    transfersTo!: Transfer[]
+    receivedTransfers!: Transfer[]
 
     @OneToMany_(() => Transfer, e => e.from)
-    transfersFrom!: Transfer[]
+    sendTransfers!: Transfer[]
 
     @OneToMany_(() => Withdraw, e => e.who)
     withdrawals!: Withdraw[]
 
-    @OneToMany_(() => Burn, e => e.from)
-    burns!: Burn[]
+    @OneToMany_(() => NodeVote, e => e.beneficiaryVoter)
+    asNodeVotingBeneficiary!: NodeVote[]
+
+    @OneToMany_(() => BurnExecuted, e => e.from)
+    burnExecutes!: BurnExecuted[]
 
     @OneToMany_(() => BurnWithdrawal, e => e.from)
     burnWithdrawals!: BurnWithdrawal[]
 
-    @OneToMany_(() => CrossChainCommitment, e => e.from)
-    crossChainCommitmentsFrom!: CrossChainCommitment[]
+    @OneToMany_(() => CrossChainCommitCreated, e => e.from)
+    chainCommitments!: CrossChainCommitCreated[]
 
-    @OneToMany_(() => CrossChainDispatch, e => e.to)
-    crossChainDispatchesTo!: CrossChainDispatch[]
+    @OneToMany_(() => CrossChainDispatchCompleted, e => e.to)
+    crossChainDispatches!: CrossChainDispatchCompleted[]
 
-    @OneToMany_(() => NodeVote, e => e.beneficiaryVoter)
-    asNodeVotingBeneficiary!: NodeVote[]
+    @OneToMany_(() => LiquidityAdded, e => e.who)
+    liquidityAddeds!: LiquidityAdded[]
 
-    @OneToMany_(() => AddLiquidity, e => e.who)
-    addedLiquidity!: AddLiquidity[]
+    @OneToMany_(() => LiquidityRemoved, e => e.who)
+    liquidityRemoves!: LiquidityRemoved[]
 
-    @OneToMany_(() => AddLiquidity, e => e.who)
-    removedLiquidity!: AddLiquidity[]
+    @OneToMany_(() => MarketConversion, e => e.who)
+    marketConversions!: MarketConversion[]
 
-    @OneToMany_(() => MarketGetToken, e => e.who)
-    marketGetTokens!: MarketGetToken[]
+    @OneToMany_(() => MerchantSubscriptionExtended, e => e.who)
+    merchantSubscriptions!: MerchantSubscriptionExtended[]
 
-    @OneToMany_(() => MerchantSubscription, e => e.who)
-    merchantSubscriptions!: MerchantSubscription[]
+    @OneToMany_(() => MerchantRedeemed, e => e.who)
+    merchantRedeemeds!: MerchantRedeemed[]
 
     @OneToMany_(() => GreenPointsTransaction, e => e.consumer)
-    greenPointsTrxAsConsumer!: GreenPointsTransaction[]
+    sentGreenPointsTransactions!: GreenPointsTransaction[]
 
     @OneToMany_(() => GreenPointsTransaction, e => e.merchant)
-    greenPointsTrxAsMerchant!: GreenPointsTransaction[]
+    receivedGreenPointsTransactions!: GreenPointsTransaction[]
+
+    @OneToMany_(() => MerchantPaymentSent, e => e.consumer)
+    sentMerchantPayments!: MerchantPaymentSent[]
+
+    @OneToMany_(() => MerchantPaymentSent, e => e.merchant)
+    receivedMerchantPayments!: MerchantPaymentSent[]
+
+    @OneToMany_(() => NodeRewardPaid, e => e.node)
+    asNodeRewardNode!: NodeRewardPaid[]
+
+    @OneToMany_(() => NodeRewardPaid, e => e.receiver)
+    receivedNodeRewards!: NodeRewardPaid[]
 }

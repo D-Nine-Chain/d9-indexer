@@ -16,6 +16,8 @@ export function isContractsCall(call: { name: string, args: { dest: { value: str
 export interface BaseEntity {
   id: string
   blockNumber: number
+  blockHash: string
   timestamp: Date
-  extrinsicHash: string | undefined
+  extrinsicHash: string
+  fee: bigint
 }

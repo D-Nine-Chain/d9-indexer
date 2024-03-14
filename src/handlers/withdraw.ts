@@ -23,8 +23,9 @@ export async function handleWithdrawEvents(ctx: ProcessorContext<Store>) {
         entities.push({
           id: event.id,
           blockNumber: block.header.height,
+          blockHash: block.header.hash,
           timestamp: new Date(block.header.timestamp!),
-          extrinsicHash: event.extrinsic?.hash,
+          extrinsicHash: event.extrinsic.hash,
           fee: event.extrinsic?.fee || 0n,
           who: ss58Encode(rec.who),
           amount: rec.amount,

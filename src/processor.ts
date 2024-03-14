@@ -17,9 +17,9 @@ export const processor = new SubstrateBatchProcessor()
   .setRpcEndpoint({
     url: assertNotNull(process.env.RPC_ENDPOINT),
     rateLimit: 0,
-    maxBatchCallSize: 500,
+    maxBatchCallSize: 300,
   })
-  // .setBlockRange({ from: 150000 })
+  // .setBlockRange({ from: 0 })
   .setBlockRange({ from: 0 })
   .addEvent({
     name: [
@@ -28,7 +28,7 @@ export const processor = new SubstrateBatchProcessor()
       events.balances.withdraw.name,
     ],
     extrinsic: true,
-    call: true,
+    call: false,
   })
   .addCall({
     name: [
@@ -36,19 +36,20 @@ export const processor = new SubstrateBatchProcessor()
     ],
     extrinsic: true,
     events: true,
-    stack: true,
+    stack: false,
   })
   .addContractsContractEmitted({
     contractAddress: [
-      ContractAddress.AMM,
+      ContractAddress.MARKET_MAKER,
       ContractAddress.CROSS_CHAIN,
       ContractAddress.D9_USDT,
       ContractAddress.MERCHANT,
       ContractAddress.BURN_MANAGER,
+      ContractAddress.NODE_REWARD,
     ],
     extrinsic: true,
     call: true,
-    stack: true,
+    stack: false,
   })
   .setFields({
     event: {

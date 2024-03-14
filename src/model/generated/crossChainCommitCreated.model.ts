@@ -3,8 +3,8 @@ import * as marshal from "./marshal"
 import {Account} from "./account.model"
 
 @Entity_()
-export class CrossChainCommitment {
-    constructor(props?: Partial<CrossChainCommitment>) {
+export class CrossChainCommitCreated {
+    constructor(props?: Partial<CrossChainCommitCreated>) {
         Object.assign(this, props)
     }
 
@@ -16,12 +16,16 @@ export class CrossChainCommitment {
     blockNumber!: number
 
     @Index_()
+    @Column_("text", {nullable: false})
+    blockHash!: string
+
+    @Index_()
     @Column_("timestamp with time zone", {nullable: false})
     timestamp!: Date
 
     @Index_()
-    @Column_("text", {nullable: true})
-    extrinsicHash!: string | undefined | null
+    @Column_("text", {nullable: false})
+    extrinsicHash!: string
 
     @Index_()
     @Column_("text", {nullable: false})

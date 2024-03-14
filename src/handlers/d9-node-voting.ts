@@ -24,6 +24,7 @@ export async function handleD9NodeVoting(ctx: ProcessorContext<Store>) {
         entities.push({
           id: call.id,
           blockNumber: call.block.height,
+          blockHash: call.block.hash,
           extrinsicHash: call.extrinsic?.hash,
           timestamp: new Date(call.block.timestamp!),
           amount: amountToBurn,

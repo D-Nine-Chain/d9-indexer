@@ -3,8 +3,8 @@ import * as marshal from "./marshal"
 import {Account} from "./account.model"
 
 @Entity_()
-export class Burn {
-    constructor(props?: Partial<Burn>) {
+export class NodeRewardPaid {
+    constructor(props?: Partial<NodeRewardPaid>) {
         Object.assign(this, props)
     }
 
@@ -16,21 +16,28 @@ export class Burn {
     blockNumber!: number
 
     @Index_()
+    @Column_("text", {nullable: false})
+    blockHash!: string
+
+    @Index_()
     @Column_("timestamp with time zone", {nullable: false})
     timestamp!: Date
 
     @Index_()
-    @Column_("text", {nullable: true})
-    extrinsicHash!: string | undefined | null
+    @Column_("text", {nullable: false})
+    extrinsicHash!: string
 
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
     fee!: bigint
 
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})
-    from!: Account
+    node!: Account
 
     @Index_()
+    @ManyToOne_(() => Account, {nullable: true})
+    receiver!: Account
+
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
     amount!: bigint
 }

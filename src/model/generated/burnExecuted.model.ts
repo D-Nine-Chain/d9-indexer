@@ -3,8 +3,8 @@ import * as marshal from "./marshal"
 import {Account} from "./account.model"
 
 @Entity_()
-export class CrossChainDispatch {
-    constructor(props?: Partial<CrossChainDispatch>) {
+export class BurnExecuted {
+    constructor(props?: Partial<BurnExecuted>) {
         Object.assign(this, props)
     }
 
@@ -16,20 +16,23 @@ export class CrossChainDispatch {
     blockNumber!: number
 
     @Index_()
+    @Column_("text", {nullable: false})
+    blockHash!: string
+
+    @Index_()
     @Column_("timestamp with time zone", {nullable: false})
     timestamp!: Date
 
     @Index_()
-    @Column_("text", {nullable: true})
-    extrinsicHash!: string | undefined | null
-
-    @Index_()
     @Column_("text", {nullable: false})
-    txId!: string
+    extrinsicHash!: string
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    fee!: bigint
 
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})
-    to!: Account
+    from!: Account
 
     @Index_()
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})

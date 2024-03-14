@@ -2,13 +2,13 @@ import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0x61f1dc95435ae5803dfbffebf0c363472e6a88c5dc102cdba59369a313940104",
+    "hash": "0x6e0eaec1512315978981967d4f9d6072c6a3f50381289c69205961fa9509fff9",
     "language": "ink! 4.3.0",
-    "compiler": "rustc 1.72.0",
+    "compiler": "rustc 1.72.1",
     "build_info": {
       "build_mode": "Release",
       "cargo_contract_version": "3.2.0",
-      "rust_toolchain": "stable-aarch64-apple-darwin",
+      "rust_toolchain": "stable-x86_64-apple-darwin",
       "wasm_opt_settings": {
         "keep_debug_symbols": false,
         "optimization_passes": "Z"
@@ -92,13 +92,13 @@ export const metadata = {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 25
+        "type": 24
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 24
+        "type": 22
       },
       "maxEventTopics": 4,
       "timestamp": {
@@ -125,26 +125,145 @@ export const metadata = {
           {
             "docs": [],
             "indexed": true,
-            "label": "direction",
+            "label": "usdt",
             "type": {
-              "displayName": [],
-              "type": 22
+              "displayName": [
+                "Balance"
+              ],
+              "type": 4
             }
           },
           {
             "docs": [],
             "indexed": true,
-            "label": "time",
+            "label": "d9",
             "type": {
               "displayName": [
-                "Timestamp"
+                "Balance"
               ],
-              "type": 23
+              "type": 4
             }
           }
         ],
         "docs": [],
-        "label": "CurrencySwap"
+        "label": "LiquidityAdded"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "account_id",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "usdt",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "d9",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "docs": [],
+        "label": "LiquidityRemoved"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "account_id",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "usdt",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "d9",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "docs": [],
+        "label": "D9ToUSDTConversion"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "account_id",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "usdt",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "d9",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "docs": [],
+        "label": "USDTToD9Conversion"
       }
     ],
     "lang_error": {
@@ -265,7 +384,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 16
+          "type": 12
         },
         "selector": "0xbdd16bfa"
       },
@@ -357,7 +476,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 18
+          "type": 16
         },
         "selector": "0x0edab8e1"
       },
@@ -375,7 +494,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 18
+          "type": 16
         },
         "selector": "0x5b41ab8a"
       },
@@ -412,7 +531,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 18
         },
         "selector": "0xbdcee4ed"
       },
@@ -424,7 +543,7 @@ export const metadata = {
               "displayName": [
                 "Direction"
               ],
-              "type": 21
+              "type": 19
             }
           },
           {
@@ -449,7 +568,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 18
+          "type": 16
         },
         "selector": "0x2413eb9a"
       },
@@ -461,7 +580,7 @@ export const metadata = {
               "displayName": [
                 "Direction"
               ],
-              "type": 21
+              "type": 19
             }
           },
           {
@@ -484,7 +603,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 16
+          "type": 20
         },
         "selector": "0x06f49352"
       },
@@ -1038,75 +1157,7 @@ export const metadata = {
               },
               {
                 "index": 16,
-                "name": "SomeEnvironmentError"
-              },
-              {
-                "index": 17,
-                "name": "CalledContractTrapped"
-              },
-              {
-                "index": 18,
-                "name": "CalledContractReverted"
-              },
-              {
-                "index": 19,
-                "name": "NotCallable"
-              },
-              {
-                "index": 20,
-                "name": "SomeDecodeError"
-              },
-              {
-                "index": 21,
-                "name": "SomeOffChainError"
-              },
-              {
-                "index": 22,
-                "name": "CalleeTrapped"
-              },
-              {
-                "index": 23,
-                "name": "CalleeReverted"
-              },
-              {
-                "index": 24,
-                "name": "KeyNotFound"
-              },
-              {
-                "index": 25,
-                "name": "_BelowSubsistenceThreshold"
-              },
-              {
-                "index": 26,
-                "name": "EnvironmentalTransferFailed"
-              },
-              {
-                "index": 27,
-                "name": "_EndowmentTooLow"
-              },
-              {
-                "index": 28,
-                "name": "CodeNotFound"
-              },
-              {
-                "index": 29,
-                "name": "Unknown"
-              },
-              {
-                "index": 30,
-                "name": "LoggingDisabled"
-              },
-              {
-                "index": 31,
-                "name": "CallRuntimeFailed"
-              },
-              {
-                "index": 32,
-                "name": "EcdsaRecoveryFailed"
-              },
-              {
-                "index": 33,
-                "name": "WithdrawalAmountExceedsBalance"
+                "name": "LiquidityTooLow"
               }
             ]
           }
@@ -1193,6 +1244,156 @@ export const metadata = {
               {
                 "fields": [
                   {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 14
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 14
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 7
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 15,
+                "typeName": "Currency"
+              },
+              {
+                "type": 15,
+                "typeName": "Currency"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_maker",
+          "market_maker",
+          "Direction"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 21
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 21
+          },
+          {
+            "name": "E",
+            "type": 7
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
                     "type": 9
                   }
                 ],
@@ -1227,176 +1428,7 @@ export const metadata = {
       }
     },
     {
-      "id": 18,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 19
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 7
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 19
-          },
-          {
-            "name": "E",
-            "type": 7
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 19,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 4
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 14
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 4
-          },
-          {
-            "name": "E",
-            "type": 14
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 20,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 4
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 7
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 4
-          },
-          {
-            "name": "E",
-            "type": 7
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 21,
-      "type": {
-        "def": {
-          "composite": {
-            "fields": [
-              {
-                "type": 15,
-                "typeName": "Currency"
-              },
-              {
-                "type": 15,
-                "typeName": "Currency"
-              }
-            ]
-          }
-        },
-        "path": [
-          "market_maker",
-          "market_maker",
-          "Direction"
-        ]
-      }
-    },
-    {
       "id": 22,
-      "type": {
-        "def": {
-          "tuple": [
-            21,
-            21
-          ]
-        }
-      }
-    },
-    {
-      "id": 23,
-      "type": {
-        "def": {
-          "primitive": "u64"
-        }
-      }
-    },
-    {
-      "id": 24,
       "type": {
         "def": {
           "composite": {
@@ -1416,7 +1448,15 @@ export const metadata = {
       }
     },
     {
-      "id": 25,
+      "id": 23,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 24,
       "type": {
         "def": {
           "variant": {}
@@ -1503,31 +1543,7 @@ export interface Currency_USDT {
     __kind: 'USDT'
 }
 
-export type Error = Error_CallRuntimeFailed | Error_CalledContractReverted | Error_CalledContractTrapped | Error_CalleeReverted | Error_CalleeTrapped | Error_CodeNotFound | Error_ConversionAmountTooLow | Error_CouldntTransferUSDTFromUser | Error_D9orUSDTProvidedLiquidityAtZero | Error_DivisionByZero | Error_EcdsaRecoveryFailed | Error_EnvironmentalTransferFailed | Error_InsufficientAllowance | Error_InsufficientContractLPTokens | Error_InsufficientLPTokens | Error_InsufficientLiquidity | Error_InsufficientLiquidityProvided | Error_KeyNotFound | Error_LiquidityAddedBeyondTolerance | Error_LiquidityProviderNotFound | Error_LoggingDisabled | Error_MarketMakerHasInsufficientFunds | Error_MultiplicationError | Error_NotCallable | Error_SomeDecodeError | Error_SomeEnvironmentError | Error_SomeOffChainError | Error_USDTBalanceInsufficient | Error_USDTTooMuch | Error_USDTTooSmall | Error_Unknown | Error_WithdrawalAmountExceedsBalance | Error__BelowSubsistenceThreshold | Error__EndowmentTooLow
-
-export interface Error_CallRuntimeFailed {
-    __kind: 'CallRuntimeFailed'
-}
-
-export interface Error_CalledContractReverted {
-    __kind: 'CalledContractReverted'
-}
-
-export interface Error_CalledContractTrapped {
-    __kind: 'CalledContractTrapped'
-}
-
-export interface Error_CalleeReverted {
-    __kind: 'CalleeReverted'
-}
-
-export interface Error_CalleeTrapped {
-    __kind: 'CalleeTrapped'
-}
-
-export interface Error_CodeNotFound {
-    __kind: 'CodeNotFound'
-}
+export type Error = Error_ConversionAmountTooLow | Error_CouldntTransferUSDTFromUser | Error_D9orUSDTProvidedLiquidityAtZero | Error_DivisionByZero | Error_InsufficientAllowance | Error_InsufficientContractLPTokens | Error_InsufficientLPTokens | Error_InsufficientLiquidity | Error_InsufficientLiquidityProvided | Error_LiquidityAddedBeyondTolerance | Error_LiquidityProviderNotFound | Error_LiquidityTooLow | Error_MarketMakerHasInsufficientFunds | Error_MultiplicationError | Error_USDTBalanceInsufficient | Error_USDTTooMuch | Error_USDTTooSmall
 
 export interface Error_ConversionAmountTooLow {
     __kind: 'ConversionAmountTooLow'
@@ -1543,14 +1559,6 @@ export interface Error_D9orUSDTProvidedLiquidityAtZero {
 
 export interface Error_DivisionByZero {
     __kind: 'DivisionByZero'
-}
-
-export interface Error_EcdsaRecoveryFailed {
-    __kind: 'EcdsaRecoveryFailed'
-}
-
-export interface Error_EnvironmentalTransferFailed {
-    __kind: 'EnvironmentalTransferFailed'
 }
 
 export interface Error_InsufficientAllowance {
@@ -1574,10 +1582,6 @@ export interface Error_InsufficientLiquidityProvided {
     __kind: 'InsufficientLiquidityProvided'
 }
 
-export interface Error_KeyNotFound {
-    __kind: 'KeyNotFound'
-}
-
 export interface Error_LiquidityAddedBeyondTolerance {
     __kind: 'LiquidityAddedBeyondTolerance'
     value: [Balance, Balance]
@@ -1587,8 +1591,8 @@ export interface Error_LiquidityProviderNotFound {
     __kind: 'LiquidityProviderNotFound'
 }
 
-export interface Error_LoggingDisabled {
-    __kind: 'LoggingDisabled'
+export interface Error_LiquidityTooLow {
+    __kind: 'LiquidityTooLow'
 }
 
 export interface Error_MarketMakerHasInsufficientFunds {
@@ -1598,22 +1602,6 @@ export interface Error_MarketMakerHasInsufficientFunds {
 
 export interface Error_MultiplicationError {
     __kind: 'MultiplicationError'
-}
-
-export interface Error_NotCallable {
-    __kind: 'NotCallable'
-}
-
-export interface Error_SomeDecodeError {
-    __kind: 'SomeDecodeError'
-}
-
-export interface Error_SomeEnvironmentError {
-    __kind: 'SomeEnvironmentError'
-}
-
-export interface Error_SomeOffChainError {
-    __kind: 'SomeOffChainError'
 }
 
 export interface Error_USDTBalanceInsufficient {
@@ -1626,22 +1614,6 @@ export interface Error_USDTTooMuch {
 
 export interface Error_USDTTooSmall {
     __kind: 'USDTTooSmall'
-}
-
-export interface Error_Unknown {
-    __kind: 'Unknown'
-}
-
-export interface Error_WithdrawalAmountExceedsBalance {
-    __kind: 'WithdrawalAmountExceedsBalance'
-}
-
-export interface Error__BelowSubsistenceThreshold {
-    __kind: '_BelowSubsistenceThreshold'
-}
-
-export interface Error__EndowmentTooLow {
-    __kind: '_EndowmentTooLow'
 }
 
 export type AccountId = Bytes
@@ -1761,15 +1733,34 @@ export interface Message_set_code {
     codeHash: Bytes
 }
 
-export type Event = Event_CurrencySwap
+export type Event = Event_D9ToUSDTConversion | Event_LiquidityAdded | Event_LiquidityRemoved | Event_USDTToD9Conversion
 
-export interface Event_CurrencySwap {
-    __kind: 'CurrencySwap'
+export interface Event_D9ToUSDTConversion {
+    __kind: 'D9ToUSDTConversion'
     accountId: AccountId
-    direction: [Direction, Direction]
-    time: Timestamp
+    usdt: Balance
+    d9: Balance
 }
 
-export type Timestamp = bigint
+export interface Event_LiquidityAdded {
+    __kind: 'LiquidityAdded'
+    accountId: AccountId
+    usdt: Balance
+    d9: Balance
+}
+
+export interface Event_LiquidityRemoved {
+    __kind: 'LiquidityRemoved'
+    accountId: AccountId
+    usdt: Balance
+    d9: Balance
+}
+
+export interface Event_USDTToD9Conversion {
+    __kind: 'USDTToD9Conversion'
+    accountId: AccountId
+    usdt: Balance
+    d9: Balance
+}
 
 export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

@@ -1,4 +1,6 @@
-{
+import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
+
+export const metadata = {
   "source": {
     "hash": "0x0cf5fbf9a9dd4057bfc9f674a402a956f97b7fa536545a43c79362842fda587e",
     "language": "ink! 4.3.0",
@@ -1212,3 +1214,167 @@
   ],
   "version": "4"
 }
+
+const _abi = new Abi(metadata)
+
+export function decodeEvent(bytes: Bytes): Event {
+    return _abi.decodeEvent(bytes)
+}
+
+export function decodeMessage(bytes: Bytes): Message {
+    return _abi.decodeMessage(bytes)
+}
+
+export function decodeConstructor(bytes: Bytes): Constructor {
+    return _abi.decodeConstructor(bytes)
+}
+
+export interface Chain {
+    rpc: {
+        call<T=any>(method: string, params?: unknown[]): Promise<T>
+    }
+}
+
+export interface ChainContext {
+    _chain: Chain
+}
+
+export class Contract {
+    constructor(private ctx: ChainContext, private address: Bytes, private blockHash?: Bytes) { }
+
+    get_vote_limit(): Promise<Result<u64, LangError>> {
+        return this.stateCall('0x345bb4a1', [])
+    }
+
+    get_session_rewards_data(session_index: u32): Promise<Result<([Balance, Balance] | undefined), LangError>> {
+        return this.stateCall('0x5b4a8bb7', [session_index])
+    }
+
+    get_node_reward_data(node_id: AccountId): Promise<Result<(Balance | undefined), LangError>> {
+        return this.stateCall('0x72c500b8', [node_id])
+    }
+
+    get_authorized_receiver(node_id: AccountId): Promise<Result<AccountId, LangError>> {
+        return this.stateCall('0x7a99af59', [node_id])
+    }
+
+    private async stateCall<T>(selector: string, args: any[]): Promise<T> {
+        let input = _abi.encodeMessageInput(selector, args)
+        let data = encodeCall(this.address, input)
+        let result = await this.ctx._chain.rpc.call('state_call', ['ContractsApi_call', data, this.blockHash])
+        let value = decodeResult(result)
+        return _abi.decodeMessageOutput(selector, value)
+    }
+}
+
+export type AccountId = Bytes
+
+export type Balance = bigint
+
+export type u32 = number
+
+export type LangError = LangError_CouldNotReadInput
+
+export interface LangError_CouldNotReadInput {
+    __kind: 'CouldNotReadInput'
+}
+
+export type u64 = bigint
+
+export type Constructor = Constructor_new
+
+/**
+ * Constructor that initializes the `bool` value to the given `init_value`.
+ */
+export interface Constructor_new {
+    __kind: 'new'
+    miningPool: AccountId
+    rewardsPallet: AccountId
+}
+
+export type Message = Message_accept_admin | Message_cancel_admin_relinquish | Message_change_vote_limit | Message_get_authorized_receiver | Message_get_node_reward_data | Message_get_session_rewards_data | Message_get_vote_limit | Message_relinquish_admin | Message_remove_authorized_receiver | Message_set_authorized_receiver | Message_set_code | Message_set_mining_pool | Message_set_rewards_pallet | Message_update_rewards | Message_withdraw_reward
+
+export interface Message_accept_admin {
+    __kind: 'accept_admin'
+}
+
+export interface Message_cancel_admin_relinquish {
+    __kind: 'cancel_admin_relinquish'
+}
+
+export interface Message_change_vote_limit {
+    __kind: 'change_vote_limit'
+    newLimit: u64
+}
+
+export interface Message_get_authorized_receiver {
+    __kind: 'get_authorized_receiver'
+    nodeId: AccountId
+}
+
+export interface Message_get_node_reward_data {
+    __kind: 'get_node_reward_data'
+    nodeId: AccountId
+}
+
+export interface Message_get_session_rewards_data {
+    __kind: 'get_session_rewards_data'
+    sessionIndex: u32
+}
+
+export interface Message_get_vote_limit {
+    __kind: 'get_vote_limit'
+}
+
+export interface Message_relinquish_admin {
+    __kind: 'relinquish_admin'
+    newAdmin: AccountId
+}
+
+export interface Message_remove_authorized_receiver {
+    __kind: 'remove_authorized_receiver'
+    nodeId: AccountId
+}
+
+export interface Message_set_authorized_receiver {
+    __kind: 'set_authorized_receiver'
+    nodeId: AccountId
+    receiver: AccountId
+}
+
+export interface Message_set_code {
+    __kind: 'set_code'
+    codeHash: Bytes
+}
+
+export interface Message_set_mining_pool {
+    __kind: 'set_mining_pool'
+    miningPool: AccountId
+}
+
+export interface Message_set_rewards_pallet {
+    __kind: 'set_rewards_pallet'
+    rewardsPallet: AccountId
+}
+
+export interface Message_update_rewards {
+    __kind: 'update_rewards'
+    lastSession: u32
+    sortedNodesAndVotes: [AccountId, u64][]
+}
+
+export interface Message_withdraw_reward {
+    __kind: 'withdraw_reward'
+    nodeId: AccountId
+}
+
+export type Event = Event_NodeRewardPaid
+
+export interface Event_NodeRewardPaid {
+    __kind: 'NodeRewardPaid'
+    node: AccountId
+    receiver: AccountId
+    amount: Balance
+}
+
+export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

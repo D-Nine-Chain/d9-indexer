@@ -1,10 +1,11 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_, ManyToOne as ManyToOne_} from "typeorm"
 import * as marshal from "./marshal"
 import {Account} from "./account.model"
+import {Token} from "./_token"
 
 @Entity_()
-export class MerchantSubscription {
-    constructor(props?: Partial<MerchantSubscription>) {
+export class MerchantPaymentSent {
+    constructor(props?: Partial<MerchantPaymentSent>) {
         Object.assign(this, props)
     }
 
@@ -16,20 +17,31 @@ export class MerchantSubscription {
     blockNumber!: number
 
     @Index_()
+    @Column_("text", {nullable: false})
+    blockHash!: string
+
+    @Index_()
     @Column_("timestamp with time zone", {nullable: false})
     timestamp!: Date
 
     @Index_()
-    @Column_("text", {nullable: true})
-    extrinsicHash!: string | undefined | null
+    @Column_("text", {nullable: false})
+    extrinsicHash!: string
 
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
     fee!: bigint
 
-    @Column_("timestamp with time zone", {nullable: false})
-    expiry!: Date
+    @Index_()
+    @ManyToOne_(() => Account, {nullable: true})
+    merchant!: Account
 
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})
-    who!: Account
+    consumer!: Account
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    amount!: bigint
+
+    @Column_("varchar", {length: 4, nullable: false})
+    paymentToken!: Token
 }

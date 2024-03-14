@@ -3,8 +3,8 @@ import * as marshal from "./marshal"
 import {Account} from "./account.model"
 
 @Entity_()
-export class GreenPointsTransaction {
-    constructor(props?: Partial<GreenPointsTransaction>) {
+export class LiquidityAdded {
+    constructor(props?: Partial<LiquidityAdded>) {
         Object.assign(this, props)
     }
 
@@ -32,15 +32,11 @@ export class GreenPointsTransaction {
 
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})
-    merchant!: Account
+    who!: Account
 
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    merchantGP!: bigint
-
-    @Index_()
-    @ManyToOne_(() => Account, {nullable: true})
-    consumer!: Account
+    d9!: bigint
 
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    consumerGP!: bigint
+    usdt!: bigint
 }

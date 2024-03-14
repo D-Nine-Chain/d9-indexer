@@ -2,13 +2,13 @@ import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0x5f4b9f371454d365b47ad474ee4ec0d8af3de753e1151377986e1112f8c7b141",
+    "hash": "0x7a88ca43f88f1468755756c58c8fcac582c83a176b183301e672712efe955d03",
     "language": "ink! 4.3.0",
-    "compiler": "rustc 1.72.0",
+    "compiler": "rustc 1.72.1",
     "build_info": {
       "build_mode": "Release",
       "cargo_contract_version": "3.2.0",
-      "rust_toolchain": "stable-aarch64-apple-darwin",
+      "rust_toolchain": "stable-x86_64-apple-darwin",
       "wasm_opt_settings": {
         "keep_debug_symbols": false,
         "optimization_passes": "Z"
@@ -56,7 +56,7 @@ export const metadata = {
         "displayName": [
           "AccountId"
         ],
-        "type": 5
+        "type": 4
       },
       "balance": {
         "displayName": [
@@ -68,26 +68,26 @@ export const metadata = {
         "displayName": [
           "BlockNumber"
         ],
-        "type": 15
+        "type": 16
       },
       "chainExtension": {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 16
+        "type": 17
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 13
+        "type": 14
       },
       "maxEventTopics": 4,
       "timestamp": {
         "displayName": [
           "Timestamp"
         ],
-        "type": 14
+        "type": 15
       }
     },
     "events": [
@@ -96,23 +96,23 @@ export const metadata = {
           {
             "docs": [],
             "indexed": true,
-            "label": "from",
+            "label": "owner",
             "type": {
               "displayName": [
                 "AccountId"
               ],
-              "type": 5
+              "type": 4
             }
           },
           {
             "docs": [],
             "indexed": true,
-            "label": "to",
+            "label": "spender",
             "type": {
               "displayName": [
                 "AccountId"
               ],
-              "type": 5
+              "type": 4
             }
           },
           {
@@ -121,14 +121,53 @@ export const metadata = {
             "label": "amount",
             "type": {
               "displayName": [
-                "Balance"
+                "u128"
               ],
               "type": 0
             }
           }
         ],
         "docs": [],
-        "label": "D9USDTTransfer"
+        "label": "Approval"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "from",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 13
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "to",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 13
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "value",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "docs": [],
+        "label": "Transfer"
       }
     ],
     "lang_error": {
@@ -139,6 +178,103 @@ export const metadata = {
       "type": 3
     },
     "messages": [
+      {
+        "args": [
+          {
+            "label": "to",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "value",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "_data",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 7
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "transfer",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0x84a15da1"
+      },
+      {
+        "args": [
+          {
+            "label": "from",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "to",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "value",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "_data",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 7
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "transfer_from",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0x0b396f18"
+      },
       {
         "args": [],
         "default": false,
@@ -151,9 +287,56 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 4
+          "type": 12
         },
         "selector": "0x162df8c2"
+      },
+      {
+        "args": [
+          {
+            "label": "to",
+            "type": {
+              "displayName": [
+                "psp22_external",
+                "TransferInput1"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "value",
+            "type": {
+              "displayName": [
+                "psp22_external",
+                "TransferInput2"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "data",
+            "type": {
+              "displayName": [
+                "psp22_external",
+                "TransferInput3"
+              ],
+              "type": 7
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "PSP22::transfer",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0xdb20f9f5"
       },
       {
         "args": [
@@ -164,7 +347,7 @@ export const metadata = {
                 "psp22_external",
                 "DecreaseAllowanceInput1"
               ],
-              "type": 5
+              "type": 4
             }
           },
           {
@@ -201,7 +384,7 @@ export const metadata = {
                 "psp22_external",
                 "BalanceOfInput1"
               ],
-              "type": 5
+              "type": 4
             }
           }
         ],
@@ -215,46 +398,9 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 4
+          "type": 12
         },
         "selector": "0x6568382f"
-      },
-      {
-        "args": [
-          {
-            "label": "spender",
-            "type": {
-              "displayName": [
-                "psp22_external",
-                "ApproveInput1"
-              ],
-              "type": 5
-            }
-          },
-          {
-            "label": "value",
-            "type": {
-              "displayName": [
-                "psp22_external",
-                "ApproveInput2"
-              ],
-              "type": 0
-            }
-          }
-        ],
-        "default": false,
-        "docs": [],
-        "label": "PSP22::approve",
-        "mutates": true,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 8
-        },
-        "selector": "0xb20f1bbd"
       },
       {
         "args": [
@@ -265,7 +411,7 @@ export const metadata = {
                 "psp22_external",
                 "TransferFromInput1"
               ],
-              "type": 5
+              "type": 4
             }
           },
           {
@@ -275,7 +421,7 @@ export const metadata = {
                 "psp22_external",
                 "TransferFromInput2"
               ],
-              "type": 5
+              "type": 4
             }
           },
           {
@@ -295,7 +441,7 @@ export const metadata = {
                 "psp22_external",
                 "TransferFromInput4"
               ],
-              "type": 12
+              "type": 7
             }
           }
         ],
@@ -322,7 +468,7 @@ export const metadata = {
                 "psp22_external",
                 "IncreaseAllowanceInput1"
               ],
-              "type": 5
+              "type": 4
             }
           },
           {
@@ -353,13 +499,50 @@ export const metadata = {
       {
         "args": [
           {
+            "label": "spender",
+            "type": {
+              "displayName": [
+                "psp22_external",
+                "ApproveInput1"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "value",
+            "type": {
+              "displayName": [
+                "psp22_external",
+                "ApproveInput2"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "PSP22::approve",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 8
+        },
+        "selector": "0xb20f1bbd"
+      },
+      {
+        "args": [
+          {
             "label": "owner",
             "type": {
               "displayName": [
                 "psp22_external",
                 "AllowanceInput1"
               ],
-              "type": 5
+              "type": 4
             }
           },
           {
@@ -369,7 +552,7 @@ export const metadata = {
                 "psp22_external",
                 "AllowanceInput2"
               ],
-              "type": 5
+              "type": 4
             }
           }
         ],
@@ -383,56 +566,9 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 4
+          "type": 12
         },
         "selector": "0x4d47d921"
-      },
-      {
-        "args": [
-          {
-            "label": "to",
-            "type": {
-              "displayName": [
-                "psp22_external",
-                "TransferInput1"
-              ],
-              "type": 5
-            }
-          },
-          {
-            "label": "value",
-            "type": {
-              "displayName": [
-                "psp22_external",
-                "TransferInput2"
-              ],
-              "type": 0
-            }
-          },
-          {
-            "label": "data",
-            "type": {
-              "displayName": [
-                "psp22_external",
-                "TransferInput3"
-              ],
-              "type": 12
-            }
-          }
-        ],
-        "default": false,
-        "docs": [],
-        "label": "PSP22::transfer",
-        "mutates": true,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 8
-        },
-        "selector": "0xdb20f9f5"
       }
     ]
   },
@@ -582,52 +718,10 @@ export const metadata = {
       "id": 4,
       "type": {
         "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 0
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 3
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 0
-          },
-          {
-            "name": "E",
-            "type": 3
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 5,
-      "type": {
-        "def": {
           "composite": {
             "fields": [
               {
-                "type": 6,
+                "type": 5,
                 "typeName": "[u8; 32]"
               }
             ]
@@ -641,13 +735,21 @@ export const metadata = {
       }
     },
     {
-      "id": 6,
+      "id": 5,
       "type": {
         "def": {
           "array": {
             "len": 32,
-            "type": 7
+            "type": 6
           }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": {
+        "def": {
+          "primitive": "u8"
         }
       }
     },
@@ -655,7 +757,9 @@ export const metadata = {
       "id": 7,
       "type": {
         "def": {
-          "primitive": "u8"
+          "sequence": {
+            "type": 6
+          }
         }
       }
     },
@@ -809,20 +913,85 @@ export const metadata = {
       "id": 12,
       "type": {
         "def": {
-          "sequence": {
-            "type": 7
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
           }
-        }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          },
+          {
+            "name": "E",
+            "type": 3
+          }
+        ],
+        "path": [
+          "Result"
+        ]
       }
     },
     {
       "id": 13,
       "type": {
         "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
           "composite": {
             "fields": [
               {
-                "type": 6,
+                "type": 5,
                 "typeName": "[u8; 32]"
               }
             ]
@@ -836,7 +1005,7 @@ export const metadata = {
       }
     },
     {
-      "id": 14,
+      "id": 15,
       "type": {
         "def": {
           "primitive": "u64"
@@ -844,7 +1013,7 @@ export const metadata = {
       }
     },
     {
-      "id": 15,
+      "id": 16,
       "type": {
         "def": {
           "primitive": "u32"
@@ -852,7 +1021,7 @@ export const metadata = {
       }
     },
     {
-      "id": 16,
+      "id": 17,
       "type": {
         "def": {
           "variant": {}
@@ -931,7 +1100,7 @@ export interface Constructor_new {
     initialSupply: bigint
 }
 
-export type Message = Message_PSP22_allowance | Message_PSP22_approve | Message_PSP22_balance_of | Message_PSP22_decrease_allowance | Message_PSP22_increase_allowance | Message_PSP22_total_supply | Message_PSP22_transfer | Message_PSP22_transfer_from
+export type Message = Message_PSP22_allowance | Message_PSP22_approve | Message_PSP22_balance_of | Message_PSP22_decrease_allowance | Message_PSP22_increase_allowance | Message_PSP22_total_supply | Message_PSP22_transfer | Message_PSP22_transfer_from | Message_transfer | Message_transfer_from
 
 export interface Message_PSP22_allowance {
     __kind: 'PSP22_allowance'
@@ -981,13 +1150,35 @@ export interface Message_PSP22_transfer_from {
     data: Bytes
 }
 
-export type Event = Event_D9USDTTransfer
+export interface Message_transfer {
+    __kind: 'transfer'
+    to: AccountId
+    value: bigint
+    data: Bytes
+}
 
-export interface Event_D9USDTTransfer {
-    __kind: 'D9USDTTransfer'
+export interface Message_transfer_from {
+    __kind: 'transfer_from'
     from: AccountId
     to: AccountId
+    value: bigint
+    data: Bytes
+}
+
+export type Event = Event_Approval | Event_Transfer
+
+export interface Event_Approval {
+    __kind: 'Approval'
+    owner: AccountId
+    spender: AccountId
     amount: bigint
+}
+
+export interface Event_Transfer {
+    __kind: 'Transfer'
+    from?: (AccountId | undefined)
+    to?: (AccountId | undefined)
+    value: bigint
 }
 
 export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

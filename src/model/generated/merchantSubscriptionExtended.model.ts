@@ -4,8 +4,8 @@ import {Token} from "./_token"
 import {Account} from "./account.model"
 
 @Entity_()
-export class MarketGetToken {
-    constructor(props?: Partial<MarketGetToken>) {
+export class MerchantSubscriptionExtended {
+    constructor(props?: Partial<MerchantSubscriptionExtended>) {
         Object.assign(this, props)
     }
 
@@ -17,23 +17,30 @@ export class MarketGetToken {
     blockNumber!: number
 
     @Index_()
+    @Column_("text", {nullable: false})
+    blockHash!: string
+
+    @Index_()
     @Column_("timestamp with time zone", {nullable: false})
     timestamp!: Date
 
     @Index_()
-    @Column_("text", {nullable: true})
-    extrinsicHash!: string | undefined | null
+    @Column_("text", {nullable: false})
+    extrinsicHash!: string
 
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
     fee!: bigint
 
+    @Column_("timestamp with time zone", {nullable: false})
+    expiry!: Date
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    amount!: bigint
+
     @Column_("varchar", {length: 4, nullable: false})
-    token!: Token
+    paymentToken!: Token
 
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})
     who!: Account
-
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    value!: bigint
 }

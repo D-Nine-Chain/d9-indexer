@@ -2,13 +2,13 @@ import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0x98c54be35f62eebd1cb35bb85f5faae3180b44cf852bd98927a429eec022ece6",
+    "hash": "0xfadde591f53203f7fe056042f80f1012e6abc39bbbf56a4c1be3a83f61ca1fc9",
     "language": "ink! 4.3.0",
-    "compiler": "rustc 1.72.0",
+    "compiler": "rustc 1.72.1",
     "build_info": {
       "build_mode": "Release",
       "cargo_contract_version": "3.2.0",
-      "rust_toolchain": "stable-aarch64-apple-darwin",
+      "rust_toolchain": "stable-x86_64-apple-darwin",
       "wasm_opt_settings": {
         "keep_debug_symbols": false,
         "optimization_passes": "Z"
@@ -36,7 +36,7 @@ export const metadata = {
             }
           },
           {
-            "label": "main_contract",
+            "label": "mining_pool",
             "type": {
               "displayName": [
                 "AccountId"
@@ -127,6 +127,17 @@ export const metadata = {
           {
             "docs": [],
             "indexed": true,
+            "label": "usdt",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
             "label": "expiry",
             "type": {
               "displayName": [
@@ -137,7 +148,35 @@ export const metadata = {
           }
         ],
         "docs": [],
-        "label": "SubscriptionCreated"
+        "label": "SubscriptionExtended"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "account_id",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "redeemed_d9",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "D9Redeemed"
       },
       {
         "args": [
@@ -166,6 +205,84 @@ export const metadata = {
         ],
         "docs": [],
         "label": "GreenPointsTransaction"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "merchant",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "consumer",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "amount",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "D9MerchantPaymentSent"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "merchant",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "consumer",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "amount",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "USDTMerchantPaymentSent"
       }
     ],
     "lang_error": {
@@ -232,6 +349,32 @@ export const metadata = {
               ],
               "type": 2
             }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "give_green_points_d9",
+        "mutates": true,
+        "payable": true,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 13
+        },
+        "selector": "0x88b8f067"
+      },
+      {
+        "args": [
+          {
+            "label": "consumer_id",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
           },
           {
             "label": "usdt_payment",
@@ -260,32 +403,6 @@ export const metadata = {
       {
         "args": [
           {
-            "label": "consumer_id",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 2
-            }
-          }
-        ],
-        "default": false,
-        "docs": [],
-        "label": "give_green_points_d9",
-        "mutates": true,
-        "payable": true,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 13
-        },
-        "selector": "0x88b8f067"
-      },
-      {
-        "args": [
-          {
             "label": "merchant_id",
             "type": {
               "displayName": [
@@ -306,7 +423,7 @@ export const metadata = {
         ],
         "default": false,
         "docs": [],
-        "label": "sendUsdtPaymentToMerchant",
+        "label": "send_usdt_payment_to_merchant",
         "mutates": true,
         "payable": true,
         "returnType": {
@@ -316,7 +433,7 @@ export const metadata = {
           ],
           "type": 13
         },
-        "selector": "0xedd032e0"
+        "selector": "0xa69d4305"
       },
       {
         "args": [
@@ -334,7 +451,7 @@ export const metadata = {
         "docs": [
           " a customer pays a merchant using d9"
         ],
-        "label": "sendD9PaymentToMerchant",
+        "label": "send_d9_payment_to_merchant",
         "mutates": true,
         "payable": true,
         "returnType": {
@@ -344,7 +461,7 @@ export const metadata = {
           ],
           "type": 13
         },
-        "selector": "0x95d33766"
+        "selector": "0xb0e55803"
       },
       {
         "args": [
@@ -451,6 +568,61 @@ export const metadata = {
           "type": 21
         },
         "selector": "0xafda72a6"
+      },
+      {
+        "args": [
+          {
+            "label": "code_hash",
+            "type": {
+              "displayName": [],
+              "type": 3
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Modifies the code which is used to execute calls to this contract address (`AccountId`).",
+          "",
+          " We use this to upgrade the contract logic. We don't do any authorization here, any caller",
+          " can execute this method. In a production contract you would do some authorization here."
+        ],
+        "label": "set_code",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 5
+        },
+        "selector": "0x694fb50f"
+      },
+      {
+        "args": [
+          {
+            "label": "new_admin",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "change_admin",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 21
+        },
+        "selector": "0x61ae97d7"
       }
     ]
   },
@@ -615,7 +787,7 @@ export const metadata = {
                   "ty": 2
                 }
               },
-              "name": "main_contract"
+              "name": "mining_pool"
             },
             {
               "layout": {
@@ -940,6 +1112,82 @@ export const metadata = {
               {
                 "index": 20,
                 "name": "RedeemD9TransferFailed"
+              },
+              {
+                "index": 21,
+                "name": "SomeEnvironmentError"
+              },
+              {
+                "index": 22,
+                "name": "CalledContractTrapped"
+              },
+              {
+                "index": 23,
+                "name": "CalledContractReverted"
+              },
+              {
+                "index": 24,
+                "name": "NotCallable"
+              },
+              {
+                "index": 25,
+                "name": "SomeDecodeError"
+              },
+              {
+                "index": 26,
+                "name": "SomeOffChainError"
+              },
+              {
+                "index": 27,
+                "name": "CalleeTrapped"
+              },
+              {
+                "index": 28,
+                "name": "CalleeReverted"
+              },
+              {
+                "index": 29,
+                "name": "KeyNotFound"
+              },
+              {
+                "index": 30,
+                "name": "_BelowSubsistenceThreshold"
+              },
+              {
+                "index": 31,
+                "name": "TransferFailed"
+              },
+              {
+                "index": 32,
+                "name": "_EndowmentTooLow"
+              },
+              {
+                "index": 33,
+                "name": "CodeNotFound"
+              },
+              {
+                "index": 34,
+                "name": "Unknown"
+              },
+              {
+                "index": 35,
+                "name": "LoggingDisabled"
+              },
+              {
+                "index": 36,
+                "name": "CallRuntimeFailed"
+              },
+              {
+                "index": 37,
+                "name": "EcdsaRecoveryFailed"
+              },
+              {
+                "index": 38,
+                "name": "ErrorGettingEstimate"
+              },
+              {
+                "index": 39,
+                "name": "CrossContractCallErrorGettingEstimate"
               }
             ]
           }
@@ -1525,18 +1773,54 @@ export interface LangError_CouldNotReadInput {
     __kind: 'CouldNotReadInput'
 }
 
-export type Error = Error_AMMConversionFailed | Error_ConvertingToD9 | Error_D9TransferFailed | Error_GettingUSDTFromAMM | Error_GrantingAllowanceFailed | Error_InsufficientAllowance | Error_InsufficientPayment | Error_MerchantAccountExpired | Error_NoAccountFound | Error_NoMerchantAccountFound | Error_NothingToRedeem | Error_OnlyAdmin | Error_ReceivingUSDTFromUser | Error_RedeemD9TransferFailed | Error_SendUSDTToMerchant | Error_SendingD9ToMiningPool | Error_SendingUSDTToAMM | Error_TransferringToMainContract | Error_TransferringToUSDTToMerchant | Error_USDTTransferFailed | Error_UserUSDTBalanceInsufficient
+export type Error = Error_AMMConversionFailed | Error_CallRuntimeFailed | Error_CalledContractReverted | Error_CalledContractTrapped | Error_CalleeReverted | Error_CalleeTrapped | Error_CodeNotFound | Error_ConvertingToD9 | Error_CrossContractCallErrorGettingEstimate | Error_D9TransferFailed | Error_EcdsaRecoveryFailed | Error_ErrorGettingEstimate | Error_GettingUSDTFromAMM | Error_GrantingAllowanceFailed | Error_InsufficientAllowance | Error_InsufficientPayment | Error_KeyNotFound | Error_LoggingDisabled | Error_MerchantAccountExpired | Error_NoAccountFound | Error_NoMerchantAccountFound | Error_NotCallable | Error_NothingToRedeem | Error_OnlyAdmin | Error_ReceivingUSDTFromUser | Error_RedeemD9TransferFailed | Error_SendUSDTToMerchant | Error_SendingD9ToMiningPool | Error_SendingUSDTToAMM | Error_SomeDecodeError | Error_SomeEnvironmentError | Error_SomeOffChainError | Error_TransferFailed | Error_TransferringToMainContract | Error_TransferringToUSDTToMerchant | Error_USDTTransferFailed | Error_Unknown | Error_UserUSDTBalanceInsufficient | Error__BelowSubsistenceThreshold | Error__EndowmentTooLow
 
 export interface Error_AMMConversionFailed {
     __kind: 'AMMConversionFailed'
+}
+
+export interface Error_CallRuntimeFailed {
+    __kind: 'CallRuntimeFailed'
+}
+
+export interface Error_CalledContractReverted {
+    __kind: 'CalledContractReverted'
+}
+
+export interface Error_CalledContractTrapped {
+    __kind: 'CalledContractTrapped'
+}
+
+export interface Error_CalleeReverted {
+    __kind: 'CalleeReverted'
+}
+
+export interface Error_CalleeTrapped {
+    __kind: 'CalleeTrapped'
+}
+
+export interface Error_CodeNotFound {
+    __kind: 'CodeNotFound'
 }
 
 export interface Error_ConvertingToD9 {
     __kind: 'ConvertingToD9'
 }
 
+export interface Error_CrossContractCallErrorGettingEstimate {
+    __kind: 'CrossContractCallErrorGettingEstimate'
+}
+
 export interface Error_D9TransferFailed {
     __kind: 'D9TransferFailed'
+}
+
+export interface Error_EcdsaRecoveryFailed {
+    __kind: 'EcdsaRecoveryFailed'
+}
+
+export interface Error_ErrorGettingEstimate {
+    __kind: 'ErrorGettingEstimate'
 }
 
 export interface Error_GettingUSDTFromAMM {
@@ -1555,6 +1839,14 @@ export interface Error_InsufficientPayment {
     __kind: 'InsufficientPayment'
 }
 
+export interface Error_KeyNotFound {
+    __kind: 'KeyNotFound'
+}
+
+export interface Error_LoggingDisabled {
+    __kind: 'LoggingDisabled'
+}
+
 export interface Error_MerchantAccountExpired {
     __kind: 'MerchantAccountExpired'
 }
@@ -1565,6 +1857,10 @@ export interface Error_NoAccountFound {
 
 export interface Error_NoMerchantAccountFound {
     __kind: 'NoMerchantAccountFound'
+}
+
+export interface Error_NotCallable {
+    __kind: 'NotCallable'
 }
 
 export interface Error_NothingToRedeem {
@@ -1595,6 +1891,22 @@ export interface Error_SendingUSDTToAMM {
     __kind: 'SendingUSDTToAMM'
 }
 
+export interface Error_SomeDecodeError {
+    __kind: 'SomeDecodeError'
+}
+
+export interface Error_SomeEnvironmentError {
+    __kind: 'SomeEnvironmentError'
+}
+
+export interface Error_SomeOffChainError {
+    __kind: 'SomeOffChainError'
+}
+
+export interface Error_TransferFailed {
+    __kind: 'TransferFailed'
+}
+
 export interface Error_TransferringToMainContract {
     __kind: 'TransferringToMainContract'
 }
@@ -1607,8 +1919,20 @@ export interface Error_USDTTransferFailed {
     __kind: 'USDTTransferFailed'
 }
 
+export interface Error_Unknown {
+    __kind: 'Unknown'
+}
+
 export interface Error_UserUSDTBalanceInsufficient {
     __kind: 'UserUSDTBalanceInsufficient'
+}
+
+export interface Error__BelowSubsistenceThreshold {
+    __kind: '_BelowSubsistenceThreshold'
+}
+
+export interface Error__EndowmentTooLow {
+    __kind: '_EndowmentTooLow'
 }
 
 export type Timestamp = bigint
@@ -1623,11 +1947,16 @@ export type Constructor = Constructor_new
 export interface Constructor_new {
     __kind: 'new'
     ammContract: AccountId
-    mainContract: AccountId
+    miningPool: AccountId
     usdtContract: AccountId
 }
 
-export type Message = Message_change_amm_contract | Message_change_mining_pool | Message_get_account | Message_get_expiry | Message_give_green_points_d9 | Message_give_green_points_usdt | Message_redeem_d9 | Message_sendD9PaymentToMerchant | Message_sendUsdtPaymentToMerchant | Message_subscribe
+export type Message = Message_change_admin | Message_change_amm_contract | Message_change_mining_pool | Message_get_account | Message_get_expiry | Message_give_green_points_d9 | Message_give_green_points_usdt | Message_redeem_d9 | Message_send_d9_payment_to_merchant | Message_send_usdt_payment_to_merchant | Message_set_code | Message_subscribe
+
+export interface Message_change_admin {
+    __kind: 'change_admin'
+    newAdmin: AccountId
+}
 
 export interface Message_change_amm_contract {
     __kind: 'change_amm_contract'
@@ -1673,15 +2002,26 @@ export interface Message_redeem_d9 {
 /**
  *  a customer pays a merchant using d9
  */
-export interface Message_sendD9PaymentToMerchant {
-    __kind: 'sendD9PaymentToMerchant'
+export interface Message_send_d9_payment_to_merchant {
+    __kind: 'send_d9_payment_to_merchant'
     merchantId: AccountId
 }
 
-export interface Message_sendUsdtPaymentToMerchant {
-    __kind: 'sendUsdtPaymentToMerchant'
+export interface Message_send_usdt_payment_to_merchant {
+    __kind: 'send_usdt_payment_to_merchant'
     merchantId: AccountId
     usdtAmount: Balance
+}
+
+/**
+ *  Modifies the code which is used to execute calls to this contract address (`AccountId`).
+ * 
+ *  We use this to upgrade the contract logic. We don't do any authorization here, any caller
+ *  can execute this method. In a production contract you would do some authorization here.
+ */
+export interface Message_set_code {
+    __kind: 'set_code'
+    codeHash: Bytes
 }
 
 /**
@@ -1692,7 +2032,20 @@ export interface Message_subscribe {
     usdtAmount: Balance
 }
 
-export type Event = Event_GreenPointsTransaction | Event_SubscriptionCreated
+export type Event = Event_D9MerchantPaymentSent | Event_D9Redeemed | Event_GreenPointsTransaction | Event_SubscriptionExtended | Event_USDTMerchantPaymentSent
+
+export interface Event_D9MerchantPaymentSent {
+    __kind: 'D9MerchantPaymentSent'
+    merchant: AccountId
+    consumer: AccountId
+    amount: Balance
+}
+
+export interface Event_D9Redeemed {
+    __kind: 'D9Redeemed'
+    accountId: AccountId
+    redeemedD9: Balance
+}
 
 export interface Event_GreenPointsTransaction {
     __kind: 'GreenPointsTransaction'
@@ -1700,10 +2053,18 @@ export interface Event_GreenPointsTransaction {
     consumer: GreenPointsCreated
 }
 
-export interface Event_SubscriptionCreated {
-    __kind: 'SubscriptionCreated'
+export interface Event_SubscriptionExtended {
+    __kind: 'SubscriptionExtended'
     accountId: AccountId
+    usdt: Balance
     expiry: Timestamp
+}
+
+export interface Event_USDTMerchantPaymentSent {
+    __kind: 'USDTMerchantPaymentSent'
+    merchant: AccountId
+    consumer: AccountId
+    amount: Balance
 }
 
 export interface GreenPointsCreated {

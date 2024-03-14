@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0xa3a88043cfcc4d27923a50d902ae2aeaf8a504e4514d905e86c6e7a98a9ce9ae",
+    "hash": "0xfadde591f53203f7fe056042f80f1012e6abc39bbbf56a4c1be3a83f61ca1fc9",
     "language": "ink! 4.3.0",
     "compiler": "rustc 1.72.1",
     "build_info": {
@@ -86,19 +86,19 @@
         "displayName": [
           "BlockNumber"
         ],
-        "type": 27
+        "type": 25
       },
       "chainExtension": {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 28
+        "type": 26
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 26
+        "type": 24
       },
       "maxEventTopics": 4,
       "timestamp": {
@@ -146,7 +146,7 @@
           }
         ],
         "docs": [],
-        "label": "SubscriptionUpdated"
+        "label": "SubscriptionExtended"
       },
       {
         "args": [
@@ -181,185 +181,12 @@
           {
             "docs": [],
             "indexed": true,
-            "label": "amount",
-            "type": {
-              "displayName": [
-                "Balance"
-              ],
-              "type": 1
-            }
-          },
-          {
-            "docs": [],
-            "indexed": false,
-            "label": "purpose",
-            "type": {
-              "displayName": [
-                "USDTConsumptionPurpose"
-              ],
-              "type": 23
-            }
-          }
-        ],
-        "docs": [],
-        "label": "USDTConsumed"
-      },
-      {
-        "args": [
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "merchant_account",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 2
-            }
-          },
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "consumer_account",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 2
-            }
-          },
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "points",
-            "type": {
-              "displayName": [
-                "Balance"
-              ],
-              "type": 1
-            }
-          }
-        ],
-        "docs": [],
-        "label": "ConsumerReceivedPoints"
-      },
-      {
-        "args": [
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "merchant_account",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 2
-            }
-          },
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "points",
-            "type": {
-              "displayName": [
-                "Balance"
-              ],
-              "type": 1
-            }
-          }
-        ],
-        "docs": [],
-        "label": "MerchantReceivedPoints"
-      },
-      {
-        "args": [
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "merchant_account",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 2
-            }
-          },
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "consumer_account",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 2
-            }
-          },
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "amount",
-            "type": {
-              "displayName": [
-                "Balance"
-              ],
-              "type": 1
-            }
-          },
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "currency",
-            "type": {
-              "displayName": [
-                "Currency"
-              ],
-              "type": 24
-            }
-          }
-        ],
-        "docs": [],
-        "label": "PaymentSent"
-      },
-      {
-        "args": [
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "account_id",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 2
-            }
-          },
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "expiry",
-            "type": {
-              "displayName": [
-                "Timestamp"
-              ],
-              "type": 0
-            }
-          }
-        ],
-        "docs": [],
-        "label": "SubscriptionCreated"
-      },
-      {
-        "args": [
-          {
-            "docs": [],
-            "indexed": true,
             "label": "merchant",
             "type": {
               "displayName": [
                 "GreenPointsCreated"
               ],
-              "type": 25
+              "type": 23
             }
           },
           {
@@ -370,12 +197,90 @@
               "displayName": [
                 "GreenPointsCreated"
               ],
-              "type": 25
+              "type": 23
             }
           }
         ],
         "docs": [],
         "label": "GreenPointsTransaction"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "merchant",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "consumer",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "amount",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "D9MerchantPaymentSent"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "merchant",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "consumer",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "amount",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "USDTMerchantPaymentSent"
       }
     ],
     "lang_error": {
@@ -1277,6 +1182,10 @@
               {
                 "index": 38,
                 "name": "ErrorGettingEstimate"
+              },
+              {
+                "index": 39,
+                "name": "CrossContractCallErrorGettingEstimate"
               }
             ]
           }
@@ -1735,58 +1644,6 @@
       "id": 23,
       "type": {
         "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 0,
-                "name": "Gift"
-              },
-              {
-                "index": 1,
-                "name": "Payment"
-              },
-              {
-                "index": 2,
-                "name": "Subscription"
-              }
-            ]
-          }
-        },
-        "path": [
-          "d9_merchant_mining",
-          "d9_merchant_mining",
-          "USDTConsumptionPurpose"
-        ]
-      }
-    },
-    {
-      "id": 24,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 0,
-                "name": "D9"
-              },
-              {
-                "index": 1,
-                "name": "USDT"
-              }
-            ]
-          }
-        },
-        "path": [
-          "d9_merchant_mining",
-          "d9_merchant_mining",
-          "Currency"
-        ]
-      }
-    },
-    {
-      "id": 25,
-      "type": {
-        "def": {
           "composite": {
             "fields": [
               {
@@ -1810,7 +1667,7 @@
       }
     },
     {
-      "id": 26,
+      "id": 24,
       "type": {
         "def": {
           "composite": {
@@ -1830,7 +1687,7 @@
       }
     },
     {
-      "id": 27,
+      "id": 25,
       "type": {
         "def": {
           "primitive": "u32"
@@ -1838,7 +1695,7 @@
       }
     },
     {
-      "id": 28,
+      "id": 26,
       "type": {
         "def": {
           "variant": {}

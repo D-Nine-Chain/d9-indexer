@@ -43,6 +43,7 @@ function getTransferEvents(ctx: ProcessorContext<Store>): TransferEvent[] {
         transfers.push({
           id: event.id,
           blockNumber: block.header.height,
+          blockHash: block.header.hash,
           timestamp: new Date(block.header.timestamp),
           extrinsicHash: event.extrinsic?.hash,
           from: ss58Encode(rec.from),
@@ -85,12 +86,13 @@ async function createAccounts(ctx: ProcessorContext<Store>, transferEvents: Tran
 function createTransfers(transferEvents: TransferEvent[], accounts: Map<string, Account>): Transfer[] {
   const transfers: Transfer[] = []
   for (const t of transferEvents) {
-    const { id, blockNumber, timestamp, extrinsicHash, amount, fee } = t
+    const { id, blockNumber, blockHash, timestamp, extrinsicHash, amount, fee } = t
     const from = accounts.get(t.from)
     const to = accounts.get(t.to)
     transfers.push(new Transfer({
       id,
       blockNumber,
+      blockHash,
       timestamp,
       extrinsicHash,
       from,

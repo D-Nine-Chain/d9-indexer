@@ -8,6 +8,8 @@ export async function getAccounts(ctx: ProcessorContext<Store>, addresses: strin
   const accounts = await ctx.store.findBy(Account, { id: In(addresses) })
   for await (const address of addresses) {
     if (!accounts.find(account => account.id === address)) {
+      if (encoded && address.startsWith('0x'))
+        throw new Error('params encoded === true but address starts with 0x is abnormal')
       const newAccount = new Account({
         id: encoded ? address : ss58Encode(address),
       })
