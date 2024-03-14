@@ -29,14 +29,14 @@ export class MarketTradeCountResolver {
       `
       WITH current_period_volume AS (
         SELECT
-          SUM(lost) + SUM(got) AS volume
+        coalesce(SUM(lost) + SUM(got), 0) AS volume
         FROM
           market_conversion
         WHERE
           timestamp >= NOW() - INTERVAL '24 HOURS'
       ), previous_period_volume AS (
         SELECT
-          SUM(lost) + SUM(got) AS volume
+        coalesce(SUM(lost) + SUM(got), 0) AS volume
         FROM
           market_conversion
         WHERE
