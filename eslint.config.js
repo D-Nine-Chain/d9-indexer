@@ -13,6 +13,7 @@ module.exports = antfu({
     'src/abi',
     'src/types',
     'src/model',
+    'gql.schema.json',
   ],
 }, {
   rules: {
