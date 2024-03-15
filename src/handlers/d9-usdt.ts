@@ -1,6 +1,6 @@
 import { Store } from '@subsquid/typeorm-store'
 import { ProcessorContext } from '../processor'
-import { isContractsCall, ss58Encode } from '../utils'
+import { isContractsCall, isContractsEvent, ss58Encode } from '../utils'
 import { ContractAddress } from '../constant'
 import * as D9USDT from '../abi/d9-usdt'
 import { usdtSaver } from '../helpers'
@@ -17,15 +17,16 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
     //     const decoded = D9USDT.decodeEvent(event.args.data)
     //     console.info(decoded)
     //     switch (decoded.__kind) {
-    //       case 'D9USDTTransfer':
+    //       case 'Transfer':
     //         entities.push({
     //           id: event.id,
     //           blockNumber: block.header.height,
+    //           blockHash: block.header.hash,
     //           extrinsicHash: event.extrinsic?.hash,
     //           timestamp: new Date(block.header.timestamp!),
     //           from: ss58Encode(decoded.from),
     //           to: ss58Encode(decoded.to),
-    //           amount: decoded.amount,
+    //           amount: decoded.value,
     //           fee: event.extrinsic?.fee || 0n,
     //         })
     //         break

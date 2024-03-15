@@ -20,7 +20,7 @@ export const processor = new SubstrateBatchProcessor()
     maxBatchCallSize: 300,
   })
   .setBlockRange({ from: 0 })
-  // .setBlockRange({ from: 379947 })
+  // .setBlockRange({ from: 407328 })
   .addEvent({
     name: [
       events.balances.transfer.name,
@@ -28,7 +28,7 @@ export const processor = new SubstrateBatchProcessor()
       events.balances.withdraw.name,
     ],
     extrinsic: true,
-    call: false,
+    call: true,
   })
   .addCall({
     name: [
@@ -36,7 +36,7 @@ export const processor = new SubstrateBatchProcessor()
     ],
     extrinsic: true,
     events: true,
-    stack: false,
+    stack: true,
   })
   .addContractsContractEmitted({
     contractAddress: [
@@ -49,7 +49,7 @@ export const processor = new SubstrateBatchProcessor()
     ],
     extrinsic: true,
     call: true,
-    stack: false,
+    stack: true,
   })
   .setFields({
     event: {

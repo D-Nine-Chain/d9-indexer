@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: d9-indexer-subsquid
-version: 3
+version: 4
 description: Substrate squid template
 build:
   package_manager: pnpm
