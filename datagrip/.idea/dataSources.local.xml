@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="DB-233.14015.137">
-    <data-source name="squid@localhost" uuid="28c7f09b-5282-4824-bb42-fe929722d63a">
-      <database-info product="PostgreSQL" version="15.5 (Debian 15.5-1.pgdg120+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.6.0" dbms="POSTGRES" exact-version="15.5" exact-driver-version="42.6">
+    <data-source name="d9-indexer-subsquid@pg.squid.subsquid.io" uuid="cc55effd-b54a-4107-af8e-f597a2e0965a">
+      <database-info product="PostgreSQL" version="14.7 (Debian 14.7-1.pgdg110+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.6.0" dbms="POSTGRES" exact-version="14.7" exact-driver-version="42.6">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
-      <user-name>postgres</user-name>
+      <user-name>v3</user-name>
       <schema-mapping>
         <introspection-scope>
           <node kind="database" qname="@">
