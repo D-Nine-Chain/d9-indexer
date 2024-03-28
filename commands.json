@@ -65,12 +65,13 @@
         "--subscriptions",
         "--max-root-fields", "10",
         "--max-response-size", "1000",
+        "--subscription-max-response-size", "1000",
         "--sql-statement-timeout", "5000",
         "--dumb-cache", "in-memory",
-        "--dumb-cache-ttl", "1000",
-        "--dumb-cache-size", "100",
-        "--dumb-cache-max-age", "1000",
-        "--dumb-cache-ttl", "10000"]
+        "--dumb-cache-ttl", "5000",
+        "--dumb-cache-size", "5500",
+        "--dumb-cache-max-age", "3000"
+      ]
     },
     "check-updates": {
       "cmd": ["npx", "--yes", "npm-check-updates", "--filter=/subsquid/", "--upgrade"],
