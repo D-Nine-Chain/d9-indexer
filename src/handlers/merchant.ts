@@ -69,6 +69,12 @@ export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) 
                 paymentToken: Token.USDT,
                 amount: decoded.usdt,
               })
+              usdtEntities.push({
+                ...commonPart,
+                from: ss58Encode(decoded.accountId),
+                to: ss58Encode(ContractAddress.MERCHANT),
+                amount: decoded.usdt,
+              })
               break
             case 'D9MerchantPaymentSent':
             case 'USDTMerchantPaymentSent':
