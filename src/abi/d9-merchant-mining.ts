@@ -2,13 +2,13 @@ import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0xfadde591f53203f7fe056042f80f1012e6abc39bbbf56a4c1be3a83f61ca1fc9",
+    "hash": "0x1605acf16a5d67473a30bde3624e103393a3ffaf9310f3abfcdb6ef1d1370ee4",
     "language": "ink! 4.3.0",
-    "compiler": "rustc 1.72.1",
+    "compiler": "rustc 1.76.0",
     "build_info": {
       "build_mode": "Release",
       "cargo_contract_version": "3.2.0",
-      "rust_toolchain": "stable-x86_64-apple-darwin",
+      "rust_toolchain": "stable-aarch64-apple-darwin",
       "wasm_opt_settings": {
         "keep_debug_symbols": false,
         "optimization_passes": "Z"
@@ -283,6 +283,45 @@ export const metadata = {
         ],
         "docs": [],
         "label": "USDTMerchantPaymentSent"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "consumer",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "merchant",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "amount",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "GivePointsUSDT"
       }
     ],
     "lang_error": {
@@ -2032,7 +2071,7 @@ export interface Message_subscribe {
     usdtAmount: Balance
 }
 
-export type Event = Event_D9MerchantPaymentSent | Event_D9Redeemed | Event_GreenPointsTransaction | Event_SubscriptionExtended | Event_USDTMerchantPaymentSent
+export type Event = Event_D9MerchantPaymentSent | Event_D9Redeemed | Event_GivePointsUSDT | Event_GreenPointsTransaction | Event_SubscriptionExtended | Event_USDTMerchantPaymentSent
 
 export interface Event_D9MerchantPaymentSent {
     __kind: 'D9MerchantPaymentSent'
@@ -2045,6 +2084,13 @@ export interface Event_D9Redeemed {
     __kind: 'D9Redeemed'
     accountId: AccountId
     redeemedD9: Balance
+}
+
+export interface Event_GivePointsUSDT {
+    __kind: 'GivePointsUSDT'
+    consumer: AccountId
+    merchant: AccountId
+    amount: Balance
 }
 
 export interface Event_GreenPointsTransaction {

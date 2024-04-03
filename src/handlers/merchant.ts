@@ -114,6 +114,14 @@ export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) 
                 merchantGP: decoded.merchant.greenPoints,
               })
               break
+            case 'GivePointsUSDT':
+              usdtEntities.push({
+                ...commonPart,
+                from: ss58Encode(decoded.consumer),
+                to: ss58Encode(decoded.merchant),
+                amount: decoded.amount,
+              })
+              break
           }
         }
         catch (err) { console.warn('[handleMerchantContractEvent]', err) }
