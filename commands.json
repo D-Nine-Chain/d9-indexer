@@ -67,9 +67,9 @@
         "--max-response-size", "1000",
         "--subscription-max-response-size", "1000",
         "--sql-statement-timeout", "5000",
-        "--dumb-cache", "in-memory",
+        "--dumb-cache", "redis",
         "--dumb-cache-ttl", "5000",
-        "--dumb-cache-size", "5500",
+        "--dumb-cache-size", "9000",
         "--dumb-cache-max-age", "3000"
       ]
     },

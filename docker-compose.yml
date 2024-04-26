@@ -23,11 +23,13 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+      - redis
     environment:
       - DB_NAME=squid
       - DB_PORT=5432
       - DB_HOST=db
       - DB_PASS=${DB_PASS:-postgres}
+      - REDIS_URL=redis://redis:6379
       - GQL_PORT=4350
     networks:
       - d9-indexer
@@ -59,6 +61,12 @@ services:
     ports:
       - "3000:3000"
     command: ["sqd", "process:prod"]
+
+  redis:
+    image: redis
+    restart: unless-stopped
+    command:
+      redis-server /etc/redis.conf
 
 networks:
   d9-indexer:
