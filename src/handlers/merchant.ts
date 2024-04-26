@@ -117,8 +117,8 @@ export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) 
             case 'GivePointsUSDT':
               usdtEntities.push({
                 ...commonPart,
-                from: ss58Encode(decoded.consumer),
-                to: ss58Encode(decoded.merchant),
+                from: ss58Encode(decoded.merchant),
+                to: ss58Encode(decoded.consumer),
                 amount: decoded.amount,
               })
               break
