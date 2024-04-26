@@ -65,8 +65,15 @@ services:
   redis:
     image: redis
     restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
     command:
-      redis-server /etc/redis.conf
+      redis-server --appendonly yes
+
+volumes:
+  redis_data:
 
 networks:
   d9-indexer:
