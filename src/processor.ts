@@ -19,7 +19,7 @@ export const processor = new SubstrateBatchProcessor()
     rateLimit: 0,
     maxBatchCallSize: 500,
   })
-  .setBlockRange({ from: 0 })
+  .setBlockRange({ from: 1 })
   // .setBlockRange({ from: 407328 })
   .addEvent({
     name: [
