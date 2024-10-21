@@ -7,6 +7,7 @@
   "scripts": {
     "build": "rm -rf lib && tsc",
     "start": "rm -rf lib && tsc && node --require=dotenv/config lib/main.js",
+    "start:prod": "dotenvx run -f .env.local -- pm2-runtime start ecosystem.config.js",
     "metadata": "squid-substrate-metadata-explorer --rpc http://34.229.77.5:40300 --out d9.jsonl",
     "serve": "sqd serve",
     "gen": "squid-substrate-typegen ./typegen.json",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.8.0",
+    "@dotenvx/dotenvx": "^1.20.0",
     "@subsquid/cli": "^3.0.0",
     "@subsquid/ink-typegen": "^3.1.0",
     "@subsquid/substrate-metadata-explorer": "^3.2.0",

@@ -16,5 +16,6 @@ vim .env.local
 # migration db if needed
 dotenvx run -f .env.local -- sqd migration:apply
 
-
+# start
+pnpm start:prod
 ```
