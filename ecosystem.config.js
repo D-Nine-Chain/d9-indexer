@@ -7,7 +7,16 @@ module.exports = {
       env: {
         DOTENV_CONFIG_PATH: '.env.local'
       },
-      log_date_format: 'YYYY-MM-DD HH:mm Z' // 设置日志时间格式
+      log_date_format: 'YYYY-MM-DD HH:mm Z'
+    },
+    {
+      name: 'api',
+      script: 'sqd',
+      args: 'serve:prod',
+      env: {
+        DOTENV_CONFIG_PATH: '.env.local'
+      },
+      log_date_format: 'YYYY-MM-DD HH:mm Z'
     }
   ]
 }
