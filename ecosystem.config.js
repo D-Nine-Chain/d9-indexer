@@ -11,11 +11,8 @@ module.exports = {
     },
     {
       name: 'api',
-      script: 'sqd',
-      args: 'serve:prod',
-      env: {
-        DOTENV_CONFIG_PATH: '.env.local'
-      },
+      script: 'dotenvx',
+      args: 'run -f .env.local -- sqd serve:prod',
       log_date_format: 'YYYY-MM-DD HH:mm Z'
     }
   ]
