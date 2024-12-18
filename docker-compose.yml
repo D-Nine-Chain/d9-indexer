@@ -56,7 +56,7 @@ services:
       - d9-indexer
     ports:
       - "4351:4351"
-    command: ["sqd", "api:prod"]
+    command: ["sqd", "new-serve:prod"]
   
   processor:
     build:

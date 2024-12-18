@@ -14,7 +14,7 @@ module.exports = {
     {
       name: 'new-api',
       script: 'sqd',
-      args: 'api:prod',
+      args: 'new-serve:prod',
       log_date_format: 'YYYY-MM-DD HH:mm Z'
     }
   ]
