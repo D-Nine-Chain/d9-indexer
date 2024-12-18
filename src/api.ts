@@ -80,7 +80,7 @@ app.get(middleware.graphiqlRoute, convertHandler(middleware.graphiqlRouteHandler
 
 const port = process.env.NGQL_PORT ? parseInt(process.env.NGQL_PORT) : 3000
 
-app.listen({ port }, (err, address) => {
+app.listen({ port, host: '0.0.0.0' }, (err, address) => {
   if (err) {
     app.log.error(String(err));
     process.exit(1);
