@@ -71,6 +71,15 @@
         "--dumb-cache-max-age", "3000"
       ]
     },
+    "new-serve": {
+      "description": "Start the PostGraphile GraphQL server",
+      "deps": ["build"],
+      "cmd": ["node", "--require=dotenv/config", "lib/api.js"]
+    },
+    "new-serve:prod": {
+      "description": "Start the PostGraphile GraphQL server in Subsquid Cloud setting",
+      "cmd": ["node", "lib/api.js"]
+    },
     "check-updates": {
       "cmd": ["npx", "--yes", "npm-check-updates", "--filter=/subsquid/", "--upgrade"],
       "hidden": true

@@ -37,6 +37,27 @@ services:
       - "4350:4350"
     command: ["sqd", "serve:prod"]
   
+  new-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DB_NAME=squid
+      - DB_PORT=5432
+      - DB_HOST=db
+      - DB_PASS=${DB_PASS:-postgres}
+      - REDIS_URL=redis://redis:6379
+      - NGQL_PORT=4351
+    networks:
+      - d9-indexer
+    ports:
+      - "4351:4351"
+    command: ["sqd", "api:prod"]
+  
   processor:
     build:
       context: .
