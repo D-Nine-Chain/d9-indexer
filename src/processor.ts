@@ -23,12 +23,34 @@ export const processor = new SubstrateBatchProcessor()
   // .setBlockRange({ from: 407328 })
   .addEvent({
     name: [
-      events.balances.transfer.name,
+      events.balances.balanceSet.name,
       events.balances.burned.name,
+      events.balances.deposit.name,
+      events.balances.dustLost.name,
+      events.balances.endowed.name,
+      events.balances.frozen.name,
+      events.balances.issued.name,
+      events.balances.locked.name,
+      events.balances.minted.name,
+      events.balances.rescinded.name,
+      events.balances.reserveRepatriated.name,
+      events.balances.reserved.name,
+      events.balances.restored.name,
+      events.balances.slashed.name,
+      events.balances.suspended.name,
+      events.balances.thawed.name,
+      events.balances.transfer.name,
+      events.balances.unlocked.name,
+      events.balances.unreserved.name,
+      events.balances.upgraded.name,
       events.balances.withdraw.name,
+      events.d9NodeVoting.candidacyRemoved.name,
+      events.d9NodeVoting.candidacySubmitted.name,
+      events.d9NodeVoting.votesDelegatedBy.name,
     ],
     extrinsic: true,
     call: true,
+    stack: true,
   })
   .addCall({
     name: [
@@ -64,6 +86,11 @@ export const processor = new SubstrateBatchProcessor()
     },
     block: {
       timestamp: true,
+      stateRoot: true,
+      extrinsicsRoot: true,
+      specName: true,
+      implName: true,
+      implVersion: true,
     },
     call: {
       name: true,

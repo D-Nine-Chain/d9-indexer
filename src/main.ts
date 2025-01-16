@@ -14,30 +14,17 @@ import { handleD9NodeVoting } from './handlers/d9-node-voting'
 import { ss58Encode } from './utils'
 import { ContractAddress } from './constant'
 import { handleNodeRewardContract } from './handlers/node-reward'
+import { handleBlockData } from './handlers/block-data'
 
 chalk.level = 1;
 
 (BigInt.prototype as any).toJSON = function () { return this.toString() }
 
 processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (ctx) => {
-  for await (const block of ctx.blocks) {
-    for await (const call of block.calls) {
-      console.info(chalk.bgBlue.blue('CALL'), chalk.blue(call.name), getByValue(call.args?.dest?.value))
-      // if (call.name.match(/ErrorIssuingRewards|CandidacySubmitted|VotesDelegatedBy|CandidacyRemoved/g)) {
-      //   console.info('---------------', 'call 👇 ', '-----------------')
-      //   console.info(JSON.stringify(call, null, 2))
-      //   console.info('------------------------------------')
-      // }
-    }
-    for await (const event of block.events) {
-      console.info(chalk.bgBlue.cyan('EVENT'), chalk.blue(event.name), getByValue(event.args?.contract))
-      // if (event.name.match(/ErrorIssuingRewards|CandidacySubmitted|VotesDelegatedBy|CandidacyRemoved/g)) {
-      //   console.info('---------------', 'event 👇 ', '-----------------')
-      //   console.info(JSON.stringify(event, null, 2))
-      //   console.info('------------------------------------')
-      // }
-    }
-  }
+  // 首先处理区块数据
+  await handleBlockData(ctx)
+
+  // 处理其他事件
   await handleTransferEvents(ctx)
   await handleWithdrawEvents(ctx)
   await handleAmmContract(ctx)

@@ -19,3 +19,15 @@ export async function getAccounts(ctx: ProcessorContext<Store>, addresses: strin
   }
   return accounts
 }
+
+export async function getAccount(ctx: ProcessorContext<Store>, address: string, encoded = false) {
+  const accounts = await ctx.store.findBy(Account, { id: address })
+  if (accounts.length === 0) {
+    const newAccount = new Account({
+      id: encoded ? address : ss58Encode(address),
+    })
+    await ctx.store.upsert(newAccount)
+    return newAccount
+  }
+  return accounts[0]
+}

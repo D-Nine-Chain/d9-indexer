@@ -10,14 +10,6 @@
       "deps": ["clean"],
       "cmd": ["tsc"]
     },
-    "up": {
-      "description": "Start a PG database",
-      "cmd": ["docker", "compose", "up", "db", "-d"]
-    },
-    "down": {
-      "description": "Drop a PG database",
-      "cmd": ["docker", "compose", "down", "db"]
-    },
     "migration:apply": {
       "description": "Apply the DB migrations",
       "cmd": ["squid-typeorm-migration", "apply"]
