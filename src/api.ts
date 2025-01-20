@@ -4,8 +4,17 @@ import Fastify, { type FastifyReply, type FastifyRequest } from 'fastify'
 import type * as pg from 'pg';
 import { gql, makeExtendSchemaPlugin, postgraphile, Plugin, type PostGraphileResponse, PostGraphileResponseFastify3 } from 'postgraphile';
 import FilterPlugin from 'postgraphile-plugin-connection-filter';
+import cors from '@fastify/cors'
 
 const app = Fastify({ logger: true })
+
+// 配置 CORS，允许所有来源
+app.register(cors, {
+  origin: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+})
 
 export const ProcessorStatusPlugin: Plugin = makeExtendSchemaPlugin((build, options) => {
   const schemas: string[] = options.stateSchemas;
@@ -54,7 +63,7 @@ const middleware = postgraphile(
     enhanceGraphiql: true,
     dynamicJson: true,
     disableDefaultMutations: true,
-    disableQueryLog: true, // set to false to see the processed queries
+    disableQueryLog: true,
     skipPlugins: [],
     classicIds: true,
     appendPlugins: [
@@ -65,8 +74,16 @@ const middleware = postgraphile(
     ],
     externalGraphqlRoute: process.env.BASE_PATH == null ? undefined : process.env.BASE_PATH + '/api/graphql',
     graphileBuildOptions: {
-      stateSchemas: ['squid_processor']
-    }
+      stateSchemas: ['squid_processor'],
+      // connectionFilterAllowedOperators: ['equal', 'notEqual', 'in', 'notIn', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual'],
+      pgQueryTimeout: 5000, // 5 seconds query timeout
+      maxRows: 100, // 限制返回行数
+    },
+    simpleCollections: 'only', // 简化集合查询
+    enableQueryBatching: false, // 禁用查询批处理
+    extendedErrors: ['errcode'],
+    allowExplain: false, // 禁止 EXPLAIN 查询
+    retryOnInitFail: true,
   },
 );
 

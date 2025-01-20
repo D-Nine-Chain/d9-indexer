@@ -21,6 +21,7 @@
     "gen:ink": "npm run gen:burn-manager && npm run gen:burn-miner && npm run gen:cross-chain && npm run gen:d9-usdt && npm run gen:market-maker && npm run gen:node-reward && npm run gen:merchant"
   },
   "dependencies": {
+    "@fastify/cors": "^10.0.2",
     "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
     "@graphile/pg-aggregates": "^0.1.1",
     "@subsquid/graphql-server": "^4.9.0",
