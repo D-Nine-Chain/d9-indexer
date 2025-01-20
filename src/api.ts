@@ -79,7 +79,7 @@ const middleware = postgraphile(
       pgQueryTimeout: 5000, // 5 seconds query timeout
       maxRows: 100, // 限制返回行数
     },
-    simpleCollections: 'only', // 简化集合查询
+    // simpleCollections: 'only', // 简化集合查询
     enableQueryBatching: false, // 禁用查询批处理
     extendedErrors: ['errcode'],
     allowExplain: false, // 禁止 EXPLAIN 查询
