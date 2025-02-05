@@ -52,12 +52,15 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
     for (let idx = 0; idx < block.extrinsics.length; idx++) {
       const extrinsic = block.extrinsics[idx]
 
+      if (!extrinsic.success) continue;
+
       let signer: Account | null = null
       const call = extrinsic.call
 
       if (call?.origin) {
         signer = await getAccount(ctx, call.origin.value.value)
       }
+      debugger
 
       const extrinsicObj = new Extrinsic({
         id: `${block.header.hash}-${idx}`,
