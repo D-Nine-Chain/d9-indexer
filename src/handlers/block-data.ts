@@ -33,7 +33,7 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
 
   for (const block of ctx.blocks) {
     const blockEntity = new Block({
-      id: block.header.hash,
+      id: block.header.height.toString(),
       number: block.header.height,
       timestamp: new Date(Number(block.header.timestamp)),
       hash: block.header.hash,
