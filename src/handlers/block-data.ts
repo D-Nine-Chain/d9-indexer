@@ -60,10 +60,9 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
       if (call?.origin) {
         signer = await getAccount(ctx, call.origin.value.value)
       }
-      debugger
 
       const extrinsicObj = new Extrinsic({
-        id: `${block.header.hash}-${idx}`,
+        id: `${block.header.height}-${idx}`,
         block: blockEntity,
         index: idx,
         hash: extrinsic.hash,
@@ -78,7 +77,7 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
 
       if (call) {
         const callEntity = new Call({
-          id: `${block.header.hash}-${idx}`,
+          id: `${block.header.height}-${extrinsic.index}-${idx}`,
           block: blockEntity,
           extrinsic: extrinsicObj,
           index: idx,
@@ -94,7 +93,7 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
         const event = extrinsic.events[idx]
 
         const eventEntity = new Event({
-          id: `${block.header.hash}-${idx}`,
+          id: `${block.header.height}-${idx}`,
           block: blockEntity,
           extrinsic: extrinsicObj,
           index: idx,
