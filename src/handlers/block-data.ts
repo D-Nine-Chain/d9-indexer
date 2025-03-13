@@ -75,8 +75,10 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
 
       await ctx.store.save(extrinsicObj)
 
+      let callEntity: Call | null = null
       if (call) {
-        const callEntity = new Call({
+        const origin = typeof call?.origin === 'object' && typeof call.origin.value?.value === 'string' ? call.origin.value.value : null
+        callEntity = new Call({
           id: `${block.header.height}-${extrinsic.index}-${idx}`,
           block: blockEntity,
           extrinsic: extrinsicObj,
@@ -84,7 +86,8 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
           timestamp: new Date(Number(block.header.timestamp)),
           method: call.name.split('.')[1],
           call: call.name,
-          parameters: call.args ?? {}
+          parameters: call.args ?? {},
+          address: origin ? await getAccount(ctx, origin) : undefined
         })
         await ctx.store.save(callEntity)
       }
@@ -100,7 +103,8 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
           module: event.name.split('.')[0],
           name: event.name.split('.')[1],
           attributes: event.args ?? {},
-          timestamp: new Date(Number(block.header.timestamp))
+          timestamp: new Date(Number(block.header.timestamp)),
+          call: callEntity
         })
 
         await ctx.store.save(eventEntity)

@@ -14,6 +14,7 @@ import {MerchantRedeemed} from "./merchantRedeemed.model"
 import {GreenPointsTransaction} from "./greenPointsTransaction.model"
 import {MerchantPaymentSent} from "./merchantPaymentSent.model"
 import {NodeRewardPaid} from "./nodeRewardPaid.model"
+import {Call} from "./call.model"
 
 @Entity_()
 export class Account {
@@ -83,4 +84,7 @@ export class Account {
 
     @OneToMany_(() => NodeRewardPaid, e => e.receiver)
     receivedNodeRewards!: NodeRewardPaid[]
+
+    @OneToMany_(() => Call, e => e.address)
+    calls!: Call[]
 }

@@ -1,6 +1,7 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, IntColumn as IntColumn_, DateTimeColumn as DateTimeColumn_, StringColumn as StringColumn_, JSONColumn as JSONColumn_} from "@subsquid/typeorm-store"
 import {Block} from "./block.model"
 import {Extrinsic} from "./extrinsic.model"
+import {Call} from "./call.model"
 
 @Entity_()
 export class Event {
@@ -37,4 +38,8 @@ export class Event {
 
     @JSONColumn_({nullable: false})
     attributes!: unknown
+
+    @Index_()
+    @ManyToOne_(() => Call, {nullable: true})
+    call!: Call | undefined | null
 }

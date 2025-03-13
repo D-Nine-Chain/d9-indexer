@@ -31,6 +31,8 @@ type Account @entity {
 # Node Reward
   asNodeRewardNode: [NodeRewardPaid!] @derivedFrom(field: "node")
   receivedNodeRewards: [NodeRewardPaid!] @derivedFrom(field: "receiver")
+
+  calls: [Call!] @derivedFrom(field: "address")
 }
 
 enum Token {
@@ -286,12 +288,14 @@ type Call @entity {
   extrinsic: Extrinsic!
   index: Int! @index
   timestamp: DateTime! @index
-
+  address: Account!
   # e.g. claimPayout
   method: String! @index
   # e.g. nominationPools(claimPayout)
   call: String! @index
   parameters: JSON!
+
+  events: [Event!] @derivedFrom(field: "call")
 }
 
 type Event @entity {
@@ -305,6 +309,8 @@ type Event @entity {
   # e.g. Withdraw
   name: String! @index
   attributes: JSON!
+
+  call: Call
 }
 
 # type Log @entity {
