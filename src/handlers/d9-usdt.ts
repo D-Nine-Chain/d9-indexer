@@ -39,6 +39,9 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
       if (isContractsCall(call, ContractAddress.D9_USDT)) {
         const decoded = D9USDT.decodeMessage(call.args.data)
         console.info(decoded)
+        if (entities.find(entity => entity.id === call.id)) {
+          continue
+        }
         const commonPart = {
           id: call.id,
           blockNumber: block.header.height,
