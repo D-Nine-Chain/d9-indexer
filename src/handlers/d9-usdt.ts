@@ -4,6 +4,7 @@ import { isContractsCall, isContractsEvent, ss58Encode } from '../utils'
 import { ContractAddress } from '../constant'
 import * as D9USDT from '../abi/d9-usdt'
 import { usdtSaver } from '../helpers'
+import { Transfer } from '../model'
 
 export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
   const { entities, save } = usdtSaver(ctx)
@@ -39,9 +40,22 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
       if (isContractsCall(call, ContractAddress.D9_USDT)) {
         const decoded = D9USDT.decodeMessage(call.args.data)
         console.info(decoded)
+        
+        // 检查当前批次中是否已存在相同ID的记录
         if (entities.find(entity => entity.id === call.id)) {
           continue
         }
+        
+        // 检查数据库中是否已存在相同ID的记录
+        const existingTransfer = await ctx.store.findOne(Transfer, {
+          where: { id: call.id }
+        })
+        
+        if (existingTransfer) {
+          console.info(`Skip existing transfer: ${call.id}`)
+          continue
+        }
+        
         const commonPart = {
           id: call.id,
           blockNumber: block.header.height,
