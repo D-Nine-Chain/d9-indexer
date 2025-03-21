@@ -6,15 +6,15 @@ module.exports = {
     //   node_args: '--require=dotenv/config',
     //   log_date_format: 'YYYY-MM-DD HH:mm Z',
     // },
-    // {
-    //   name: 'api',
-    //   script: 'sqd',
-    //   args: 'serve:prod',
-    //   node_args: '--require=dotenv/config',
-    //   log_date_format: 'YYYY-MM-DD HH:mm Z',
-    //   // instances: 'max',
-    //   // exec_mode: 'cluster'
-    // },
+    {
+      name: 'api',
+      script: 'sqd',
+      args: 'serve:prod',
+      node_args: '--require=dotenv/config',
+      log_date_format: 'YYYY-MM-DD HH:mm Z',
+      // instances: 'max',
+      // exec_mode: 'cluster'
+    },
     {
       name: 'new-api',
       script: 'sqd',
