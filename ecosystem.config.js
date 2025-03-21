@@ -1,20 +1,20 @@
 module.exports = {
   apps: [
-    {
-      name: 'processor',
-      script: 'lib/main.js',
-      node_args: '--require=dotenv/config',
-      log_date_format: 'YYYY-MM-DD HH:mm Z',
-    },
-    {
-      name: 'api',
-      script: 'sqd',
-      args: 'serve:prod',
-      node_args: '--require=dotenv/config',
-      log_date_format: 'YYYY-MM-DD HH:mm Z',
-      // instances: 'max',
-      // exec_mode: 'cluster'
-    },
+    // {
+    //   name: 'processor',
+    //   script: 'lib/main.js',
+    //   node_args: '--require=dotenv/config',
+    //   log_date_format: 'YYYY-MM-DD HH:mm Z',
+    // },
+    // {
+    //   name: 'api',
+    //   script: 'sqd',
+    //   args: 'serve:prod',
+    //   node_args: '--require=dotenv/config',
+    //   log_date_format: 'YYYY-MM-DD HH:mm Z',
+    //   // instances: 'max',
+    //   // exec_mode: 'cluster'
+    // },
     {
       name: 'new-api',
       script: 'sqd',
@@ -23,6 +23,10 @@ module.exports = {
       log_date_format: 'YYYY-MM-DD HH:mm Z',
       // instances: 'max',
       // exec_mode: 'cluster'
+      env: {
+        NODE_ENV: 'production',
+        DOTENV_CONFIG_PATH: '.env.local'
+      }
     },
     {
       name: 'processor-v2',
@@ -31,7 +35,7 @@ module.exports = {
       log_date_format: 'YYYY-MM-DD HH:mm Z',
       env: {
         NODE_ENV: 'production',
-        DOTENV_CONFIG_PATH: '.env.v2'
+        DOTENV_CONFIG_PATH: '.env.local'
       }
     }
   ]

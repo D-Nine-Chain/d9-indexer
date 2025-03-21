@@ -275,9 +275,9 @@ type Extrinsic @entity {
   timestamp: DateTime! @index
   hash: String @index
   # e.g. nominationPools
-  module: String! @index
+  module: String @index
   # e.g. claimPayout
-  call: String! @index
+  call: String @index
   signer: Account
   success: Boolean!
   parameters: JSON!

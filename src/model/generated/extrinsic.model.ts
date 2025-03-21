@@ -30,12 +30,12 @@ export class Extrinsic {
     hash!: string | undefined | null
 
     @Index_()
-    @StringColumn_({nullable: false})
-    module!: string
+    @StringColumn_({nullable: true})
+    module!: string | undefined | null
 
     @Index_()
-    @StringColumn_({nullable: false})
-    call!: string
+    @StringColumn_({nullable: true})
+    call!: string | undefined | null
 
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})

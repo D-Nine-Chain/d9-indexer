@@ -1,5 +1,5 @@
-module.exports = class Data1742574310082 {
-    name = 'Data1742574310082'
+module.exports = class Data1742576739183 {
+    name = 'Data1742576739183'
 
     async up(db) {
         await db.query(`CREATE TABLE "transfer" ("id" character varying NOT NULL, "block_number" integer NOT NULL, "block_hash" text NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, "extrinsic_hash" text NOT NULL, "fee" numeric NOT NULL, "amount" numeric NOT NULL, "success" boolean NOT NULL, "token" character varying(4) NOT NULL, "from_id" character varying, "to_id" character varying, CONSTRAINT "PK_fd9ddbdd49a17afcbe014401295" PRIMARY KEY ("id"))`)
@@ -114,7 +114,7 @@ module.exports = class Data1742574310082 {
         await db.query(`CREATE INDEX "IDX_cc4a03697c24814df8d7ebc501" ON "event" ("module") `)
         await db.query(`CREATE INDEX "IDX_b535fbe8ec6d832dde22065ebd" ON "event" ("name") `)
         await db.query(`CREATE INDEX "IDX_83cf1bd59aa4521ed882fa5145" ON "event" ("call_id") `)
-        await db.query(`CREATE TABLE "extrinsic" ("id" character varying NOT NULL, "index" integer NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, "hash" text, "module" text NOT NULL, "call" text NOT NULL, "success" boolean NOT NULL, "parameters" jsonb NOT NULL, "block_id" character varying, "signer_id" character varying, CONSTRAINT "PK_80d7db0e4b1e83e30336bc76755" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE TABLE "extrinsic" ("id" character varying NOT NULL, "index" integer NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, "hash" text, "module" text, "call" text, "success" boolean NOT NULL, "parameters" jsonb NOT NULL, "block_id" character varying, "signer_id" character varying, CONSTRAINT "PK_80d7db0e4b1e83e30336bc76755" PRIMARY KEY ("id"))`)
         await db.query(`CREATE INDEX "IDX_a3b99daba1259dab0dd040d4f7" ON "extrinsic" ("block_id") `)
         await db.query(`CREATE INDEX "IDX_91b0c68a28f1eed15d736d7e11" ON "extrinsic" ("index") `)
         await db.query(`CREATE INDEX "IDX_6e232918078798b1fade21dcf8" ON "extrinsic" ("timestamp") `)
