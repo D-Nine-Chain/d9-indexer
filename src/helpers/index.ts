@@ -17,16 +17,16 @@ export function usdtSaver(ctx: ProcessorContext<Store>) {
   async function save() {
     const accounts = await getAccounts(ctx, entities.flatMap(entity => [entity.to, entity.from]), true)
 
-    const processedIds = new Set<string>()
-    const uniqueEntities = entities.filter(entity => {
-      if (processedIds.has(entity.id)) {
-        return false
-      }
-      processedIds.add(entity.id)
-      return true
-    })
+    // const processedIds = new Set<string>()
+    // const uniqueEntities = entities.filter(entity => {
+    //   if (processedIds.has(entity.id)) {
+    //     return false
+    //   }
+    //   processedIds.add(entity.id)
+    //   return true
+    // })
     
-    await ctx.store.insert(uniqueEntities.map((entity) => {
+    await ctx.store.insert(entities.map((entity) => {
       return new Transfer({
         ...entity,
         from: accounts.find(({ id }) => id === entity.from),

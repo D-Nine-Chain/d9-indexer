@@ -55,7 +55,7 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
         // }
         
         const commonPart = {
-          id: call.id,
+          id: decoded.__kind + '-' + call.id,
           blockNumber: block.header.height,
           blockHash: block.header.hash,
           extrinsicHash: call.extrinsic?.hash,
