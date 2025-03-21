@@ -12,8 +12,8 @@ module.exports = {
       args: 'serve:prod',
       node_args: '--require=dotenv/config',
       log_date_format: 'YYYY-MM-DD HH:mm Z',
-      instances: 'max',
-      exec_mode: 'cluster'
+      // instances: 'max',
+      // exec_mode: 'cluster'
     },
     {
       name: 'new-api',
@@ -21,8 +21,8 @@ module.exports = {
       args: 'new-serve:prod',
       node_args: '--require=dotenv/config',
       log_date_format: 'YYYY-MM-DD HH:mm Z',
-      instances: 'max',
-      exec_mode: 'cluster'
+      // instances: 'max',
+      // exec_mode: 'cluster'
     },
     {
       name: 'processor-v2',
