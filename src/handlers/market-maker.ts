@@ -31,7 +31,7 @@ export async function handleAmmContract(ctx: ProcessorContext<Store>) {
   const { entities: usdtEntities, save } = usdtSaver(ctx)
   for await (const block of ctx.blocks) {
     for await (const event of block.events) {
-      if (!event.extrinsic?.success)
+      if (!event.extrinsic)
         continue
       try {
         if (isContractsEvent(event, ContractAddress.MARKET_MAKER)) {
@@ -44,6 +44,7 @@ export async function handleAmmContract(ctx: ProcessorContext<Store>) {
             timestamp: new Date(event.block.timestamp!),
             extrinsicHash: event.extrinsic.hash,
             fee: event.extrinsic.fee ?? 0n,
+            success: event.extrinsic.success,
           }
           switch (decoded.__kind) {
             case 'D9ToUSDTConversion':

@@ -35,7 +35,7 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
     //   }
     // }
     for await (const call of block.calls) {
-      if (!call.extrinsic?.success)
+      if (!call.extrinsic)
         continue
       if (isContractsCall(call, ContractAddress.D9_USDT)) {
         const decoded = D9USDT.decodeMessage(call.args.data)
@@ -63,6 +63,7 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
           extrinsicHash: call.extrinsic?.hash,
           timestamp: new Date(block.header.timestamp!),
           fee: call.extrinsic?.fee || 0n,
+          success: call.extrinsic.success,
         }
         switch (decoded.__kind) {
           case 'PSP22_transfer_from':

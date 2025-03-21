@@ -1,4 +1,4 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, IntColumn as IntColumn_, Index as Index_, StringColumn as StringColumn_, DateTimeColumn as DateTimeColumn_, BigIntColumn as BigIntColumn_, ManyToOne as ManyToOne_} from "@subsquid/typeorm-store"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, IntColumn as IntColumn_, Index as Index_, StringColumn as StringColumn_, DateTimeColumn as DateTimeColumn_, BigIntColumn as BigIntColumn_, BooleanColumn as BooleanColumn_, ManyToOne as ManyToOne_} from "@subsquid/typeorm-store"
 import {Token} from "./_token"
 import {Account} from "./account.model"
 
@@ -29,6 +29,9 @@ export class MerchantSubscriptionExtended {
 
     @BigIntColumn_({nullable: false})
     fee!: bigint
+
+    @BooleanColumn_({nullable: false})
+    success!: boolean
 
     @DateTimeColumn_({nullable: false})
     expiry!: Date

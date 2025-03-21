@@ -16,7 +16,7 @@ export async function handleWithdrawEvents(ctx: ProcessorContext<Store>) {
 
   for (const block of ctx.blocks) {
     for (const event of block.events) {
-      if (!event.extrinsic?.success)
+      if (!event.extrinsic)
         continue
       if (event.name === events.balances.withdraw.name) {
         const rec = events.balances.withdraw.v112.decode(event)
@@ -29,6 +29,7 @@ export async function handleWithdrawEvents(ctx: ProcessorContext<Store>) {
           fee: event.extrinsic?.fee || 0n,
           who: ss58Encode(rec.who),
           amount: rec.amount,
+          success: event.extrinsic.success,
         })
       }
     }

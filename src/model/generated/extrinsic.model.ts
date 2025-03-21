@@ -1,4 +1,4 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, IntColumn as IntColumn_, StringColumn as StringColumn_, BooleanColumn as BooleanColumn_, JSONColumn as JSONColumn_, OneToMany as OneToMany_} from "@subsquid/typeorm-store"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, IntColumn as IntColumn_, DateTimeColumn as DateTimeColumn_, StringColumn as StringColumn_, BooleanColumn as BooleanColumn_, JSONColumn as JSONColumn_, OneToMany as OneToMany_} from "@subsquid/typeorm-store"
 import {Block} from "./block.model"
 import {Account} from "./account.model"
 import {Call} from "./call.model"
@@ -20,6 +20,10 @@ export class Extrinsic {
     @Index_()
     @IntColumn_({nullable: false})
     index!: number
+
+    @Index_()
+    @DateTimeColumn_({nullable: false})
+    timestamp!: Date
 
     @Index_()
     @StringColumn_({nullable: true})

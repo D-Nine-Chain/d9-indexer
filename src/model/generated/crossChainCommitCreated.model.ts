@@ -1,4 +1,4 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, IntColumn as IntColumn_, Index as Index_, StringColumn as StringColumn_, DateTimeColumn as DateTimeColumn_, ManyToOne as ManyToOne_, BigIntColumn as BigIntColumn_} from "@subsquid/typeorm-store"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, IntColumn as IntColumn_, Index as Index_, StringColumn as StringColumn_, DateTimeColumn as DateTimeColumn_, BigIntColumn as BigIntColumn_, BooleanColumn as BooleanColumn_, ManyToOne as ManyToOne_} from "@subsquid/typeorm-store"
 import {Account} from "./account.model"
 
 @Entity_()
@@ -25,6 +25,12 @@ export class CrossChainCommitCreated {
     @Index_()
     @StringColumn_({nullable: false})
     extrinsicHash!: string
+
+    @BigIntColumn_({nullable: false})
+    fee!: bigint
+
+    @BooleanColumn_({nullable: false})
+    success!: boolean
 
     @Index_()
     @StringColumn_({nullable: false})

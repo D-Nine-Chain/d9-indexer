@@ -20,4 +20,5 @@ export interface BaseEntity {
   timestamp: Date
   extrinsicHash: string
   fee: bigint
+  success: boolean
 }

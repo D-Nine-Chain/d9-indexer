@@ -28,7 +28,7 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
 
   for await (const block of ctx.blocks) {
     for await (const event of block.events) {
-      if (!event.extrinsic?.success)
+      if (!event.extrinsic)
         continue
       try {
         if (isContractsEvent(event, ContractAddress.CROSS_CHAIN)) {
@@ -41,6 +41,7 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
             timestamp: new Date(block.header.timestamp!),
             extrinsicHash: event.extrinsic?.hash,
             fee: event.extrinsic.fee ?? 0n,
+            success: event.extrinsic.success,
           }
           switch (decoded.__kind) {
             case 'CommitCreated':

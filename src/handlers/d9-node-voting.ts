@@ -10,14 +10,13 @@ type _Record = {
   beneficiaryVoter: string
   burnContract: string
   mainPool: string
-  fee: bigint
 } & BaseEntity
 
 export async function handleD9NodeVoting(ctx: ProcessorContext<Store>) {
   const entities = [] as _Record[]
   for await (const block of ctx.blocks) {
     for await (const call of block.calls) {
-      if (!call.extrinsic?.success)
+      if (!call.extrinsic)
         continue
       if (call.name === calls.d9NodeVoting.addVotingInterest.name) {
         const { amountToBurn, beneficiaryVoter, burnContract, mainPool } = calls.d9NodeVoting.addVotingInterest.v113.decode(call)
@@ -31,6 +30,7 @@ export async function handleD9NodeVoting(ctx: ProcessorContext<Store>) {
           beneficiaryVoter: ss58Encode(beneficiaryVoter),
           burnContract,
           mainPool,
+          success: call.extrinsic.success,
           fee: call.extrinsic?.fee ?? 0n,
         })
       }

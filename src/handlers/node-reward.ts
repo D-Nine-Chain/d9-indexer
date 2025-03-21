@@ -17,7 +17,7 @@ export async function handleNodeRewardContract(ctx: ProcessorContext<Store>) {
   const entities = [] as _Record[]
   for await (const block of ctx.blocks) {
     for await (const event of block.events) {
-      if (!event.extrinsic?.success)
+      if (!event.extrinsic)
         continue
       if (isContractsEvent(event, ContractAddress.NODE_REWARD)) {
         const decoded = NodeReward.decodeEvent(event.args.data)
@@ -33,6 +33,7 @@ export async function handleNodeRewardContract(ctx: ProcessorContext<Store>) {
           node: ss58Encode(decoded.node),
           receiver: ss58Encode(decoded.receiver),
           amount: decoded.amount,
+          success: event.extrinsic.success,
         })
       }
     }

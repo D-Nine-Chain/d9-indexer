@@ -52,7 +52,7 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
     for (let idx = 0; idx < block.extrinsics.length; idx++) {
       const extrinsic = block.extrinsics[idx]
 
-      if (!extrinsic.success) continue;
+      // if (!extrinsic.success) continue;
 
       let signer: Account | null = null
       const call = extrinsic.call
@@ -65,11 +65,12 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
         id: `${block.header.height}-${idx}`,
         block: blockEntity,
         index: idx,
+        timestamp: new Date(Number(block.header.timestamp)),
         hash: extrinsic.hash,
         module: call?.name.split('.')[0],
         call: call?.name.split('.')[1],
         parameters: call?.args ?? {},
-        success: true,
+        success: extrinsic.success,
         signer
       })
 
@@ -82,11 +83,13 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
           id: `${block.header.height}-${extrinsic.index}-${idx}`,
           block: blockEntity,
           extrinsic: extrinsicObj,
+          extrinsicHash: extrinsic.hash,
           index: idx,
           timestamp: new Date(Number(block.header.timestamp)),
           method: call.name.split('.')[1],
           call: call.name,
           parameters: call.args ?? {},
+          success: extrinsic.success,
           address: origin ? await getAccount(ctx, origin) : undefined
         })
         await ctx.store.save(callEntity)
@@ -96,14 +99,16 @@ export async function handleBlockData(ctx: ProcessorContext<Store>): Promise<voi
         const event = extrinsic.events[idx]
 
         const eventEntity = new Event({
-          id: `${block.header.height}-${idx}`,
+          id: `${block.header.height}-${extrinsic.index}-${idx}`,
           block: blockEntity,
           extrinsic: extrinsicObj,
+          extrinsicHash: extrinsic.hash,
           index: idx,
           module: event.name.split('.')[0],
           name: event.name.split('.')[1],
           attributes: event.args ?? {},
           timestamp: new Date(Number(block.header.timestamp)),
+          success: extrinsic.success,
           call: callEntity
         })
 

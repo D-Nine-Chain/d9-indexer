@@ -1,4 +1,4 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, IntColumn as IntColumn_, DateTimeColumn as DateTimeColumn_, StringColumn as StringColumn_, JSONColumn as JSONColumn_, OneToMany as OneToMany_} from "@subsquid/typeorm-store"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, StringColumn as StringColumn_, IntColumn as IntColumn_, DateTimeColumn as DateTimeColumn_, JSONColumn as JSONColumn_, BooleanColumn as BooleanColumn_, OneToMany as OneToMany_} from "@subsquid/typeorm-store"
 import {Block} from "./block.model"
 import {Extrinsic} from "./extrinsic.model"
 import {Account} from "./account.model"
@@ -22,6 +22,10 @@ export class Call {
     extrinsic!: Extrinsic
 
     @Index_()
+    @StringColumn_({nullable: false})
+    extrinsicHash!: string
+
+    @Index_()
     @IntColumn_({nullable: false})
     index!: number
 
@@ -43,6 +47,9 @@ export class Call {
 
     @JSONColumn_({nullable: false})
     parameters!: unknown
+
+    @BooleanColumn_({nullable: false})
+    success!: boolean
 
     @OneToMany_(() => Event, e => e.call)
     events!: Event[]

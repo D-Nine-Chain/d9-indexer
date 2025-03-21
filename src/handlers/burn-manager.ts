@@ -16,7 +16,7 @@ export async function handleBurnManagerContract(ctx: ProcessorContext<Store>) {
   const entities = [] as _Record[]
   for await (const block of ctx.blocks) {
     for await (const event of block.events) {
-      if (!event.extrinsic?.success)
+      if (!event.extrinsic)
         continue
       try {
         if (isContractsEvent(event, ContractAddress.BURN_MANAGER)) {
@@ -31,6 +31,7 @@ export async function handleBurnManagerContract(ctx: ProcessorContext<Store>) {
             fee: event.extrinsic?.fee ?? 0n,
             from: ss58Encode(decoded.from),
             amount: decoded.amount,
+            success: event.extrinsic!.success,
             type: decoded.__kind,
           })
         }

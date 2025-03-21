@@ -27,8 +27,8 @@ function getTransferEvents(ctx: ProcessorContext<Store>): TransferEvent[] {
   const transfers: TransferEvent[] = []
   for (const block of ctx.blocks) {
     for (const event of block.events) {
-      if (!event.extrinsic?.success)
-        continue
+      if (!event.extrinsic) continue;
+      
       if (event.name === events.balances.transfer.name) {
         let rec: { from: string, to: string, amount: bigint }
         if (events.balances.transfer.v112.is(event)) {
@@ -49,6 +49,7 @@ function getTransferEvents(ctx: ProcessorContext<Store>): TransferEvent[] {
           from: ss58Encode(rec.from),
           to: ss58Encode(rec.to),
           amount: rec.amount,
+          success: event.extrinsic!.success,
           fee: event.extrinsic?.fee || 0n,
         })
       }

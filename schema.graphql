@@ -51,7 +51,7 @@ type Transfer @entity {
   from: Account!
   to: Account!
   amount: BigInt! @index
-  
+  success: Boolean!
   token: Token! @index
 }
 
@@ -62,7 +62,7 @@ type Withdraw @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   who: Account!
   amount: BigInt! @index
 }
@@ -75,7 +75,7 @@ type NodeVote @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   amount: BigInt!
   beneficiaryVoter: Account!
   burnContract: String!
@@ -90,7 +90,7 @@ type BurnWithdrawal @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   from: Account!
   amount: BigInt! @index
 }
@@ -102,7 +102,7 @@ type BurnExecuted @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   from: Account!
   amount: BigInt! @index
 }
@@ -114,7 +114,8 @@ type CrossChainCommitCreated @entity {
   blockHash: String! @index
   timestamp: DateTime! @index
   extrinsicHash: String! @index
-  
+  fee: BigInt!
+  success: Boolean!
   txId: String! @index
   from: Account!
   amount: BigInt! @index
@@ -126,7 +127,8 @@ type CrossChainDispatchCompleted @entity {
   blockHash: String! @index
   timestamp: DateTime! @index
   extrinsicHash: String! @index
-
+  fee: BigInt!
+  success: Boolean!
   txId: String! @index
   to: Account!
   amount: BigInt! @index
@@ -140,7 +142,7 @@ type LiquidityAdded @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   who: Account!
   d9: BigInt!
   usdt: BigInt!
@@ -153,7 +155,7 @@ type LiquidityRemoved @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   who: Account!
   d9: BigInt!
   usdt: BigInt!
@@ -166,7 +168,7 @@ type MarketConversion @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   fromToken: Token!
   toToken: Token!
   lost: BigInt!
@@ -183,7 +185,7 @@ type MerchantSubscriptionExtended @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   expiry: DateTime!
   amount: BigInt!
   paymentToken: Token!
@@ -197,7 +199,7 @@ type MerchantRedeemed @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   who: Account!
   token: Token!
   amount: BigInt!
@@ -210,7 +212,7 @@ type GreenPointsTransaction @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   merchant: Account!
   merchantGP: BigInt!
   consumer: Account!
@@ -224,7 +226,7 @@ type MerchantPaymentSent @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   merchant: Account!
   consumer: Account!
   amount: BigInt!
@@ -239,7 +241,7 @@ type NodeRewardPaid @entity {
   timestamp: DateTime! @index
   extrinsicHash: String! @index
   fee: BigInt!
-
+  success: Boolean!
   node: Account!
   receiver: Account!
   amount: BigInt!
@@ -270,6 +272,7 @@ type Extrinsic @entity {
   id: ID!
   block: Block!
   index: Int! @index
+  timestamp: DateTime! @index
   hash: String @index
   # e.g. nominationPools
   module: String! @index
@@ -286,6 +289,7 @@ type Call @entity {
   id: ID!
   block: Block!
   extrinsic: Extrinsic!
+  extrinsicHash: String! @index
   index: Int! @index
   timestamp: DateTime! @index
   address: Account!
@@ -294,6 +298,7 @@ type Call @entity {
   # e.g. nominationPools(claimPayout)
   call: String! @index
   parameters: JSON!
+  success: Boolean!
 
   events: [Event!] @derivedFrom(field: "call")
 }
@@ -302,6 +307,7 @@ type Event @entity {
   id: ID!
   block: Block!
   extrinsic: Extrinsic
+  extrinsicHash: String! @index
   index: Int! @index
   timestamp: DateTime! @index
   # e.g. balances
@@ -309,6 +315,7 @@ type Event @entity {
   # e.g. Withdraw
   name: String! @index
   attributes: JSON!
+  success: Boolean!
 
   call: Call
 }
