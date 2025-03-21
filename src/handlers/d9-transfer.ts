@@ -87,7 +87,7 @@ async function createAccounts(ctx: ProcessorContext<Store>, transferEvents: Tran
 function createTransfers(transferEvents: TransferEvent[], accounts: Map<string, Account>): Transfer[] {
   const transfers: Transfer[] = []
   for (const t of transferEvents) {
-    const { id, blockNumber, blockHash, timestamp, extrinsicHash, amount, fee } = t
+    const { id, blockNumber, blockHash, timestamp, extrinsicHash, amount, fee, success } = t
     const from = accounts.get(t.from)
     const to = accounts.get(t.to)
     if (t.from === 'vMEwWJwYbzgiKeLeu4RwiAd73GVvGijTywfEAbba3pzPiPC' && t.to === 'z8keEeLwjZFK5NS5PF6xYwTHEbm7jwpH4gBYB1JV6pDTtWg') {
@@ -104,6 +104,7 @@ function createTransfers(transferEvents: TransferEvent[], accounts: Map<string, 
       to,
       amount,
       token: Token.D9,
+      success,
       fee,
     }))
   }
