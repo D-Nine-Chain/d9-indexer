@@ -41,21 +41,8 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
         const decoded = D9USDT.decodeMessage(call.args.data)
         console.info(decoded)
         
-        // if (entities.find(entity => entity.id === call.id)) {
-        //   continue
-        // }
-        
-        // const existingTransfer = await ctx.store.findOne(Transfer, {
-        //   where: { id: call.id }
-        // })
-        
-        // if (existingTransfer) {
-        //   console.info(`Skip existing transfer: ${call.id}`)
-        //   continue
-        // }
-        
         const commonPart = {
-          id: decoded.__kind + '-' + call.id,
+          id: call.id + '-USDT',
           blockNumber: block.header.height,
           blockHash: block.header.hash,
           extrinsicHash: call.extrinsic?.hash,
