@@ -4,7 +4,6 @@ import { isContractsCall, isContractsEvent, ss58Encode } from '../utils'
 import { ContractAddress } from '../constant'
 import * as D9USDT from '../abi/d9-usdt'
 import { usdtSaver } from '../helpers'
-import { Transfer } from '../model'
 
 export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
   const { entities, save } = usdtSaver(ctx)
@@ -34,8 +33,7 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
     //     }
     //   }
     // }
-    for (let index = 0; index < block.calls.length; index++) {
-      const call = block.calls[index];
+    for (const call of block.calls) {
       if (!call.extrinsic)
         continue
       if (isContractsCall(call, ContractAddress.D9_USDT)) {
@@ -43,7 +41,7 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
         console.info(decoded)
 
         const commonPart = {
-          id: call.block.height + '-' + call.extrinsic.id + '-' + index,
+          id: call.id + '-USDT',
           blockNumber: block.header.height,
           blockHash: block.header.hash,
           extrinsicHash: call.extrinsic?.hash,

@@ -41,7 +41,7 @@ function getTransferEvents(ctx: ProcessorContext<Store>): TransferEvent[] {
         assert(block.header.timestamp, `Got an undefined timestamp at block ${block.header.height}`)
 
         transfers.push({
-          id: event.id,
+          id: event.id + '-D9',
           blockNumber: block.header.height,
           blockHash: block.header.hash,
           timestamp: new Date(block.header.timestamp),
