@@ -34,7 +34,8 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
     //     }
     //   }
     // }
-    for await (const call of block.calls) {
+    for (let index = 0; index < block.calls.length; index++) {
+      const call = block.calls[index];
       if (!call.extrinsic)
         continue
       if (isContractsCall(call, ContractAddress.D9_USDT)) {
@@ -42,7 +43,7 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
         console.info(decoded)
 
         const commonPart = {
-          id: call.block.height + '-' + call.extrinsic.id + '-' + call.extrinsicIndex,
+          id: call.block.height + '-' + call.extrinsic.id + '-' + index,
           blockNumber: block.header.height,
           blockHash: block.header.hash,
           extrinsicHash: call.extrinsic?.hash,
