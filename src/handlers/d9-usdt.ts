@@ -40,24 +40,9 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
       if (isContractsCall(call, ContractAddress.D9_USDT)) {
         const decoded = D9USDT.decodeMessage(call.args.data)
         console.info(decoded)
-        
-        // 检查当前批次中是否已存在相同ID的记录
-        if (entities.find(entity => entity.id === call.id)) {
-          continue
-        }
-        
-        // 检查数据库中是否已存在相同ID的记录
-        const existingTransfer = await ctx.store.findOne(Transfer, {
-          where: { id: call.id }
-        })
-        
-        if (existingTransfer) {
-          console.info(`Skip existing transfer: ${call.id}`)
-          continue
-        }
-        
+
         const commonPart = {
-          id: call.id,
+          id: call.block.height + '-' + call.extrinsic.id + '-' + call.extrinsicIndex,
           blockNumber: block.header.height,
           blockHash: block.header.hash,
           extrinsicHash: call.extrinsic?.hash,
