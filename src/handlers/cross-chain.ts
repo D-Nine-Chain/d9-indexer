@@ -51,12 +51,12 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
                 from: ss58Encode(decoded.fromAddress),
                 amount: decoded.amount,
               })
-              // usdtEntities.push({
-              //   ...commonPart,
-              //   from: ss58Encode(decoded.fromAddress),
-              //   to: ss58Encode(ContractAddress.CROSS_CHAIN),
-              //   amount: decoded.amount,
-              // })
+              usdtEntities.push({
+                ...commonPart,
+                from: ss58Encode(decoded.fromAddress),
+                to: ss58Encode(ContractAddress.CROSS_CHAIN),
+                amount: decoded.amount,
+              })
               break
             case 'DispatchCompleted':
               entities.push({
@@ -65,12 +65,12 @@ export async function handleCrossChainContractEvent(ctx: ProcessorContext<Store>
                 to: ss58Encode(decoded.toAddress),
                 amount: decoded.amount,
               })
-              // usdtEntities.push({
-              //   ...commonPart,
-              //   from: ss58Encode(ContractAddress.CROSS_CHAIN),
-              //   to: ss58Encode(decoded.toAddress),
-              //   amount: decoded.amount,
-              // })
+              usdtEntities.push({
+                ...commonPart,
+                from: ss58Encode(ContractAddress.CROSS_CHAIN),
+                to: ss58Encode(decoded.toAddress),
+                amount: decoded.amount,
+              })
               break
           }
         }
