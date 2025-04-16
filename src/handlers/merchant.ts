@@ -69,12 +69,12 @@ export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) 
                 paymentToken: Token.USDT,
                 amount: decoded.usdt,
               })
-              // usdtEntities.push({
-              //   ...commonPart,
-              //   from: ss58Encode(decoded.accountId),
-              //   to: ss58Encode(ContractAddress.MERCHANT),
-              //   amount: decoded.usdt,
-              // })
+              usdtEntities.push({
+                ...commonPart,
+                from: ss58Encode(decoded.accountId),
+                to: ss58Encode(ContractAddress.MERCHANT),
+                amount: decoded.usdt,
+              })
               break
             case 'D9MerchantPaymentSent':
             case 'USDTMerchantPaymentSent':
@@ -86,6 +86,14 @@ export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) 
                 amount: decoded.amount,
                 paymentToken: decoded.__kind === 'D9MerchantPaymentSent' ? Token.D9 : Token.USDT,
               })
+              if (decoded.__kind === 'USDTMerchantPaymentSent') {
+                usdtEntities.push({
+                  ...commonPart,
+                  from: ss58Encode(decoded.consumer),
+                  to: ss58Encode(ContractAddress.MERCHANT),
+                  amount: decoded.amount,
+                })
+              }
               break
             case 'D9Redeemed':
               entities.push({
@@ -107,13 +115,12 @@ export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) 
               })
               break
             case 'GivePointsUSDT':
-              // 如果它发出了PSP22::transfer_from，那么在 d9-usdt.ts 里应该会记录才是
-              // usdtEntities.push({
-              //   ...commonPart,
-              //   from: ss58Encode(decoded.merchant),
-              //   to: ss58Encode(ContractAddress.MERCHANT),
-              //   amount: decoded.amount,
-              // })
+              usdtEntities.push({
+                ...commonPart,
+                from: ss58Encode(decoded.merchant),
+                to: ss58Encode(ContractAddress.MERCHANT),
+                amount: decoded.amount,
+              })
               break
           }
         }

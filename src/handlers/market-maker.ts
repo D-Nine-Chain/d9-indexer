@@ -55,16 +55,16 @@ export async function handleAmmContract(ctx: ProcessorContext<Store>) {
                 d9: decoded.d9,
                 usdt: decoded.usdt,
               })
-              // usdtEntities.push({
-              //   ...commonPart,
-              //   from: decoded.__kind === 'USDTToD9Conversion'
-              //     ? ss58Encode(decoded.accountId)
-              //     : ss58Encode(ContractAddress.MARKET_MAKER),
-              //   to: decoded.__kind === 'D9ToUSDTConversion'
-              //     ? ss58Encode(decoded.accountId)
-              //     : ss58Encode(ContractAddress.MARKET_MAKER),
-              //   amount: decoded.usdt,
-              // })
+              usdtEntities.push({
+                ...commonPart,
+                from: decoded.__kind === 'USDTToD9Conversion'
+                  ? ss58Encode(decoded.accountId)
+                  : ss58Encode(ContractAddress.MARKET_MAKER),
+                to: decoded.__kind === 'D9ToUSDTConversion'
+                  ? ss58Encode(decoded.accountId)
+                  : ss58Encode(ContractAddress.MARKET_MAKER),
+                amount: decoded.usdt,
+              })
               break
             case 'LiquidityAdded':
             case 'LiquidityRemoved':
@@ -75,16 +75,16 @@ export async function handleAmmContract(ctx: ProcessorContext<Store>) {
                 d9: decoded.d9,
                 usdt: decoded.usdt,
               })
-              // usdtEntities.push({
-              //   ...commonPart,
-              //   from: decoded.__kind === 'LiquidityAdded'
-              //     ? ss58Encode(decoded.accountId)
-              //     : ss58Encode(ContractAddress.MARKET_MAKER),
-              //   to: decoded.__kind === 'LiquidityRemoved'
-              //     ? ss58Encode(decoded.accountId)
-              //     : ss58Encode(ContractAddress.MARKET_MAKER),
-              //   amount: decoded.usdt,
-              // })
+              usdtEntities.push({
+                ...commonPart,
+                from: decoded.__kind === 'LiquidityAdded'
+                  ? ss58Encode(decoded.accountId)
+                  : ss58Encode(ContractAddress.MARKET_MAKER),
+                to: decoded.__kind === 'LiquidityRemoved'
+                  ? ss58Encode(decoded.accountId)
+                  : ss58Encode(ContractAddress.MARKET_MAKER),
+                amount: decoded.usdt,
+              })
               break
           }
         }
