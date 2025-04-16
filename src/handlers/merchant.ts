@@ -87,13 +87,13 @@ export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) 
                 paymentToken: decoded.__kind === 'D9MerchantPaymentSent' ? Token.D9 : Token.USDT,
               })
               // Only usdt
-              if (decoded.__kind === 'USDTMerchantPaymentSent')
-                usdtEntities.push({
-                  ...commonPart,
-                  from: ss58Encode(decoded.consumer),
-                  to: ss58Encode(decoded.merchant),
-                  amount: decoded.amount,
-                })
+              // if (decoded.__kind === 'USDTMerchantPaymentSent')
+              //   usdtEntities.push({
+              //     ...commonPart,
+              //     from: ss58Encode(decoded.consumer),
+              //     to: ss58Encode(decoded.merchant),
+              //     amount: decoded.amount,
+              //   })
               break
             case 'D9Redeemed':
               entities.push({
@@ -118,7 +118,7 @@ export async function handleMerchantContractEvent(ctx: ProcessorContext<Store>) 
               usdtEntities.push({
                 ...commonPart,
                 from: ss58Encode(decoded.merchant),
-                to: ss58Encode(decoded.consumer),
+                to: ss58Encode(ContractAddress.MERCHANT),
                 amount: decoded.amount,
               })
               break
