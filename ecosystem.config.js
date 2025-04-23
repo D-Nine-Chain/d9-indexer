@@ -14,6 +14,10 @@ module.exports = {
       log_date_format: 'YYYY-MM-DD HH:mm Z',
       // instances: 'max',
       // exec_mode: 'cluster'
+      env: {
+        NODE_ENV: 'production',
+        DOTENV_CONFIG_PATH: '.env.local'
+      }
     },
     {
       name: 'new-api',
