@@ -13,3 +13,8 @@ services:
       # command: ["postgres", "-c", "log_statement=all"]
     volumes:
       - ./data/db:/var/lib/postgresql/data
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
