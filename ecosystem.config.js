@@ -15,7 +15,8 @@ module.exports = {
       // instances: 'max',
       // exec_mode: 'cluster'
       env: {
-        NODE_ENV: 'production',
+        // fix GraphQL introspection is not allowed by Apollo Server
+        NODE_ENV: 'development',
         DOTENV_CONFIG_PATH: '.env.local'
       }
     },
