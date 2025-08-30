@@ -45,8 +45,8 @@ module.exports = {
     },
     {
       name: 'account-assets-processor',
-      interpreter: 'bun',
-      script: 'd9/account-assets-processor.ts',
+      script: 'bun',
+      args: '--env-file .env.local d9/account-assets-processor.ts',
       log_date_format: 'YYYY-MM-DD HH:mm Z',
       env: {
         NODE_ENV: 'production',
