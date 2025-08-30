@@ -124,9 +124,9 @@ setInterval(async () => {
   console.log(`Total count: ${totalCount}`)
 }, 5000)
 
-if (process.env.NODE_ENV !== 'production') {
+// if (process.env.NODE_ENV !== 'production') {
   processAssets()
-}
+// }
 
 process.on('SIGINT', async () => {
   await redis.set('account-assets-refreshing', "false")
