@@ -105,7 +105,7 @@ async function processAssets() {
   }
 }
 
-cron.schedule('0 */6 * * *', processAssets);
+cron.schedule('0 0 * * *', processAssets);
 
 setInterval(async () => {
   // Print analysis of the account assets
