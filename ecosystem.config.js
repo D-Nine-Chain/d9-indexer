@@ -44,9 +44,9 @@ module.exports = {
       }
     },
     {
-      name: 'address-assets-processor',
+      name: 'account-assets-processor',
       interpreter: 'bun',
-      script: 'd9/address-assets-processor.ts',
+      script: 'd9/account-assets-processor.ts',
       log_date_format: 'YYYY-MM-DD HH:mm Z',
       env: {
         NODE_ENV: 'production',
