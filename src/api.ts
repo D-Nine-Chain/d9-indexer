@@ -106,6 +106,12 @@ export const AccountAssetsProcessorPlugin: Plugin = makeExtendSchemaPlugin((buil
           const limit = args.limit || 100;
           const offset = args.offset || 0;
 
+          // 限制最多只能查询到前287名
+          const maxAllowedLimit = Math.min(limit, 287 - offset);
+          if (maxAllowedLimit <= 0) {
+            return [];
+          }
+
           const { rows } = await pgClient.query(
             `
             SELECT 
@@ -117,7 +123,7 @@ export const AccountAssetsProcessorPlugin: Plugin = makeExtendSchemaPlugin((buil
             ORDER BY mine_balance DESC
             LIMIT $1 OFFSET $2
             `,
-            [Math.min(limit, 100), offset]
+            [maxAllowedLimit, offset]
           );
 
           return rows.map((row: any) => ({
@@ -131,6 +137,12 @@ export const AccountAssetsProcessorPlugin: Plugin = makeExtendSchemaPlugin((buil
           const limit = args.limit || 100;
           const offset = args.offset || 0;
 
+          // 限制最多只能查询到前287名
+          const maxAllowedLimit = Math.min(limit, 287 - offset);
+          if (maxAllowedLimit <= 0) {
+            return [];
+          }
+
           const { rows } = await pgClient.query(
             `
             SELECT 
@@ -142,7 +154,7 @@ export const AccountAssetsProcessorPlugin: Plugin = makeExtendSchemaPlugin((buil
             ORDER BY green_points_balance DESC
             LIMIT $1 OFFSET $2
             `,
-            [Math.min(limit, 100), offset]
+            [maxAllowedLimit, offset]
           );
 
           return rows.map((row: any) => ({
@@ -185,7 +197,7 @@ const middleware = postgraphile(
       stateSchemas: ['squid_processor'],
       // connectionFilterAllowedOperators: ['equal', 'notEqual', 'in', 'notIn', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual'],
       pgQueryTimeout: 5000, // 5 seconds query timeout
-      maxRows: 100, // 限制返回行数
+      maxRows: 287, // 限制返回行数
     },
     // simpleCollections: 'only', // 简化集合查询
     enableQueryBatching: false, // 禁用查询批处理
