@@ -74,8 +74,8 @@ export const AccountAssetsProcessorPlugin: Plugin = makeExtendSchemaPlugin((buil
 
       extend type Query {
         accountAssetsProcessorStatus: AccountAssetsProcessorStatus!
-        mineBalanceRanking(limit: Int = 100): [AccountRanking!]!
-        greenPointsRanking(limit: Int = 100): [AccountRanking!]!
+        mineBalanceRanking(limit: Int = 100, offset: Int = 0): [AccountRanking!]!
+        greenPointsRanking(limit: Int = 100, offset: Int = 0): [AccountRanking!]!
       }
     `,
     resolvers: {
@@ -104,6 +104,7 @@ export const AccountAssetsProcessorPlugin: Plugin = makeExtendSchemaPlugin((buil
         mineBalanceRanking: async (parentObject, args, context) => {
           const pgClient: pg.Client = context.pgClient;
           const limit = args.limit || 100;
+          const offset = args.offset || 0;
 
           const { rows } = await pgClient.query(
             `
@@ -114,9 +115,9 @@ export const AccountAssetsProcessorPlugin: Plugin = makeExtendSchemaPlugin((buil
             FROM account 
             WHERE mine_balance > 0
             ORDER BY mine_balance DESC
-            LIMIT $1
+            LIMIT $1 OFFSET $2
             `,
-            [Math.min(limit, 100)]
+            [Math.min(limit, 100), offset]
           );
 
           return rows.map((row: any) => ({
@@ -128,6 +129,7 @@ export const AccountAssetsProcessorPlugin: Plugin = makeExtendSchemaPlugin((buil
         greenPointsRanking: async (parentObject, args, context) => {
           const pgClient: pg.Client = context.pgClient;
           const limit = args.limit || 100;
+          const offset = args.offset || 0;
 
           const { rows } = await pgClient.query(
             `
@@ -138,9 +140,9 @@ export const AccountAssetsProcessorPlugin: Plugin = makeExtendSchemaPlugin((buil
             FROM account 
             WHERE green_points_balance > 0
             ORDER BY green_points_balance DESC
-            LIMIT $1
+            LIMIT $1 OFFSET $2
             `,
-            [Math.min(limit, 100)]
+            [Math.min(limit, 100), offset]
           );
 
           return rows.map((row: any) => ({
