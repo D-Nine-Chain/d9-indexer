@@ -12,7 +12,11 @@
     "outDir": "lib",
     "sourceMap": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@polkadot/api/augment": ["./d9/interfaces/augment-api.ts"],
+      "@polkadot/types/augment": ["./d9/interfaces/augment-types.ts"]
+    },
   },
   "include": ["src"],
   "exclude": [

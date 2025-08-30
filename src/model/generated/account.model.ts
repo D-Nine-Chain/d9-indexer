@@ -1,4 +1,4 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "@subsquid/typeorm-store"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, BigIntColumn as BigIntColumn_, Index as Index_, OneToMany as OneToMany_} from "@subsquid/typeorm-store"
 import {Transfer} from "./transfer.model"
 import {Withdraw} from "./withdraw.model"
 import {NodeVote} from "./nodeVote.model"
@@ -27,6 +27,22 @@ export class Account {
      */
     @PrimaryColumn_()
     id!: string
+
+    @Index_()
+    @BigIntColumn_({nullable: true})
+    d9Balance!: bigint | undefined | null
+
+    @Index_()
+    @BigIntColumn_({nullable: true})
+    usdtBalance!: bigint | undefined | null
+
+    @Index_()
+    @BigIntColumn_({nullable: true})
+    greenPointsBalance!: bigint | undefined | null
+
+    @Index_()
+    @BigIntColumn_({nullable: true})
+    mineBalance!: bigint | undefined | null
 
     @OneToMany_(() => Transfer, e => e.to)
     receivedTransfers!: Transfer[]

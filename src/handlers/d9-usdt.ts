@@ -1,6 +1,6 @@
 import { Store } from '@subsquid/typeorm-store'
 import { ProcessorContext } from '../processor'
-import { isContractsCall, isContractsEvent, ss58Encode } from '../utils'
+import { isContractsCall, ss58Encode } from '../utils'
 import { ContractAddress } from '../constant'
 import * as D9USDT from '../abi/d9-usdt'
 import { usdtSaver } from '../helpers'
@@ -38,7 +38,7 @@ export async function handleD9USDTContract(ctx: ProcessorContext<Store>) {
         continue
       if (isContractsCall(call, ContractAddress.D9_USDT)) {
         const decoded = D9USDT.decodeMessage(call.args.data)
-        console.info(decoded)
+        // console.info(decoded)
 
         const commonPart = {
           id: call.id + '-USDT',

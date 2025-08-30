@@ -25,6 +25,7 @@ export class MarketTradeCountResolver {
   @Query(() => [MarketTrade24H])
   async trade24H() {
     const manager = await this.tx()
+    
     const result = await manager.getRepository(MarketConversion).query(
       `
       WITH current_period_volume AS (

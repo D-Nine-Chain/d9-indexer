@@ -5,8 +5,11 @@ import type * as pg from 'pg';
 import { gql, makeExtendSchemaPlugin, postgraphile, Plugin, type PostGraphileResponse, PostGraphileResponseFastify3 } from 'postgraphile';
 import FilterPlugin from 'postgraphile-plugin-connection-filter';
 import cors from '@fastify/cors'
+import { Redis } from 'ioredis'
 
 const app = Fastify({ logger: true })
+
+const redis = new Redis(process.env.REDIS_URL as string)
 
 // 配置 CORS，允许所有来源
 app.register(cors, {
@@ -49,6 +52,108 @@ export const ProcessorStatusPlugin: Plugin = makeExtendSchemaPlugin((build, opti
   }
 })
 
+export const AccountAssetsProcessorPlugin: Plugin = makeExtendSchemaPlugin((build, options) => {
+  return {
+    typeDefs: gql`
+      type AccountAssetsProcessorStatus {
+        refreshing: Boolean!
+        refreshedAt: String
+        processedCount: Int!
+        remainingCount: Int!
+        totalCount: Int!
+        processedPerMinute: Int!
+        error: String
+        partialFailures: Int
+      }
+
+      type AccountRanking {
+        accountId: String!
+        balance: String!
+        rank: Int!
+      }
+
+      extend type Query {
+        accountAssetsProcessorStatus: AccountAssetsProcessorStatus!
+        mineBalanceRanking(limit: Int = 100): [AccountRanking!]!
+        greenPointsRanking(limit: Int = 100): [AccountRanking!]!
+      }
+    `,
+    resolvers: {
+      Query: {
+        accountAssetsProcessorStatus: async () => {
+          const refreshing = await redis.get('account-assets-refreshing')
+          const refreshedAt = await redis.get('account-assets-refreshed-at')
+          const processedCount = await redis.get('account-assets-processed-count')
+          const remainingCount = await redis.get('account-assets-remaining-count')
+          const totalCount = await redis.get('account-assets-total-count')
+          const processedPerMinute = await redis.get('account-assets-processed-per-minute')
+          const error = await redis.get('account-assets-error')
+          const partialFailures = await redis.get('account-assets-partial-failures')
+
+          return {
+            refreshing: refreshing === 'true',
+            refreshedAt: refreshedAt || null,
+            processedCount: parseInt(processedCount || '0'),
+            remainingCount: parseInt(remainingCount || '0'),
+            totalCount: parseInt(totalCount || '0'),
+            processedPerMinute: parseInt(processedPerMinute || '0'),
+            error: error || null,
+            partialFailures: partialFailures ? parseInt(partialFailures) : null
+          }
+        },
+        mineBalanceRanking: async (parentObject, args, context) => {
+          const pgClient: pg.Client = context.pgClient;
+          const limit = args.limit || 100;
+
+          const { rows } = await pgClient.query(
+            `
+            SELECT 
+              id as "accountId",
+              mine_balance as balance,
+              ROW_NUMBER() OVER (ORDER BY mine_balance DESC) as rank
+            FROM account 
+            WHERE mine_balance > 0
+            ORDER BY mine_balance DESC
+            LIMIT $1
+            `,
+            [Math.min(limit, 100)]
+          );
+
+          return rows.map((row: any) => ({
+            accountId: row.accountId,
+            balance: row.balance?.toString() || '0',
+            rank: parseInt(row.rank)
+          }));
+        },
+        greenPointsRanking: async (parentObject, args, context) => {
+          const pgClient: pg.Client = context.pgClient;
+          const limit = args.limit || 100;
+
+          const { rows } = await pgClient.query(
+            `
+            SELECT 
+              id as "accountId",
+              green_points_balance as balance,
+              ROW_NUMBER() OVER (ORDER BY green_points_balance DESC) as rank
+            FROM account 
+            WHERE green_points_balance > 0
+            ORDER BY green_points_balance DESC
+            LIMIT $1
+            `,
+            [Math.min(limit, 100)]
+          );
+
+          return rows.map((row: any) => ({
+            accountId: row.accountId,
+            balance: row.balance?.toString() || '0',
+            rank: parseInt(row.rank)
+          }));
+        }
+      }
+    }
+  }
+})
+
 const middleware = postgraphile(
   {
     host: process.env.DB_HOST || 'localhost',
@@ -71,6 +176,7 @@ const middleware = postgraphile(
       FilterPlugin,
       PgSimplifyInflectorPlugin,
       ProcessorStatusPlugin,
+      AccountAssetsProcessorPlugin,
     ],
     externalGraphqlRoute: process.env.BASE_PATH == null ? undefined : process.env.BASE_PATH + '/api/graphql',
     graphileBuildOptions: {

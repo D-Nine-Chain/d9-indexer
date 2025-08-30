@@ -42,6 +42,15 @@ module.exports = {
         NODE_ENV: 'production',
         DOTENV_CONFIG_PATH: '.env.local'
       }
+    },
+    {
+      name: 'address-assets-processor',
+      interpreter: 'bun',
+      script: 'd9/address-assets-processor.ts',
+      log_date_format: 'YYYY-MM-DD HH:mm Z',
+      env: {
+        NODE_ENV: 'production',
+      }
     }
   ]
 }
