@@ -43,7 +43,6 @@ async function processAssets() {
           : db.select().from(schema.account).limit(batchSize).orderBy(schema.account.id)
 
         const accounts = await query
-        console.info(`Found ${accounts.length} accounts`)
 
         if (accounts.length === 0) {
           hasMore = false
@@ -59,19 +58,19 @@ async function processAssets() {
         )
 
         const results = await Promise.allSettled(promises)
-        
+
         const failures = results
           .filter(result => result.status === 'rejected' || (result.status === 'fulfilled' && result.value?.error))
           .length
-        
+
         const successes = results.length - failures
-        
+
         if (successes === 0) {
           console.error(`Complete batch failure: all ${accounts.length} accounts failed`)
           await redis.set('account-assets-error', `Complete batch failure: all ${accounts.length} accounts failed`)
           process.exit(1)
         }
-        
+
         if (failures > 0) {
           console.warn(`Partial batch failure: ${failures}/${accounts.length} accounts failed`)
           await redis.set('account-assets-partial-failures', failures)
@@ -131,7 +130,7 @@ setInterval(async () => {
 }, 5000)
 
 // if (process.env.NODE_ENV !== 'production') {
-  processAssets()
+processAssets()
 // }
 
 process.on('SIGINT', async () => {
