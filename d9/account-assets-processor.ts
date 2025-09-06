@@ -22,7 +22,8 @@ async function processAssets() {
   let hasMore = true
   let totalProcessed = 0
   const startTime = Date.now()
-  const batchSize = 32 / 4 // 4 get Account Assets 占用4个Call
+  const batchSize = 32 / 6 // 4 get Account Assets 占用4个Call
+  console.info('Now Start Processing Account Assets')
 
   try {
     await redis.set('account-assets-refreshing', "true")
@@ -35,12 +36,14 @@ async function processAssets() {
     await redis.set('account-assets-start-time', startTime)
 
     while (hasMore) {
+      console.info(`Processing batch ${totalProcessed + 1} to ${totalProcessed + batchSize}`)
       try {
         const query = cursor
           ? db.select().from(schema.account).where(gt(schema.account.id, cursor)).limit(batchSize).orderBy(schema.account.id)
           : db.select().from(schema.account).limit(batchSize).orderBy(schema.account.id)
 
         const accounts = await query
+        console.info(`Found ${accounts.length} accounts`)
 
         if (accounts.length === 0) {
           hasMore = false
@@ -97,6 +100,7 @@ async function processAssets() {
     await redis.set('account-assets-refreshed-at', new Date().toISOString())
     await redis.set('account-assets-processed-count', totalProcessed)
     await redis.set('account-assets-remaining-count', Math.max(0, totalCount - totalProcessed))
+    console.info('Account Assets Processing Completed')
   } catch (error) {
     console.error('Error in processAssets:', error)
     await redis.set('account-assets-refreshing', "false")
@@ -114,6 +118,7 @@ setInterval(async () => {
   const processedCount = await redis.get('account-assets-processed-count')
   const remainingCount = await redis.get('account-assets-remaining-count')
   const processedPerMinute = await redis.get('account-assets-processed-per-minute')
+  const partialFailures = await redis.get('account-assets-partial-failures')
   const totalCount = await redis.get('account-assets-total-count')
   console.log('-------------------Account Assets Analysis-------------------')
   console.log(`Account assets processing: ${refreshing ? 'Refreshing' : 'Not refreshing'}`)
@@ -122,6 +127,7 @@ setInterval(async () => {
   console.log(`Remaining count: ${remainingCount}`)
   console.log(`Processed per minute: ${processedPerMinute}`)
   console.log(`Total count: ${totalCount}`)
+  console.log(`Partial failures: ${partialFailures}`)
 }, 5000)
 
 // if (process.env.NODE_ENV !== 'production') {
