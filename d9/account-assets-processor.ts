@@ -6,6 +6,8 @@ import retry from 'async-retry';
 
 const redis = Bun.redis
 
+let processing = false
+
 async function refreshAccountAssets(id: string) {
   const assets = await getAccountAssets(id)
 
@@ -18,11 +20,17 @@ async function refreshAccountAssets(id: string) {
 }
 
 async function processAssets() {
+  if (processing) {
+    console.info('Account Assets Processing Already Running, skipping')
+    return
+  }
+  processing = true
   let cursor = ''
   let hasMore = true
   let totalProcessed = 0
   const startTime = Date.now()
-  const batchSize = 32 / 8 // 4 get Account Assets 占用4个Call
+  // const batchSize = 32 / 8 // 4 get Account Assets 占用4个Call
+  const batchSize = 6
   console.info('Now Start Processing Account Assets')
 
   try {
@@ -36,7 +44,6 @@ async function processAssets() {
     await redis.set('account-assets-start-time', startTime)
 
     while (hasMore) {
-      console.info(`Processing batch ${totalProcessed + 1} to ${totalProcessed + batchSize}`)
       try {
         const query = cursor
           ? db.select().from(schema.account).where(gt(schema.account.id, cursor)).limit(batchSize).orderBy(schema.account.id)
@@ -105,6 +112,8 @@ async function processAssets() {
     await redis.set('account-assets-refreshing', "false")
     await redis.set('account-assets-error', error.message)
     throw error
+  } finally {
+    processing = false
   }
 }
 
