@@ -22,7 +22,7 @@ async function processAssets() {
   let hasMore = true
   let totalProcessed = 0
   const startTime = Date.now()
-  const batchSize = 32 / 6 // 4 get Account Assets 占用4个Call
+  const batchSize = 32 / 8 // 4 get Account Assets 占用4个Call
   console.info('Now Start Processing Account Assets')
 
   try {
